@@ -112,7 +112,12 @@ vii = (function(){
 		'sc' : function(v){
 			return 'scale(' + v +') ';
 		},
-		'per' : function(v){return v + '%'},
+		'per' : function(v){
+			if(v.indexOf('%') != -1){
+				return v;
+			}
+			return v + '%'
+		},
 		'none' : function(v){return v}
 	};
 	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'];
@@ -207,7 +212,7 @@ vii = (function(){
 			e = prop.ease || easing || 'ease',
 			delay = prop.delay || '0',
 			useAll = prop.useAll || false,
-			fm = prop.fillMode || 'forwards',
+			fm = prop.fillMode || (parseInt(delay) !== 0)?'both':'forwards',
 			p = prop.percent || 'to',
 			hacks = '',
 			t = '',
