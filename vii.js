@@ -123,15 +123,21 @@ vii = (function(){
 	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'];
 	formatMap['bg'] = formatMap['bgc'] = formatMap['c'];
 	formatMap.d = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap['none'];
+	function cleanWhiteSpace(s){
+		return s.replace(/\s\s+/g, ' ');
+	}
+	function trim(s){
+		return s.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+	}
 	//receives an object or spring and parse and reads its data
 	function parse(val){
 		var fr = [];
 		if(typeof val === 'string'){
 			//is string
 			if(val.indexOf('|') !== -1){
-				fr = val.split('|');
+				fr = cleanWhiteSpace(val).split('|');
 			}else{
-				fr = [val];
+				fr = [cleanWhiteSpace(val)];
 			}
 		}else if(Object.prototype.toString.call(val) === '[object Object]'){
 			//is object
@@ -146,7 +152,7 @@ vii = (function(){
 			//check if string
 			if(typeof fr[i] === 'string'){
 				obj = {};
-				var raw = fr[i].split(' ');
+				var raw = trim(fr[i]).split(' ');
 				for(var j = 0; j < raw.length; j++){
 					var nameValue = raw[j].split(':');
 					obj[nameValue[0]] = (nameValue[0] in formatMap)?formatMap[nameValue[0]](nameValue[1]):nameValue[1];
