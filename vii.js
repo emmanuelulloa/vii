@@ -45,37 +45,70 @@ vii = (function(){
 	ceaser.snap    = ceaser.easeInQuint;
 	ceaser.swing   = ceaser.easeOutBack;
 	ceaser.slowmo  = 'cubic-bezier(0,1,1,0)';
+	//pre-made animations
+	var preMade = {
+		//http://www.justinaguilar.com/animations/#
+		'slideDown'     : 'n:slideDown d:1 e:ease per:0 y:-100%|per:50 y:8%|per:65 y:-4%|per:80 y:4%|per:95 y:-2%|per:100 y:0',
+		'slideUp'       : 'n:slideUp d:1 e:ease per:0 y:100%|per:50 y:-8%|per:65 y:4%|per:80 y:-4%|per:95 y:2%|per:100 y:0%',
+		'slideLeft'     : 'n:slideLeft d:1 e:easeInOut per:0 x:150%|per:50 x:-8%|per:65 x:4%|per:80 x:-4%|per:95 x:2%|per:100 x:0%',
+		'slideRight'    : 'n:slideRight d:1 e:easeInOut per:0 x:-150%|per:50 x:8%|per:65 x:-4%|per:80 x:4%|per:95 x:-2%|per:100 x:0%',
+		'slideExpandUp' : 'n:slideExpandUp d:1.6 e:easeOut per:0 y:100% scx:0.5|per:30 y:-8% scx:0.5|per:40 y:2% scx:0.5|per:50 y:0% scx:1.1|per:60 y:0% scx:0.0|per:70 y:0% scx:1.05|per:80 y:0% scx:0.95%|per:90 y:0% scx:1.02|per:100 y:0% scx:1',
+		'expandUp'      : 'n:expandUp d:0.7 e:ease per:0 y:100% sc:0.6 scy:0.5|per:60 y:-7% scy:1.12|per:75 y:3%|per:100 y:0% sc:1 scy:1',
+		'fadeIn'		: 'n:fadeIn d:1.5 e:easeInOut per:0 sc:0 op:0|per:60 sc:1.1|per:80 sc:0.9 op:1|per:100 sc:1 op:1',
+		'expandOpen'	: 'n:expandOpen d:1.2 e:easeOut per:0 sc:1.8|per:50 sc:0.95|per:80 sc:1.05|per:90 sc:0.98|per:100 sc:1',
+		'bigEntrance'	: 'n:bigEntrance d:1.6 e:easeOut per:0 sc:0.3 rot:6 x:-30% y:30% op:0.2|per:30 sc:1.03 rot:-2 x:2% y:-2% op:1|per:45 sc:0.98 rot:1 x:0% y:0% op:1|per:60 sc:1.01 rot:-1 x:0% y:0% op:1|per:75 sc:0.99 rot:1 x:0% y:0% op:1|per:90 sc:1.01 rot:0 x:0% y:0% op:1|per:100 sc:1 rot:0 x:0% y:0% op:1',
+		'hatch'			: 'n:hatch d:2 e:easeInOut to:50%100% per:0 rot:0 scy:0.6|per:20 rot:-2 scy:1.05|per:35 rot:2 scy:1|per:50 rot:-2|per:65 rot:1|per:80 rot:-1|rot:100 rot:0',
+		'pulse' 		: 'n:pulse d:1.5 loop:-1 per:0 sc:0.9 op:0.7|per:50 sc:1 op:1|per:100 sc:0.9 op:0.7',
+		'floating'		: 'n:floating d:1.5 loop:-1 per:0 y:0%|per:50 y:8%|per:100 y:0%',
+		'tossing'		: 'n:tossing d:2.5 loop:-1 per:0 rot:-4|per:50 rot:4|per:100 rot:-4',
+		'pullUp'		: 'n:pullUp d:1.1 e:easeOut to:50%,100% per:0 scy:0.1|per:40 scy:1.02|per:60 scy:0.98|per:80 scy:1.01|per:100 scy:1',
+		'pullDown'		: 'n:pullDown d:1.1 e:easeOut to:50%,0% per:0 scy:0.1|per:40 scy:1.02|per:60 scy:0.98|per:80 scy:1.01|per:100 scy:1',
+		'stretchLeft'	: 'n:stretchLeft d:1.5 e:easeOut to:100%,0% per:0 scx:0.3|per:40 scx:1.02|per:60 scx:0.98|per:80 scx:1.01|per:100 scx:1',
+		'stretchRight'	: 'n:stretchRight d:1.5 e:easeOut to:0%,0% per:0 scx:0.3|per:40 scx:1.02|per:60 scx:0.98|per:80 scx:1.01|per:100 scx:1',
+		//https://daneden.github.io/animate.css/
+		'bounce'		: 'n:bounce d:0.75 per:0%,20%,53%,80%,100% x:0 y:0 to:center,bottom e:easeOutCubic|per:40%,43% y:-30 e:easeInQuint|per:70% y:-15 e:easeInQuint|per:90% y:-4',
+		'flash'			: 'n:flash d:1 per:0%,50%100% op:1|per:25%,75% op:0',
+		'rubberBand'	: 'n:rubberBand d:1 per:0 scx:1 scy:1|per:30 scx:1.25 scy:0.75|per:40 scx:0.75 scy:1.25|per:50 scx:1.15 scy:0.85|per:65 scx:0.95 scy:1.05|per:75 scx:1.05 scy:0.95|per:100 scx:1 scy:1',
+		'shake'			: 'n:shake d:1 per:0%,100% x:0|per:10%,30%,50%,70%,90% x:-10|per:20%,40%,60%,80% x:10',
+		'swing'			: 'n:swing d:1 to:top,center per:20 rot:15|per:40 rot:-10|per:60 rot:5|per:80 rot:-5|per:100 rot:0',
+		'tada'			: 'n:tada d:1 per:0% scx:1 scy:1|per:10%,20% scx:0.9 scy:0.9 rot:-3|per:30%,50%,70%,90% scx:1.1 scy:1.1 rot:3|per:40%,60%,80% scx:1.1 scy:1.1 rot:-3|per:100% scx:1 scy:1',
+		'wobble'		: 'n:wobble d:1 per:0 transform:none|per:15 x:-25% rot:-5|per:30 x:20% rot:3|per:45 x:-15% rot:-3|per:60% x:10% rot:2|per:75 x:-5% rot:-1|per:100 transform:none'
+
+	}
 	//check if a property is a configuration property or css property
 	function isCSS(prop){	
-		return (('useTransition name duration loop ease delay transform fillMode useAll percent').indexOf(prop) === -1);
+		return (('useTransition name duration loop ease delay fillMode useAll percent transform transform-origin transformOrigin animation-timing-function animationTimingFunction').indexOf(prop) === -1);
 	}
 	//a data map to shorcut words so tweens can be created Emmet style
 	var propMap = {
-		'd':'duration',
-		'e':'ease',
-		'dy':'delay',
-		'n': 'name',
-		'w':'width',
-		'h':'height',
-		't':'top',
-		'l':'left',
-		'r':'right',
-		'b':'bottom',
-		'm':'margin',
-		'p':'padding',
-		'fz':'font-size',
-		'bg':'background',
-		'bgc':'background-color',
-		'bgp':'background-position',
-		'c':'color',
-		'op':'opacity',
-		'bd':'border',
-		'x' : 'translateX',
-		'y' : 'translateY',
-		'rot': 'rotate',
-		'sk': 'skew',
-		'sc': 'scale',
-		'per' : 'percent'
+		'd'		:'duration',
+		'e'		:'animationTimingFunction',
+		'dy'	:'delay',
+		'n'		:'name',
+		'w'		:'width',
+		'h'		:'height',
+		't'		:'top',
+		'l'		:'left',
+		'r'		:'right',
+		'b'		:'bottom',
+		'm'		:'margin',
+		'p'		:'padding',
+		'fz'	:'font-size',
+		'bg'	:'background',
+		'bgc'	:'background-color',
+		'bgp'	:'background-position',
+		'c'		:'color',
+		'op'	:'opacity',
+		'bd'	:'border',
+		'x' 	:'translateX',
+		'y' 	:'translateY',
+		'rot'	:'rotate',
+		'sk'	:'skew',
+		'sc'	:'scale',
+		'scx'	:'scaleX',
+		'scy' 	:'scaleY',
+		'to' 	:'transformOrigin',
+		'per' 	:'percent'
 	};
 	//a data map to format properties
 	var formatMap = {
@@ -112,11 +145,23 @@ vii = (function(){
 		'sc' : function(v){
 			return 'scale(' + v +') ';
 		},
+		'scx' : function(v){
+			return 'scaleX(' + v +') ';
+		},
+		'scy' : function(v){
+			return 'scaleY(' + v +') ';
+		},
 		'per' : function(v){
 			if(v.indexOf('%') != -1){
 				return v;
 			}
-			return v + '%'
+			return v + '%';
+		},
+		'to' : function(v){
+			if(v.indexOf(',') != -1){
+				return v.split(',')[0] + ' ' + v.split(',')[1];
+			}
+			return v;
 		},
 		'none' : function(v){return v}
 	};
@@ -133,6 +178,9 @@ vii = (function(){
 	function parse(val){
 		var fr = [];
 		if(typeof val === 'string'){
+			if(preMade[val]){
+				return parse(preMade[val]);
+			}
 			//is string
 			if(val.indexOf('|') !== -1){
 				fr = cleanWhiteSpace(val).split('|');
@@ -170,7 +218,7 @@ vii = (function(){
 				}
 			}
 			//clean transforms
-			if('translateX' in o || 'translateY' in o || 'rotate' in o || 'skew' in o || 'scale' in o){
+			if('translateX' in o || 'translateY' in o || 'rotate' in o || 'skew' in o || 'scale' in o || 'scaleX' in o || 'scaleY' in o){
 				o['transform'] = '';
 				if('translateX' in o && 'translateY' in o){
 					o['transform'] += 'translate('+ o['translateX'] + ', ' + o['translateY'] + ') ' ;
@@ -185,6 +233,14 @@ vii = (function(){
 						o['transform'] += 'translateY(' + o['translateY'] + ') ';
 						delete o['translateY'];
 					}				
+				}
+				if('scaleX' in o){
+					o['transform'] += o['scaleX'];
+					delete o['scaleX'];
+				}
+				if('scaleY' in o){
+					o['transform'] += o['scaleY'];
+					delete o['scaleY'];
 				}
 				if('scale' in o){
 					o['transform'] += o['scale'];
@@ -214,8 +270,8 @@ vii = (function(){
 			useTransition = (prop.useTransition !== null)?prop.useTransition:false,
 			n = prop.name || 'myTween',
 			d = prop.duration || duration || '0.5',
-			l = prop.loop || '1',
-			e = prop.ease || easing || 'ease',
+			l = prop.animationIterationCount || prop.loop || '1',
+			e = prop.animationTimingFunction || prop.ease || easing || 'ease',
 			delay = prop.delay || '0',
 			useAll = prop.useAll || false,
 			fm = prop.fillMode || (parseInt(delay) !== 0)?'both':'forwards',
@@ -245,11 +301,14 @@ vii = (function(){
 		hacks += _t + 'backface-visibility: hidden' + _e + _n;
 		hacks += _t + _w + 'backface-visibility: hidden' + _e + _n;
 		hacks += _t + '-moz-osx-font-smoothing: grayscale' + _e + _n + _n;
+		if(l == '-1'){
+			l = 'infinite';
+		}
 		//KEYFRAMES
 		if(!useTransition){
 			//keyframes
+			var fQty = frames.length;
 			for(var px=0; px < prefix.length; px++){
-				var fQty = frames.length;
 				if(fQty == 1){
 					t += '@' + prefix[px] + _k + n + _s + _o + _n;
 					t += _t + p + _s + _o + _n;
@@ -258,6 +317,10 @@ vii = (function(){
 							t += _t + _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + prop[k] + _e + _n;
 						}else if(k === 'transform'){
 							t += _t + _t + prefix[px] + 'transform: ' + prop[k] + _e + _n;
+						}else if(k === 'transformOrigin'){
+							t += _t + _t + prefix[px] + 'transform-origin: ' + prop[k] + _e + _n;
+						}else if(k === 'animationTimingFunction'){
+							t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[prop[k]]?ceaser[prop[k]]:prop[k]) + _e + _n;
 						}
 					}
 					t += _t + _x + _n;
@@ -269,9 +332,13 @@ vii = (function(){
 						t += _t + p + _s + _o + _n;
 						for(var k in frames[i]){
 							if(isCSS(k)){
-								t += _t + _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + prop[k] + _e + _n;
+								t += _t + _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + frames[i][k] + _e + _n;
 							}else if(k === 'transform'){
 								t += _t + _t + prefix[px] + 'transform: ' + frames[i][k] + _e + _n;
+							}else if(k === 'transformOrigin'){
+								t += _t + _t + prefix[px] + 'transform-origin: ' + frames[i][k] + _e + _n;
+							}else if(k === 'animationTimingFunction'){
+								t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[frames[i][k]]?ceaser[frames[i][k]]:frames[i][k]) + _e + _n;
 							}
 						}
 						t += _t + _x + _n;	
