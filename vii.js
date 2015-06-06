@@ -45,29 +45,37 @@ vii = (function(){
 	ceaser.snap    = ceaser.easeInQuint;
 	ceaser.swing   = ceaser.easeOutBack;
 	ceaser.slowmo  = 'cubic-bezier(0,1,1,0)';
+	ceaser.hesitate = 'cubic-bezier(.2,1,.9,-0.5)';
+	ceaser.anticipate = 'cubic-bezier(.5,0,.8,.15)';
+	ceaser.overshoot = 'cubic-bezier(.41,.41,.35,1.2)';
+	ceaser.anticipateOvershoot = 'cubic-bezier(.45,-0.67,.53,1.63)';
+	ceaser.bounce = 'cubic-bezier(.65, 1.95, .03, .32)';
+	ceaser.elastic = 'cubic-bezier(0.47, 2.02, 0.31, -0.36)';
+	ceaser.spring = 'cubic-bezier(.25,2,.75,.5)';
 	//pre-made animations
 	var preMade = {
-		'fadeIn'			: 'n:fadeIn d:0.5 e:ease op:1',
-		'fadeOut'			: 'n:fadeOut d:0.5 e:ease op:0',
-		//http://www.justinaguilar.com/animations/#
+		'fadeIn'		: 'n:fadeIn d:0.5 e:ease op:1',
+		'fadeOut'		: 'n:fadeOut d:0.5 e:ease op:0',
+		//Created by Justin Aguilar's Animation CheatSheet
 		'slideDown'     : 'n:slideDown d:1 e:ease per:0 y:-100%|per:50 y:8%|per:65 y:-4%|per:80 y:4%|per:95 y:-2%|per:100 y:0',
 		'slideUp'       : 'n:slideUp d:1 e:ease per:0 y:100%|per:50 y:-8%|per:65 y:4%|per:80 y:-4%|per:95 y:2%|per:100 y:0%',
 		'slideLeft'     : 'n:slideLeft d:1 e:easeInOut per:0 x:150%|per:50 x:-8%|per:65 x:4%|per:80 x:-4%|per:95 x:2%|per:100 x:0%',
 		'slideRight'    : 'n:slideRight d:1 e:easeInOut per:0 x:-150%|per:50 x:8%|per:65 x:-4%|per:80 x:4%|per:95 x:-2%|per:100 x:0%',
 		'slideExpandUp' : 'n:slideExpandUp d:1.6 e:easeOut per:0 y:100% scx:0.5|per:30 y:-8% scx:0.5|per:40 y:2% scx:0.5|per:50 y:0% scx:1.1|per:60 y:0% scx:0.0|per:70 y:0% scx:1.05|per:80 y:0% scx:0.95%|per:90 y:0% scx:1.02|per:100 y:0% scx:1',
 		'expandUp'      : 'n:expandUp d:0.7 e:ease per:0 y:100% sc:0.6 scy:0.5|per:60 y:-7% scy:1.12|per:75 y:3%|per:100 y:0% sc:1 scy:1',
-		'fadeIn2'		: 'n:fadeIn2 d:1.5 e:easeInOut per:0 sc:0 op:0|per:60 sc:1.1|per:80 sc:0.9 op:1|per:100 sc:1 op:1',
 		'expandOpen'	: 'n:expandOpen d:1.2 e:easeOut per:0 sc:1.8|per:50 sc:0.95|per:80 sc:1.05|per:90 sc:0.98|per:100 sc:1',
 		'bigEntrance'	: 'n:bigEntrance d:1.6 e:easeOut per:0 sc:0.3 rot:6 x:-30% y:30% op:0.2|per:30 sc:1.03 rot:-2 x:2% y:-2% op:1|per:45 sc:0.98 rot:1 x:0% y:0% op:1|per:60 sc:1.01 rot:-1 x:0% y:0% op:1|per:75 sc:0.99 rot:1 x:0% y:0% op:1|per:90 sc:1.01 rot:0 x:0% y:0% op:1|per:100 sc:1 rot:0 x:0% y:0% op:1',
 		'hatch'			: 'n:hatch d:2 e:easeInOut to:50%100% per:0 rot:0 scy:0.6|per:20 rot:-2 scy:1.05|per:35 rot:2 scy:1|per:50 rot:-2|per:65 rot:1|per:80 rot:-1|rot:100 rot:0',
-		'pulse' 		: 'n:pulse d:1.5 loop:-1 per:0 sc:0.9 op:0.7|per:50 sc:1 op:1|per:100 sc:0.9 op:0.7',
 		'floating'		: 'n:floating d:1.5 loop:-1 per:0 y:0%|per:50 y:8%|per:100 y:0%',
 		'tossing'		: 'n:tossing d:2.5 loop:-1 per:0 rot:-4|per:50 rot:4|per:100 rot:-4',
 		'pullUp'		: 'n:pullUp d:1.1 e:easeOut to:50%,100% per:0 scy:0.1|per:40 scy:1.02|per:60 scy:0.98|per:80 scy:1.01|per:100 scy:1',
 		'pullDown'		: 'n:pullDown d:1.1 e:easeOut to:50%,0% per:0 scy:0.1|per:40 scy:1.02|per:60 scy:0.98|per:80 scy:1.01|per:100 scy:1',
 		'stretchLeft'	: 'n:stretchLeft d:1.5 e:easeOut to:100%,0% per:0 scx:0.3|per:40 scx:1.02|per:60 scx:0.98|per:80 scx:1.01|per:100 scx:1',
 		'stretchRight'	: 'n:stretchRight d:1.5 e:easeOut to:0%,0% per:0 scx:0.3|per:40 scx:1.02|per:60 scx:0.98|per:80 scx:1.01|per:100 scx:1',
-		//https://daneden.github.io/animate.css/
+		'bounce2'		: 'n:bounce d:1.6 e:ease to:50%,100% per:0 y:0% scy:0.6|per:60 y:-100% scy:1.1|per:70 y:0% scy:0.95 scx:1.05|per:80 y:0% scy:1.05 scx:1|per:90 y:0% scy:0.95% scx:1|per:100 y:0% scy:1 scx:1',
+		'fadeIn2'		: 'n:fadeIn2 d:1.5 e:easeInOut per:0 sc:0 op:0|per:60 sc:1.1|per:80 sc:0.9 op:1|per:100 sc:1 op:1',
+		'pulse2' 		: 'n:pulse d:1.5 loop:-1 per:0 sc:0.9 op:0.7|per:50 sc:1 op:1|per:100 sc:0.9 op:0.7',
+		//Created by Daniel T. Eden for Animate.css & Nick Pettit for Glide
 		'bounce'		: 'n:bounce d:0.75 per:0%,20%,53%,80%,100% x:0 y:0 to:center,bottom e:easeOutCubic|per:40%,43% y:-30 e:easeInQuint|per:70% y:-15 e:easeInQuint|per:90% y:-4',
 		'flash'			: 'n:flash d:1 per:0%,50%100% op:1|per:25%,75% op:0',
 		'rubberBand'	: 'n:rubberBand d:1 per:0 scx:1 scy:1|per:30 scx:1.25 scy:0.75|per:40 scx:0.75 scy:1.25|per:50 scx:1.15 scy:0.85|per:65 scx:0.95 scy:1.05|per:75 scx:1.05 scy:0.95|per:100 scx:1 scy:1',
@@ -127,11 +135,66 @@ vii = (function(){
 		'zoomInLeft'	: 'n:zoomInLeft d:1 per:0 op:0 s3d:0.1,0.1,0.1 x:-1000 e:easeInCubic|per:60 op:1 s3d:0.475,0.475,0.475 x:10 e:easeOutBack',
 		'zoomInRight'	: 'n:zoomInRight d:1 per:0 op:0 s3d:0.1,0.1,0.1 x:1000 e:easeInCubic|per:60 op:1 s3d:0.475,0.475,0.475 x:-10 e:easeOutBack',
 		'zoomInUp'		: 'n:zoomInUp d:1 per:0 op:0 s3d:0.1,0.1,0.1 y:1000 e:easeInCubic|per:60 op:1 s3d:0.475,0.475,0.475 y:-60 e:easeOutBack',
-		//https://github.com/IanLunn/Hover/blob/master/css/hover.css
+		'zoomOut'		: 'n:zoomOut d:1 per:0 op:1|per:50 op:0 s3d:0.3,0.3,0.3|per:100 op:0',
+		'zoomOutDown'	: 'n:zoomOutDown d:1 per:40 op:1 s3d:0.475,0.475,0.475 y:-60 e:easeInCubic|per:100 op:0 s3d:0.1,0.1,0.1 y:2000 to:center,bottom e:easeOutBack',
+		'zoomOutLeft'	: 'n:zoomOutLeft d:1 per:40 op:1 s3d:0.475,0.475,0.475 x:42|per:100 op:0 sc:0.1 x:-2000 to:left,center',
+		'zoomOutRight'	: 'n:zoomOutRight d:1 per:40 op:1 s3d:0.475,0.475,0.475 x:-42|per:100 op:0 sc:0.1 x:2000 to:right,center',
+		'zoomOutUp' 	: 'n:zoomOutUp d:1 per:40 op:1 s3d:0.475,0.475,0.475 y:60 e:easeInCubic|per:100 op:0 s3d:0.1,0.1,0.1 y:-2000 to:center,bottom e:easeOutBack',
+		'slideInDown'	: 'n:slideInDown d:1 per:0 y:-100%|per:100 y:0%',
+		'slideInLeft'	: 'n:slideInLeft d:1 per:0 x:-100%|per:100 y:0%',
+		'slideInRight'	: 'n:slideInRight d:1 per:0 x:100%|per:100 y:0%',
+		'slideInUp'		: 'n:slideInUp d:1 per:0 y:100%|per:100 y:0%',
+		'slideOutDown'	: 'n:slideOutDown d:1 per:100 y:100%',
+		'slideOutLeft'	: 'n:slideOutLeft d:1 per:100 x:-100%',
+		'slideOutRight'	: 'n:slideOutRight d:1 per:100 x:100%',
+		'slideOutUp'	: 'n:slideOutUp d:1 per:100 y:-100%',
+		//Created by Ian Lunn for Hover.css
+		'pulse'			:'n:pulse d:1 e:linear loop:-1 backfaceVisibility:hidden per:25% sc:1.1|per:75% sc:0.9',
+		'pulseGrow'		:'n:pulseGrow d:1 e:linear loop:-1 backfaceVisibility:hidden per:100 sc:1.1',
+		'pulseShrink'	:'n:pulseShrink d:1 e:linear loop:-1 backfaceVisibility:hidden per:100 sc:0.9',
+		'push'			:'n:push d:1 backfaceVisibility:hidden e:linear per:50 sc:0.8|per:100 sc:1',
+		'pop'			:'n:pop d:1 backfaceVisibility:hidden e:linear per:50 sc:1.2',
+		'bounceIn2'		:'n:bounceIn2 d:0.5 backfaceVisibility:hidden per:100 sc:1.2 e:elastic',
+		'bounceOut2'	:'n:bounceOut2 d:0.5 backfaceVisibility:hidden per:100 sc:0.8 e:elastic',
+		'rotate'		:'n:rotate d:0.3 backfaceVisibility:hidden rot:4',
+		'floating2'		:'n:floating2 d:0.3 backfaceVisibility:hidden y:-8',
+		'sink'			:'n:sink d:0.3 backfaceVisibility:hidden y:8',
+		'bob'			:'n:bob d:1.5 backfaceVisibility:hidden loop:-1 per:0 y:-8|per:50 y:-4|per:100 y:-8',
 		'hang'			:'n:hang d:1.5 e:easeInOut fillMode:forwards direction:alternate loop:-1 backfaceVisibility:hidden per:0 y:8|per:50 y:4|per:100 y:8',
-
+		'skewForward'	:'n:skewForward d:0.3 backfaceVisibility:hidden sk:-10',
+		'skewBackward'	:'n:skewBackward d:0.3 backfaceVisibility:hidden sk:10',
+		'wobbleVertical':'n:wobbleVertical d:1 backfaceVisibility:hidden per:16.65% y:8|per:33.3% y:-6|per:49.95% y:4|per:66.6% y:-2|per:83.25% y:1|per:100 y:0',
+		'wobbleHorizontal':'n:wobbleHorizontal d:1 backfaceVisibility:hidden per:16.65% x:8|per:33.3% x:-6|per:49.95% x:4|per:66.6% x:-2|per:83.25% x:1|per:100 x:0',
+		'wobbleToBottomRight':'n:wobbleToBottomRight d:1 backfaceVisibility:hidden per:16.65% x:8 y:8|per:33.3% x:-6 y:-6|per:49.95% x:4 y:4|per:66.6% x:-2 y:-2|per:83.25% x:1 y:1|per:100 x:0 y:0',
+		'wobbleToTopRight':'n:wobbleToTopRight d:1 backfaceVisibility:hidden per:16.65% x:8 y:-8|per:33.3% x:-6 y:6|per:49.95% x:4 y:-4|per:66.6% x:-2 y:2|per:83.25% x:1 y:-1|per:100 x:0 y:0',
+		'wobbleTop'		:'n:wobbleTop d:1 backfaceVisibility:hidden per:16.65% to:0%,100% sk:-12|per:33.3% sk:10|per:49.95% sk:-6|per:66.6% sk:4|per:83.25% sk:-2|per:100 sk:0',
+		'wobbleBottom'	:'n:wobbleBottom d:1 backfaceVisibility:hidden per:16.65% to:100%,0% sk:-12|per:33.3% sk:10|per:49.95% sk:-6|per:66.6% sk:4|per:83.25% sk:-2|per:100 sk:0',
+		'wobbleSkew'	:'n:wobbleSkew d:1 backfaceVisibility:hidden per:16.65% sk:-12|per:33.3% sk:10|per:49.95% sk:-6|per:66.6% sk:4|per:83.25% sk:-2|per:100 sk:0',
+		'buzz'			:'n:buzz d:0.15 loop:-1 e:linear backfaceVisibility:hidden per:50 x:3 rot:2|per:100 x:-3 rot:-2',
+		'buzzOut'		:'n:buzzOut d:0.75 e:linear backfaceVisibility:hidden per:10%,30% x:3 rot:2|per:20%,40% x:-3 rot:-2|per:50%,70% x:2 rot:1|per:60%,80% x:-2 rot:-1|per:90 x:1 rot:0|per:100 x:-1 rot:0',
 		//https://github.com/miniMAC/magic/blob/master/magic.css
-		'magic'			:'n:magic d:1 per:0 to:100%,200% sc:1 rot:0 op:1|per:100 to:100%,500% sc:0 rot:270'
+		'magic'			:'n:magic d:1 per:0 to:100%,200% sc:1 rot:0 op:1|per:100 to:100%,500% sc:0 rot:270',
+		'openDownLeft'	:'n:openDownLeft d:1 per:0 to:lb rot:0 e:easeOut|per:100 to:lb rot:-110 e:easeInOut',
+		'openDownRight'	:'n:openDownRight d:1 per:0 to:lb rot:0 e:easeOut|per:100 to:lb rot:110 e:easeInOut',
+		'openUpLeft'	:'n:openUpLeft d:1 per:0 to:lt rot:0 e:easeOut|per:100 to:lt rot:110 e:easeInOut',
+		'openUpRight'	:'n:openDownRight d:1 per:0 to:lt rot:0 e:easeOut|per:100 to:lt rot:-110 e:easeInOut',
+		'openDownLeftRetourn':'n:openDownLeftRetourn d:1 per:0 to:lb rot:-110 e:easeInOut|per:100 to:lb rot:0 e:easeOut',
+		'openDownRightRetourn':'n:openDownRightRetourn d:1 per:0 to:rb rot:110 e:easeInOut|per:100 to:rb rot:0 e:easeOut',
+		'openUpLeftRetourn':'n:openUpLeftRetourn d:1 per:0 to:lt rot:110 e:easeInOut|per:100 to:lt rot:0 e:easeOut',
+		'openUpRightRetourn':'n:openUpRightRetourn d:1 per:0 to:rt rot:-110 e:easeInOut|per:100 to:rl rot:0 e:easeOut',
+		'openDownLeftOut':'n:openDownLeftOut d:1 per:0 to:lb rot:0 op:1 e:easeOut|per:100 to:lb rot:-110 op:0 e:easeInOut',
+		'openDownRightOut':'n:openDownRightOut d:1 per:0 op:1 to:rb rot:0 e:easeOut|per:100 op:0 to:rb rot:110 e:easeInOut',
+		'openUpLeftOut':'n:openUpLeftOut d:1 per:0 op:1 to:lt rot:0 e:easeOut|per:100 op:0 to:lt rot:110 e:easeInOut',
+		'openUpRightOut':'n:openUpRightOut d:1 per:0 op:1 to:rt rot:0 e:easeOut|per:100 op:0 to:rt rot:-110 e:easeInOut',
+		'perspectiveDown':'n:perspectiveDown d:1 per:0 to:0%,100% p3d:800 r3d:x,0|per:100 to:0%,100% p3d:800 r3d:x,-180',
+		'perspectiveLeft': 'n:perspectiveLeft d:1 per:0 to:0,0 p3d:800 r3d:y,0|per:100 to:0,0 p3d:800 r3d:y,-180',
+		'perspectiveRight':'n:perspectiveRight d:1 per:0 to:100%,0 p3d:800 r3d:y,0|per:100 to:100%,0 p3d:800 r3d:y,180',
+		'perspectiveUp':'n:perspectiveUp d:1 per:0 to:0,0 p3d:800 r3d:x,0|per:100 to:0,0 p3d:800 r3d:x,180',
+		'perspectiveDownRetourn':'n:perspectiveDownRetourn d:1 per:0 to:0,100% p3d:800 r3d:x,-180|per:100',
+		'perspectiveLeftRetourn':'n:perspectiveLeftRetourn d:1 per:0 to:0,0 p3d:800 r3d:y,-180|per:100 to:0,0 p3d:800 r3d:y,0',
+		'perspectiveRightRetourn':'n:perspectiveRightRetourn d:1 per:0 to:100%,0 r3d:y,180|per:100 to:100%,0 p3d:800 r3d:y,0',
+		'perspectiveUpRetourn':'n:perspectiveUpRetourn d:1 to:0,0 p3d:800 r3d:x,180|per:100 to:0,0 p3d:800 r3d:x,0',
+		
 
 
 	}
@@ -143,6 +206,7 @@ vii = (function(){
 	var propMap = {
 		'd'		:'duration',
 		'e'		:'animationTimingFunction',
+		'steps'	:'animationTimingFunction',
 		'dy'	:'delay',
 		'n'		:'name',
 		'w'		:'width',
@@ -163,6 +227,7 @@ vii = (function(){
 		'x' 	:'translateX',
 		'y' 	:'translateY',
 		'rot'	:'rotate',
+		'spin'	:'rotate',
 		'sk'	:'skew',
 		'sc'	:'scale',
 		'scx'	:'scaleX',
@@ -257,10 +322,27 @@ vii = (function(){
 			return v + '%';
 		},
 		'to' : function(v){
+			var map = {
+				'lb':'left bottom',
+				'lt':'left top',
+				'lc':'left center',
+				'rb':'right bottom',
+				'rt':'right top',
+				'rc':'right center',
+				'cc':'center center',
+				'cb':'center bottom',
+				'ct':'center top'
+			}
+			if(map[v]){
+				return map[v];
+			}
 			if(v.indexOf(',') != -1){
-				return v.split(',')[0] + ' ' + v.split(',')[1];
+				return v.replace(',',' ');
 			}
 			return v;
+		},
+		'steps' : function(v){
+			return 'steps(' + v + ')';
 		},
 		'none' : function(v){return v}
 	};
