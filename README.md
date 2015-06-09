@@ -1,7 +1,5 @@
 ##vii.js: create CSS3 animations using Javascript##
 
-
-----------
 Please be aware that vii.js is not a library you include in your projects.  Is a tool you use to generate CSS3 animation code.
 
 Therefore something like this:
