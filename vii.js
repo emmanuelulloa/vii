@@ -172,7 +172,7 @@ vii = (function(){
 		'wobbleSkew'	:'n:wobbleSkew d:1 backfaceVisibility:hidden kf:16.65% sk:-12|kf:33.3% sk:10|kf:49.95% sk:-6|kf:66.6% sk:4|kf:83.25% sk:-2|kf:100 sk:0',
 		'buzz'			:'n:buzz d:0.15 loop:-1 e:linear backfaceVisibility:hidden kf:50 x:3 rot:2|kf:100 x:-3 rot:-2',
 		'buzzOut'		:'n:buzzOut d:0.75 e:linear backfaceVisibility:hidden kf:10%,30% x:3 rot:2|kf:20%,40% x:-3 rot:-2|kf:50%,70% x:2 rot:1|kf:60%,80% x:-2 rot:-1|kf:90 x:1 rot:0|kf:100 x:-1 rot:0',
-		//https://github.com/miniMAC/magic/blob/master/magic.css
+		//CHRISTIAN PUCCI Magic Animations
 		'magic'			:'n:magic d:1 kf:0 to:100%,200% sc:1 rot:0 op:1|kf:100 to:100%,500% sc:0 rot:270',
 		'openDownLeft'	:'n:openDownLeft d:1 kf:0 to:lb rot:0 e:easeOut|kf:100 to:lb rot:-110 e:easeInOut',
 		'openDownRight'	:'n:openDownRight d:1 kf:0 to:lb rot:0 e:easeOut|kf:100 to:lb rot:110 e:easeInOut',
@@ -199,7 +199,7 @@ vii = (function(){
 		'rotateDown'	: 'n:rotateDown d:1 kf:0 op:1 to:0%,0% p3d:800 r3d:x,0 z:0|kf:100 op:0 to:50%,100% p3d:800 r3d:x,-180 z:300',
 		'rotateLeft'	: 'n:rotateLeft d:1 kf:0 op:1 to:0%,0% p3d:800 r3d:y,0 z:0|kf:100 op:0 to:50%,0% p3d:800 r3d:y,180 z:300',
 		'rotateRight'	: 'n:rotateRight d:1 kf:0 op:1 to:0%,0% p3d:800 r3d:y,0 z:0|kf:100 op:0 to:50%,0% p3d:800 r3d:y,-180 z:150',
-		'rotateUp'		: 'n:rotateUp d:1 kf:0 op:1 to:0%,0% p3d:800 r3d:x,0 z:0|kf:100 op:0 to:50%,0% p3d:800 r3d:x,180 z:0',
+		'rotateUp'		: 'n:rotateUp d:1 kf:0 op:1 to:0%,0% p3d:800 r3d:x,0 z:0|kf:100 op:0 to:0%,50% p3d:800 r3d:x,180 z:100',
 		'swap'			: 'n:swap d:1 kf:0 op:0 to:0%,100% sc:0 x:-700|kf:100 op:1 to:100%,100% sc:1 x:0',
 		'twisterInDown'	: 'n:twisterInDown d:1 kf:0%,30% op:0 to:0%,100% sc:0 rot:360 y:-100%|kf:100 to:100%,100% sc:1 rot:0 y:0',
 		'twisterInUp'	: 'n:twisterInUp d:1 kf:0%,30% op:0 to:0%,100% sc:0 rot:360 y:100%|kf:100 to:100%,100% sc:1 rot:0 y:0',
@@ -207,8 +207,40 @@ vii = (function(){
 		'vanishOut'		: 'n:vanishOut d:1 kf:0 op:1 to:50%,50% sc:1 bl:0|kf:100 op:0 to:50%,50% sc:2 bl:20',
 		'swashIn'		: 'n:swashIn d:1 kf:0 op:0 to:50%,50% sc:0|kf:90 op:1 to:50%,50% sc:0.9|kf:100 op:1 to:50%,50% sc:1',
 		'swashOut'		: 'n:swashOut d:1 kf:0 op:1 to:50%,50% sc:1|kf:80 op:1 to:50%,50% sc:0.9|kf:100 to:50%,50% sc:0',
-		
-
+		'foolishOut'	: 'n:foolishOut d:1 kf:0 op:1 to:50%,50% sc:1 rot:360|kf:20 op:1 to:0%,0% sc:0.5 rot:0|kf:40 op:1 to:100%,100% sc:0.5 rot:0|kf:60 op:1 to:0% sc:0.5 rot:0|kf:80 to:0%,100% sc:0.5 rot:0|kf:100 op:0 to:50%,50% sc:0 rot:0',
+		'foolishIn'		: 'n:foolishIn d:1 kf:0 op:0 to:50%,50% sc:0 rot:360|kf:20 op:1 to:0%,100% sc:0.5 rot:0|kf:40 op:1 to:100%,100% sc:0.5 rot:0|kf:60 op:1 to:0% sc:0.5 rot:0|kf:80 op:1 to:0%,0% sc:0.5 rot:0|kf:100 op:1 to:50%,50% sc:1 rot:0',
+		'holeOut'		: 'n:holeOut d:1 kf:0 op:1 to:50%,50% sc:1 r3d:y,0|kf:100 op:0 to:50%,50% sc:0 r3d:y,180',
+		'tinRightOut'	: 'n:tinRightOut d:1 kf:0%,20%,40%,50% op:1 sc:1 x:0|kf:10%,30% op:1 sc:1.1 x:0|kf:100 op:0 sc:1 x:900%',
+		'tinLeftOut'	: 'n:tinLeftOut d:1 kf:0%,20%,40%,50% op:1 sc:1 x:0|kf:10%,30% op:1 sc:1.1 x:0|kf:100 op:0 sc:1 x:-900%',
+		'tinUpOut'		: 'n:tinUpOut d:1 kf:0%,20%,40%,50% op:1 sc:1 y:0|kf:10%,30% op:1 sc:1.1 y:0|kf:100 op:0 sc:1 y:-900%',
+		'tinDownOut'	: 'n:tinDownOut d:1 kf:0%,20%,40%,50% op:1 sc:1 y:0|kf:10%,30% op:1 sc:1.1 y:0|kf:100 op:0 sc:1 y:900%',
+		'tinRightIn'	: 'n:tinRightIn d:1 kf:0 op:0 sc:1 x:900%|kf:50%,70%,90% op:1 sc:1.1 x:0|kf:60%,80%,100% op:1 sc:1 x:0',
+		'tinLeftIn'		: 'n:tinLeftIn d:1 kf:0 op:0 sc:1 x:-900%|kf:50%,70%,90% op:1 sc:1.1 x:0|kf:60%,80%,100% op:1 sc:1 x:0',
+		'tinUpIn'		: 'n:tinUpIn d:1 kf:0 op:0 sc:1 y:-900%|kf:50%,70%,90% op:1 sc:1.1 y:0|kf:60%,80%,100% op:1 sc:1 y:0',
+		'tinDownIn'		: 'n:tinDownIn d:1 kf:0 op:0 sc:1 y:900%|kf:50%,70%,90% op:1 sc:1.1 y:0|kf:60%,80%,100% op:1 sc:1 y:0',
+		'bombRightOut'	: 'n:bombRightOut d:1 kf:0 op:1 to:50%,50% rot:0 bl:0|kf:50 op:1 to:200%,50% rot:160 bl:0|kf:100 op:0 to:200%,50% rot:160 bl:20',
+		'bombLeftOut'	: 'n:bombLeftOut d:1 kf:0 op:1 to:50%,50% rot:0 bl:0|kf:50 op:1 to:-100%,50% rot:-160 bl:0|kf:100 op:0 to:-100%,50% rot:-160 bl:20',
+		'boingInUp'		: 'n:boingInUp d:1 kf:0 to:50%,0% p3d:800 r3d:x,-90|kf:50 to:50%,0% p3d:800 r3d:x,50|kf:100 op:1 to:50%,0% p3d:800 r3d:x,0',
+		'boingOutDown'	: 'n:boingOutDown d:1 kf:0 to:100%,100% p3d:800 r3d:y,0|kf:20 op:1 to:100%,100% p3d:800 r3d:y,10|kf:30 op:1 to:0%,100% p3d:800 r3d:y,0|kf:40 op:1 to:0%100% p3d:800 r3d:xy,10|kf:100 op:0 to:100%,100% p3d:800 r3d:x,90',
+		'spaceOutUp'	: 'n:spaceOutUp d:1 kf:0 op:1 to:50%,0% sc:1 y:0%|kf:100 op:0 to:50%,0% sc:0.2 y:-200%',
+		'spaceOutRight'	: 'n:spaceOutRight d:1 kf:0 op:1 to:100%,50% sc:1 x:0%|kf:100 op:0 to:100%,50% sc:0.2 x:200%',
+		'spaceOutDown'	: 'n:spaceOutDown d:1 kf:0 op:1 to:50%,100% sc:1 y:0%|kf:100 op:0 to:50%,100% sc:0.2 y:200%',
+		'spaceOutLeft'	: 'n:spaceOutLeft d:1 kf:0 op:1 to:0%,50% sc:1 x:0%|kf:100 op:0 to:0%,50% sc:0.2 x:-200%',
+		'spaceInUp'		: 'n:spaceInUp d:1 kf:0 op:0 to:50%,0% sc:0.2 y:-200%|kf:100 op:1 to:50%,0% sc:1 y:0%',
+		'spaceInRight'	: 'n:spaceInRight d:1 kf:0 op:0 to:100%,50% sc:0.2 x:200%|kf:100 op:1 to:100%,50% sc:1 x:0%',
+		'spaceInDown'	: 'n:spaceInDown d:1 kf:0 op:0 to:50%,100% sc:0.2 y:200%|kf:100 op:1 to:50%,100% sc:1 y:0%',
+		'spaceInLeft'	: 'n:spaceInLeft d:1 kf:0 op:0 to:0%,50% sc:0.2 x:-200%|kf:100 op:1 to:0%,50% sc:1 x:0%',
+		//Adem Ilter liffect animations
+		'pageTop'		: 'n:pageTop d:600ms e:ease fm:both kf:0 op:0 to:ct p3d:400 r3d:x,90|kf:100 op:1 to:ct p3d:400 r3d:x,0',
+		'pageTopBack'	: 'n:pageTopBack d:600ms e:ease fm:both kf:0 op:0 to:ct p3d:400 r3d:x,-90|kf:100 op:1 to:ct p3d:400 r3d:x,0',
+		'pageRight'		: 'n:pageRight d:600ms e:ease fm:both kf:0 op:0 to:rc p3d:400 r3d:y,90|kf:100 op:1 to:rc p3d:400 r3d:y,0',
+		'pageRightBack'	: 'n:pageRightBack d:600ms e:ease fm:both kf:0 op:0 to:rc p3d:400 r3d:y,-90|kf:100 op:1 to:rc p3d:400 r3d:y,0',
+		'pageBottom'	: 'n:pageBottom d:600ms e:ease fm:both kf:0 op:0 to:ct p3d:400 r3d:x,90|kf:100 op:1 to:ct p3d:400 r3d:x,0',
+		'pageBottomBack': 'n:pageBottomBack d:600ms e:ease fm:both kf:0 op:0 to:ct p3d:400 r3d:x,-90|kf:100 op:1 to:ct p3d:400 r3d:x,0',
+		'pageLeft'		: 'n:pageLeft d:600ms e:ease fm:both kf:0 op:0 to:lc p3d:400 r3d:y,90|kf:100 op:1 to:lc p3d:400 r3d:y,0',
+		'pageLeftBack'	: 'n:pageLeftBack d:600ms e:ease fm:both kf:0 op:0 to:lc p3d:400 r3d:y,-90|kf:100 op:1 to:lc p3d:400 r3d:y,0',
+		'flip2'			: 'n:flip2 d:600ms fm:both kf:0 to:cc e:ease op:0 p3d:500 r3d:y,0 e:easeOut|kf:40 p3d:500 z:150 r3d:y,170 e:easeOut|kf:50 p3d:500 z:150 r3d:y,190 sc:1 e:easeIn|kf:80 p3d:500 r3d:y,360 sc:0.95 e:easeIn|kf:100 op:1 p3d:500 sc:1 e:easeIn',
+		'galaxyIn'		: 'n:galaxyIn d:600ms fm:both kf:0 to:cc e:easeOut op:0 p3d:200 sc:3 y:180 r3d:x,80|kf:80 op:1 p3d:200 sc:1 r3d:x,60|kf:100 op:1 p3d:200 sc:1 r3d:x0'
 
 	}
 	//check if a property is a configuration property or css property
@@ -261,7 +293,8 @@ vii = (function(){
 		'inv'	:'invert',
 		'sat'	:'saturate',
 		'dp'	:'dropShadow',
-		'kf' 	:'percent'
+		'kf' 	:'percent',
+		'fm'	:'fillMode'
 	};
 	//a data map to format properties
 	var formatMap = {
@@ -310,12 +343,12 @@ vii = (function(){
 			var raw = v.split(',');
 			var axis = raw[0];
 			var map = {
-				'x':'1,0,0,',
-				'y':'0,1,0,',
-				'z':'0,0,1,',
-				'xy':'1,1,0,',
-				'xz':'1,0,1,',
-				'yz':'0,1,1,',
+				'x'  :'1,0,0,',
+				'y'  :'0,1,0,',
+				'z'  :'0,0,1,',
+				'xy' :'1,1,0,',
+				'xz' :'1,0,1,',
+				'yz' :'0,1,1,',
 				'xyz':'1,1,1,'
 			}
 			return 'rotate3d(' + map[axis] + raw[1] + 'deg) ';
@@ -408,7 +441,7 @@ vii = (function(){
 	formatMap['x'] = formatMap['y'] = formatMap.trans;
 	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['numberPX'];
 	formatMap['bg'] = formatMap['bgc'] = formatMap['c'] = formatMap['color'];
-	formatMap.d = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap['none'];
+	formatMap.d = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap.fm = formatMap['none'];
 	function cleanWhiteSpace(s){
 		return s.replace(/\s\s+/g, ' ');
 	}
@@ -416,6 +449,7 @@ vii = (function(){
 		return s.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 	}
 	//receives an object or spring and parse and reads its data
+	var global = {};
 	function parse(val){
 		var fr = [];
 		if(typeof val === 'string'){
@@ -461,6 +495,31 @@ vii = (function(){
 			//clean transforms
 			if('translateX' in o || 'translateY' in o || 'translateZ' in o || 'rotate' in o || 'skew' in o || 'scale' in o || 'scaleX' in o || 'scaleY' in o || 'perspective' in o || 'scale3d' in o || 'translate3d' in o || 'rotate3d' in o){
 				o['transform'] = '';
+				if('perspective' in o){
+					o['transform'] += o['perspective'];
+					global.has3D = true;
+					delete o['perspective'];
+				}
+				if('translate3d' in o){
+					o['transform'] += o['translate3d'];
+					global.has3D = true;
+					delete o['translate3d'];
+				}
+				if('scale3d' in o){
+					o['transform'] += o['scale3d'];
+					global.has3D = true;
+					delete o['scale3d'];
+				}
+				if('rotate3d' in o){
+					o['transform'] += o['rotate3d'];
+					global.has3D = true;
+					delete o['rotate3d'];
+				}
+				if('translateZ' in o){
+					o['transform'] += o['translateZ'];
+					global.has3D = true;
+					delete o['translateZ'];
+				}
 				if('translateX' in o && 'translateY' in o){
 					o['transform'] += 'translate('+ o['translateX'] + ', ' + o['translateY'] + ') ' ;
 					delete o['translateX'];
@@ -474,10 +533,6 @@ vii = (function(){
 						o['transform'] += 'translateY(' + o['translateY'] + ') ';
 						delete o['translateY'];
 					}				
-				}
-				if('translateZ' in o){
-					o['transform'] += o['translateZ'];
-					delete o['translateZ'];
 				}
 				if('scaleX' in o){
 					o['transform'] += o['scaleX'];
@@ -498,22 +553,6 @@ vii = (function(){
 				if('skew' in o){
 					o['transform'] += o['skew'];
 					delete o['skew'];
-				}
-				if('perspective' in o){
-					o['transform'] += o['perspective'];
-					delete o['perspective'];
-				}
-				if('translate3d' in o){
-					o['transform'] += o['translate3d'];
-					delete o['translate3d'];
-				}
-				if('scale3d' in o){
-					o['transform'] += o['scale3d'];
-					delete o['scale3d'];
-				}
-				if('rotate3d' in o){
-					o['transform'] += o['rotate3d'];
-					delete o['rotate3d'];
 				}
 			}
 			//clean filters
@@ -594,16 +633,21 @@ vii = (function(){
 			_k = 'keyframes ',
 			_w = '-webkit-',
 			prefix = ['',_w];
-		d += 's';
-		dy += 's';
-		hacks += _t + '/*enable hardware acceleration*/' + _n;
-		hacks += _t + 'transform:translateZ(0)' + _e + _n;
-		hacks += _t + _w + 'transform:translateZ(0)' + _e + _n + _n;
+		d += d.indexOf('s') == -1? 's':'';
+		dy += dy.indexOf('s') == -1? 's':'';
+		if(!global.has3D){
+			hacks += _t + '/*enable hardware acceleration*/' + _n;
+			hacks += _t + 'transform:translateZ(0)' + _e + _n;
+			hacks += _t + _w + 'transform:translateZ(0)' + _e + _n + _n;	
+		}
 		hacks += _t + '/*improve anti-alias*/'  + _n;
 		hacks += _t + 'box-shadow: 0 0 1px rgba(0, 0, 0, 0)' + _e + _n + _n;
 		hacks += _t + '/*font smoothing*/'  + _n;
-		hacks += _t + 'backface-visibility: hidden' + _e + _n;
-		hacks += _t + _w + 'backface-visibility: hidden' + _e + _n;
+		if(!global.has3D){
+			hacks += _t + 'backface-visibility: hidden' + _e + _n;
+			hacks += _t + _w + 'backface-visibility: hidden' + _e + _n;	
+			global.has3D = false;
+		}
 		hacks += _t + '-moz-osx-font-smoothing: grayscale' + _e + _n + _n;
 		if(l == '-1'){
 			l = 'infinite';
@@ -628,7 +672,7 @@ vii = (function(){
 						}else if(k === 'backfaceVisibility'){
 							t += _t + _t + prefix[px] + 'backface-visibility: ' + prop[k] + _e + _n;
 						}else if(k === 'filter'){
-							t += _t + _t + prefix[px] + 'filter: ' + prop[k] + _e + _n;
+							t += _t + _t + _w + 'filter: ' + prop[k] + _e + _n;
 						}
 					}
 					t += _t + _x + _n;
@@ -650,7 +694,7 @@ vii = (function(){
 							}else if(k === 'backfaceVisibility'){
 								t += _t + _t + prefix[px] + 'backface-visibility: ' + frames[i][k] + _e + _n;
 							}else if(k === 'filter'){
-								t += _t + _t + prefix[px] + 'filter: ' + frames[i][k] + _e + _n;
+								t += _t + _t + _w + 'filter: ' + frames[i][k] + _e + _n;
 							}
 						}
 						t += _t + _x + _n;	
@@ -717,7 +761,7 @@ vii = (function(){
 						t += _s + 'backface-visibility ' + _s + d + _s + ceaser[e] + _s + dy + ',';
 						t += _s + _w +'backface-visibility ' + _s + d + _s + ceaser[e] + _s + dy + ',';
 					}else if(k === 'filter'){
-						t += _s + 'filter ' + _s + d + _s + ceaser[e] + _s + dy + ',';
+						//t += _s + 'filter ' + _s + d + _s + ceaser[e] + _s + dy + ',';
 						t += _s + _w +'filter ' + _s + d + _s + ceaser[e] + _s + dy + ',';
 					}
 				}	
@@ -746,7 +790,7 @@ vii = (function(){
 					t += _t + _t + 'backface-visibility: ' + prop[k] + _e + _n;
 					t += _t + _t + _w +'backface-visibility: ' + prop[k] + _e + _n;
 				}else if(k === 'filter'){
-					t += _t + _t + 'filter: ' + prop[k] + _e + _n;
+					//t += _t + _t + 'filter: ' + prop[k] + _e + _n;
 					t += _t + _t + _w +'filter: ' + prop[k] + _e + _n;
 				}
 			}
