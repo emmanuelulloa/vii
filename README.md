@@ -242,6 +242,13 @@ Keyframed and interactive transitions use animations in back. Use the methods kt
 
 While I improve the documentation and create tutorials my recommendation for you is to go into the vii.js code and read it.  Specially testing the pre-made animations will teach you how the string command compiles to the actual output
 
+## TODO ##
+* Improve overall documentation
+* Implement better and simpler 3D transform methods (rotateX,rotateY,etc).
+* Implement reverse keyframes order
+* Implement joined animations
+* Implement tweened animations
+
   [1]: https://daneden.github.io/animate.css/
   [2]: http://www.justinaguilar.com/animations/
   [3]: http://ianlunn.github.io/Hover/
