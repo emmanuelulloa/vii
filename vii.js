@@ -245,7 +245,7 @@ vii = (function(){
 	}
 	//check if a property is a configuration property or css property
 	function isCSS(prop){	
-		return (('isTransition name duration loop ease delay fillMode useAll percent transform useLongForm transformOrigin direction animationTimingFunction animationPlayState play animationIterationCount backfaceVisibility filter').indexOf(prop) === -1);
+		return (('isTransition name duration loop ease delay fillMode useAll percent transform useLongForm useHacks transformOrigin direction animationTimingFunction animationPlayState play animationIterationCount backfaceVisibility filter').indexOf(prop) === -1);
 	}
 	//a data map to shorcut words so tweens can be created Emmet style
 	var propMap = {
@@ -597,7 +597,7 @@ vii = (function(){
 			}
 			//check if percentage is present
 			if(!o.percent){
-				o.percent = Math.round(i + 1/(fr.length) * 100) + '%';
+				o.percent = (i == 0)?'0%':(i == fr.length - 1)?'100%':(Math.floor(i/(fr.length-1) * 100)) + '%';
 			}
 			frames.push(o);
 		}
@@ -619,6 +619,7 @@ vii = (function(){
 			isPlaying = prop.play || prop.animationPlayState || 'running',
 			useAll = prop.useAll || false,
 			useLongForm = prop.useLongForm || true,
+			useHacks = prop.useHacks || false,
 			hacks = '',
 			t = '',
 			s = '',
@@ -635,20 +636,22 @@ vii = (function(){
 			prefix = ['',_w];
 		d += d.indexOf('s') == -1? 's':'';
 		dy += dy.indexOf('s') == -1? 's':'';
-		if(!global.has3D){
-			hacks += _t + '/*enable hardware acceleration*/' + _n;
-			hacks += _t + 'transform:translateZ(0)' + _e + _n;
-			hacks += _t + _w + 'transform:translateZ(0)' + _e + _n + _n;	
+		if(useHacks){
+			if(!global.has3D){
+				hacks += _t + '/*enable hardware acceleration*/' + _n;
+				hacks += _t + 'transform:translateZ(0)' + _e + _n;
+				hacks += _t + _w + 'transform:translateZ(0)' + _e + _n + _n;	
+			}
+			hacks += _t + '/*improve anti-alias*/'  + _n;
+			hacks += _t + 'box-shadow: 0 0 1px rgba(0, 0, 0, 0)' + _e + _n + _n;
+			hacks += _t + '/*font smoothing*/'  + _n;
+			if(!global.has3D){
+				hacks += _t + 'backface-visibility: hidden' + _e + _n;
+				hacks += _t + _w + 'backface-visibility: hidden' + _e + _n;	
+				global.has3D = false;
+			}
+			hacks += _t + '-moz-osx-font-smoothing: grayscale' + _e + _n + _n;	
 		}
-		hacks += _t + '/*improve anti-alias*/'  + _n;
-		hacks += _t + 'box-shadow: 0 0 1px rgba(0, 0, 0, 0)' + _e + _n + _n;
-		hacks += _t + '/*font smoothing*/'  + _n;
-		if(!global.has3D){
-			hacks += _t + 'backface-visibility: hidden' + _e + _n;
-			hacks += _t + _w + 'backface-visibility: hidden' + _e + _n;	
-			global.has3D = false;
-		}
-		hacks += _t + '-moz-osx-font-smoothing: grayscale' + _e + _n + _n;
 		if(l == '-1'){
 			l = 'infinite';
 		}
