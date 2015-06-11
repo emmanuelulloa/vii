@@ -619,7 +619,7 @@ vii = (function(){
 			isPlaying = prop.play || prop.animationPlayState || 'running',
 			useAll = prop.useAll || false,
 			useLongForm = prop.useLongForm || true,
-			useHacks = prop.useHacks || false,
+			useHacks = Boolean(prop.useHacks) || false,
 			hacks = '',
 			t = '',
 			s = '',
@@ -848,6 +848,7 @@ vii = (function(){
 		getTransition : getTransition,
 		applyTransition : applyTransition,
 		getKeyframedTransition: getKeyframedTransition,
-		getInteractiveTransition: getInteractiveTransition
+		getInteractiveTransition: getInteractiveTransition,
+		getPreMade: function(){return preMade}
 	}
 })();
