@@ -369,9 +369,9 @@ vii = (function(){
 			return v;
 		},
 		'color' : function(v){
-			if(v.indexOf('#') == -1){
+			/*if(v.indexOf('#') == -1){
 				return '#' + v;
-			}
+			}*/
 			return v;
 		},
 		'trans' : function(v){
@@ -614,7 +614,7 @@ vii = (function(){
 			e = prop.animationTimingFunction || prop.ease || easing || 'ease',
 			ad = prop.direction || 'normal',
 			dy = prop.delay || '0',
-			fm = prop.fillMode || (parseInt(dy) !== 0)?'both':'forwards',
+			fm = prop.fillMode || (parseFloat(dy) !== 0)?'both':'forwards',
 			p = prop.percent || 'to',
 			isPlaying = prop.play || prop.animationPlayState || 'running',
 			useAll = prop.useAll || false,
@@ -661,6 +661,7 @@ vii = (function(){
 			var fQty = frames.length;
 			for(var px=0; px < prefix.length; px++){
 				if(fQty == 1){
+					p = (p != '0%')?p:'to';
 					t += '@' + prefix[px] + _k + n + _s + _o + _n;
 					t += _t + p + _s + _o + _n;
 					for(var k in prop){

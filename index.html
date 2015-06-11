@@ -3,14 +3,306 @@
 <head>
 	<meta charset="UTF-8">
 	<title>viii sample</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script type="text/javascript" src="vii.js"></script>
+	<style type="text/css">
+	body{
+		background: whitesmoke;
+		font-family: Helvetica, Verdana, sans-serif;
+  		font-size: 17px/24px;
+  		color: #555555;
+  		padding: 10px 2% 0 2%;
+  		margin: 0;
+  		transform-style: preserve-3d;
+		-webkit-transform-style: preserve-3d;
+	}
+	h1, h2, h3, ul, p{
+		font-size: 100%;
+		margin: 0;
+		line-height: 1.2em;
+	}
+	h1 {
+		padding-bottom: 10px;
+		font-size: 200%;
+	}
+	h2 {
+		padding-bottom: 10px;
+		font-size: 150%;
+	}
+	h3 {
+		padding-bottom: 8px;
+		font-size: 110%;
+	}
+	p{
+		padding-bottom: 8px;
+	}
+	h1{
+		border-bottom: 1px solid lightgray;
+		padding-bottom: 10px;
+		width: 90%;
+	}
+	select, input, textarea{
+		font-size: 125%;
+		margin-bottom: 3px;
+		outline:0;
+	}
+	.vii {
+		font-family: "Courier New", Courier, monospace;
+	}
+	.viiLogo{
+		background-color:deeppink;
+		color:white;
+		font-weight: bold;
+		border-radius:10px;
+		-webkit-border-radius:10px;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.viiFoo {
+		background: lightgray;
+		border:1px solid lightgray;
+		color:#555555;
+		padding:5px;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+	}
+	.viiString {
+		background:#555;
+		border:none;
+		min-width: 320px;
+		width: 50%;
+		color:lightcyan;
+		font-weight: normal;
+		text-align: center;
+		padding: 5px;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		transition: all 0.6s ease 0s;
+		-webkit-transition: all 0.6s ease 0s;
+	}
+	.viiString:hover, .viiString:focus, .viiString:active {
+		font-weight: bold;
+		background-color : dodgerblue;
+		color : white;
+	}
+	.viiCode {
+		background:white;
+		border:none;
+		width: 90%;
+		height: 260px;
+		color:#555;
+		text-align: left;
+		padding: 5px;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border: 1px solid lightgray;
+	}
+
+	/*ANIMATIONS*/
+	/*vii.k('n:titleIn d:0.6 dy:0.3 e:swing to:ct op:0 sc:3|op:1 transform:none');*/
+@keyframes titleIn {
+	from {
+		animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+		transform-origin: center top;
+		opacity : 0;
+		transform: scale(3) ;
+	}
+	to {
+		opacity : 1;
+		transform: none;
+	}
+}
+@-webkit-keyframes titleIn {
+	from {
+		-webkit-animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+		-webkit-transform-origin: center top;
+		opacity : 0;
+		-webkit-transform: scale(3) ;
+	}
+	to {
+		opacity : 1;
+		-webkit-transform: none;
+	}
+}
+.titleIn{
+	animation-name: titleIn;
+	animation-duration: 0.6s;
+	animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+	animation-delay: 0.3s;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-fill-mode: both;
+	animation-play-state: running;
+	-webkit-animation-name: titleIn;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+	-webkit-animation-delay: 0.3s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-direction: normal;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-play-state: running;
+}
+/*vii.k('n:instructionsIn d:0.6 dy:1 e:swing to:ct op:0 sc:0.3|op:1 transform:none');*/
+@keyframes instructionsIn {
+	from {
+		animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+		transform-origin: center top;
+		opacity : 0;
+		transform: scale(0.3) ;
+	}
+	to {
+		opacity : 1;
+		transform: none;
+	}
+}
+@-webkit-keyframes instructionsIn {
+	from {
+		-webkit-animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+		-webkit-transform-origin: center top;
+		opacity : 0;
+		-webkit-transform: scale(0.3) ;
+	}
+	to {
+		opacity : 1;
+		-webkit-transform: none;
+	}
+}
+.instructionsIn{
+	animation-name: instructionsIn;
+	animation-duration: 0.6s;
+	animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+	animation-delay: 1s;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-fill-mode: both;
+	animation-play-state: running;
+	-webkit-animation-name: instructionsIn;
+	-webkit-animation-duration: 0.6s;
+	-webkit-animation-timing-function: cubic-bezier(.175, .885,.32,1.275);
+	-webkit-animation-delay: 1s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-direction: normal;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-play-state: running;
+}
+/*vii.t('n:viiButton d:500ms e:spring bgc:deeppink c:white sc:1.5 x:35 y:5 rot:-5 to:cc');*/
+.viiButton {
+	font-size: 20px;
+	vertical-align:middle;
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	background-color : dodgerblue;
+	color : white;
+	transform: scale(1) ;
+	-webkit-transform: scale(1) ;
+	transform-origin: center center;
+	-webkit-transform-origin: center center;
+	border:none;
+	border-bottom: 3px solid blue;
+	cursor: pointer;
+	padding-left: 10px;
+	padding-right: 10px;
+	transition: all 500ms cubic-bezier(.25,2,.75,.5) 0s;
+	-webkit-transition: all 500ms cubic-bezier(.25,2,.75,.5) 0s;
+}
+.viiButton:hover, .viiButton:focus, .viiButton:active {
+	border-bottom: 3px solid crimson;
+	background-color : deeppink;
+	color : white;
+		transform-origin: center center;
+		-webkit-transform-origin: center center;
+		transform: translate(35px, 5px) scale(1.5) rotate(-5deg) ;
+		-webkit-transform: translate(35px, 5px) scale(1.5) rotate(-5deg) ;
+}
+/*vii.it('n:buzz d:0.15 loop:-1 e:linear backfaceVisibility:hidden kf:50 x:3 rot:2|kf:100 x:-3 rot:-2')*/
+@keyframes buzz {
+	50% {
+		animation-timing-function: linear;
+		backface-visibility: hidden;
+		transform: translateX(3px) rotate(2deg) ;
+	}
+	to {
+		transform: translateX(-3px) rotate(-2deg) ;
+	}
+}
+@-webkit-keyframes buzz {
+	50% {
+		-webkit-animation-timing-function: linear;
+		-webkit-backface-visibility: hidden;
+		-webkit-transform: translateX(3px) rotate(2deg) ;
+	}
+	to {
+		-webkit-transform: translateX(-3px) rotate(-2deg) ;
+	}
+}
+.buzz{
+	animation-name: buzz;
+	animation-duration: 0.15s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: infinite;
+	animation-direction: normal;
+	animation-fill-mode: forwards;
+	animation-play-state: paused;
+	-webkit-animation-name: buzz;
+	-webkit-animation-duration: 0.15s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-play-state: paused;
+}
+.buzz:hover, .buzz:focus, .buzz:active {
+	animation-play-state: running;
+	-webkit-animation-play-state: running;
+}
+	</style>
 </head>
 <body>
-	<h1>vii Instructions</h1>
+	<h1 class="titleIn"><span class="vii viiLogo buzz">vii</span>: the css3 animation generator</h1>
+	<div class="instructionsIn">
+	<h2>Instructions</h2>
+	<h3>1) Type your commands:</h3>
+	<form>
+		<p>
+			<span class="vii"><strong>vii.
+			<select name="foo" id="foo" class="vii viiFoo">
+				<option value="k">k</option>
+				<option value="t">t</option>
+				<option value="kt">kt</option>
+				<option value="it">it</option>
+			</select>
+			('<input type="text" class="vii viiString" value="n:myTween d:1 e:ease x:100% rot:180" id="command_txt">')</strong></span>
+			<button class="viiButton" id="generate_btn">GENERATE</button>
+		</p>
+		<p>
+			Load a pre-made animation:
+			<select class="vii viiFoo">
+				<option>premade</option>
+			</select>
+			<button class="viiButton">load</button>
+		</p>
+		<textarea class="vii viiCode" id="code_txt"></textarea>
+	</form>
+	<h3>2) Quick mode:</h3>
 	<ul>
 		<li>Open your browser console.</li>
 		<li>Type commands using vii.k('') for keyframes, vii.t('') for transitions, vii.kt('') for keyframed transitions and vii.it('') for interactive transitions.</li>
 		<li>Copy the generated code into a .css file.</li>
 	</ul>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			var $generate_btn = $('#generate_btn'),
+				$command_txt = $('#command_txt'),
+				$code_txt = $('#code_txt');
+			$generate_btn.click(function(event){
+				$code_txt.val(vii.k($command_txt.val()));
+				event.preventDefault();
+			})
+		})
+	</script>
 </body>
 </html>
