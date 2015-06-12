@@ -255,14 +255,14 @@
 		color : white;
 	}
 	.viiCode {
-		background: #feffe8; /* Old browsers */
-		background: -moz-radial-gradient(center, ellipse cover,  #feffe8 0%, #d6d6d6 100%); /* FF3.6+ */
-		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#feffe8), color-stop(100%,#d6d6d6)); /* Chrome,Safari4+ */
-		background: -webkit-radial-gradient(center, ellipse cover,  #feffe8 0%,#d6d6d6 100%); /* Chrome10+,Safari5.1+ */
-		background: -o-radial-gradient(center, ellipse cover,  #feffe8 0%,#d6d6d6 100%); /* Opera 12+ */
-		background: -ms-radial-gradient(center, ellipse cover,  #feffe8 0%,#d6d6d6 100%); /* IE10+ */
-		background: radial-gradient(ellipse at center,  #feffe8 0%,#d6d6d6 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffe8', endColorstr='#d6d6d6',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+		background: #ffffff; /* Old browsers */
+		background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
+		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
+		background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Chrome10+,Safari5.1+ */
+		background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 12+ */
+		background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
+		background: radial-gradient(ellipse at center,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 		border:none;
 		max-width: 1280px;
 		width: 90%;
@@ -277,7 +277,8 @@
 	}
 /*vii.t('n:viiButton d:500ms e:spring bgc:deeppink c:white sc:1.5 x:35 y:5 rot:-5 to:cc');*/
 .viiButton {
-	font-size: 20px;
+	font-size: 110%;
+	font-weight: bold;
 	vertical-align:middle;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -290,19 +291,24 @@
 	border:none;
 	border-bottom: 3px solid blue;
 	cursor: pointer;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding: 10px 10px 0 10px;
 	transition: all 500ms cubic-bezier(.25,2,.75,.5) 0s;
 	-webkit-transition: all 500ms cubic-bezier(.25,2,.75,.5) 0s;
+	display: inline-block;
+	text-decoration: none;
+	text-align: center;
+	vertical-align: middle;
+	height: 30px;
 }
 .viiButton:hover, .viiButton:focus, .viiButton:active {
 	border-bottom: 3px solid crimson;
 	background-color : deeppink;
 	color : white;
-		transform-origin: center center;
-		-webkit-transform-origin: center center;
-		transform: translate(35px, 5px) scale(1.5) rotate(-5deg) ;
-		-webkit-transform: translate(35px, 5px) scale(1.5) rotate(-5deg) ;
+	transform-origin: center center;
+	-webkit-transform-origin: center center;
+	transform: scale(1.2) ;
+	-webkit-transform: scale(1.2) ;
+	outline: 0;
 }
 @keyframes loaded {
 	0% {
@@ -416,7 +422,7 @@
 </head>
 <body>
 	<div class="header">
-		<h1><span class="vii logo">vii</span>: the css3 animation generator</h1>
+		<h1><span class="vii logo">vii</span>: The css3 Animation Generator</h1>
 	</div>
 	<div class="content">
 	<h2>Instructions</h2>
@@ -431,7 +437,7 @@
 				<option value="it">it</option>
 			</select>
 			('<input type="text" class="vii viiString" value="n:myTween d:1 e:ease x:100% rot:180" id="command_txt">')</strong></span>
-			<button class="viiButton" id="generate_btn">GENERATE</button>
+			<a href="#" class="viiButton" id="generate_btn">GENERATE</a>
 		</p>
 		<p>
 			Load a pre-made animation:
@@ -471,12 +477,20 @@
 			$generate_btn.click(function(event){
 				generateCode();
 				event.preventDefault();
+				return false;
 			});
 			var preMade = vii.getPreMade(),
 				$preMade_sl = $('#preMade_sl');
 			for(var k in preMade){
 				$preMade_sl.append($('<option />').val(preMade[k]).text(k));
 			}
+			var $options = $('#preMade_sl option');
+			var arr = $options.map(function(_, o) { return { t: $(o).text(), v: o.value }; }).get();
+			arr.sort(function(o1, o2) { return o1.t > o2.t ? 1 : o1.t < o2.t ? -1 : 0; });
+			$options.each(function(i, o) {
+			  o.value = arr[i].v;
+			  $(o).text(arr[i].t);
+			});
 			$preMade_sl.change(function(event){
 				$command_txt.val($preMade_sl.val());
 				generateCode();
