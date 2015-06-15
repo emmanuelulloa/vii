@@ -254,6 +254,7 @@ vii = (function(){
 		'dir'	:'direction',
 		'e'		:'animationTimingFunction',
 		'steps'	:'animationTimingFunction',
+		'fps'	:'duration',
 		'dy'	:'delay',
 		'n'		:'name',
 		'w'		:'width',
@@ -474,6 +475,13 @@ vii = (function(){
 		},
 		'steps' : function(v){
 			return 'steps(' + v + ')';
+		},
+		'fps' : function(v){
+			if(v.indexOf(',') != -1){
+				var raw = v.split(',');
+				return ((parseInt(raw[0])/1000) * parseInt(raw[1])).toFixed(1) + 's';
+			}
+			return v;
 		},
 		'none' : function(v){return v}
 	};
@@ -722,7 +730,9 @@ vii = (function(){
 						}else if(k === 'transformOrigin'){
 							t += _t + _t + prefix[px] + 'transform-origin: ' + prop[k] + _e + _n;
 						}else if(k === 'animationTimingFunction'){
-							t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[prop[k]]?ceaser[prop[k]]:prop[k]) + _e + _n;
+							if(prop[k].indexOf('steps') === -1){
+								t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[prop[k]]?ceaser[prop[k]]:prop[k]) + _e + _n;
+							}
 						}else if(k === 'backfaceVisibility'){
 							t += _t + _t + prefix[px] + 'backface-visibility: ' + prop[k] + _e + _n;
 						}else if(k === 'filter'){
@@ -744,7 +754,9 @@ vii = (function(){
 							}else if(k === 'transformOrigin'){
 								t += _t + _t + prefix[px] + 'transform-origin: ' + frames[i][k] + _e + _n;
 							}else if(k === 'animationTimingFunction'){
-								t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[frames[i][k]]?ceaser[frames[i][k]]:frames[i][k]) + _e + _n;
+								if(frames[i][k].indexOf('steps') === -1){
+									t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[frames[i][k]]?ceaser[frames[i][k]]:frames[i][k]) + _e + _n;
+								}
 							}else if(k === 'backfaceVisibility'){
 								t += _t + _t + prefix[px] + 'backface-visibility: ' + frames[i][k] + _e + _n;
 							}else if(k === 'filter'){
@@ -773,14 +785,14 @@ vii = (function(){
 			}
 			t = '';
 			if(!useLongForm){
-				t += 'animation: ' + n + _s + d + _s + ceaser[e] + _s + dy + _s + l + _s + ad + _e + _n;
+				t += 'animation: ' + n + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + _s + l + _s + ad + _e + _n;
 				s += _t + t;
 				s += _t + _w + t;				
 			}else{
 				for(var px=0; px < prefix.length; px++){
 					t += _t + prefix[px] +'animation-name: ' + n + _e + _n;
 					t += _t + prefix[px] +'animation-duration: ' + d + _e + _n;
-					t += _t + prefix[px] +'animation-timing-function: ' + ceaser[e] + _e + _n;
+					t += _t + prefix[px] +'animation-timing-function: ' + (ceaser[e]?ceaser[e]:e) + _e + _n;
 					t += _t + prefix[px] +'animation-delay: ' + dy + _e + _n;
 					t += _t + prefix[px] +'animation-iteration-count: ' + l + _e + _n;
 					t += _t + prefix[px] +'animation-direction: ' + ad + _e + _n;
@@ -806,21 +818,21 @@ vii = (function(){
 					if(isCSS(k)){
 						t += _s + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + d + _s + ceaser[e] + _s + dy + ',';
 					}else if(k === 'transform'){
-						t += _s + 'transform ' + _s + d + _s + ceaser[e] + _s + dy + ',';
-						t += _s + _w +'transform ' + _s + d + _s + ceaser[e] + _s + dy + ',';
+						t += _s + 'transform ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
+						t += _s + _w +'transform ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
 					}else if(k === 'transformOrigin'){
-						t += _s + 'transform-origin ' + _s + d + _s + ceaser[e] + _s + dy + ',';
-						t += _s + _w +'transform-origin ' + _s + d + _s + ceaser[e] + _s + dy + ',';
+						t += _s + 'transform-origin ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
+						t += _s + _w +'transform-origin ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
 					}else if(k === 'backfaceVisibility'){
-						t += _s + 'backface-visibility ' + _s + d + _s + ceaser[e] + _s + dy + ',';
-						t += _s + _w +'backface-visibility ' + _s + d + _s + ceaser[e] + _s + dy + ',';
+						t += _s + 'backface-visibility ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
+						t += _s + _w +'backface-visibility ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
 					}else if(k === 'filter'){
 						//t += _s + 'filter ' + _s + d + _s + ceaser[e] + _s + dy + ',';
-						t += _s + _w +'filter ' + _s + d + _s + ceaser[e] + _s + dy + ',';
+						t += _s + _w +'filter ' + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
 					}
 				}	
 			}else {
-				t += ' all ' + d + _s + ceaser[e] + _s + dy + ',';
+				t += ' all ' + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + ',';
 			}
 			t = t.replace(/,\s*$/, _e);
 			t += _n;
