@@ -149,9 +149,9 @@ vii = (function(){
 		'slideOutRight'	: 'n:slideOutRight d:1 kf:100 x:100%',
 		'slideOutUp'	: 'n:slideOutUp d:1 kf:100 y:-100%',
 		//Created by Ian Lunn for Hover.css
-		'pulse'			:'n:pulse d:1 e:linear loop:-1 backfaceVisibility:hidden kf:25% sc:1.1|kf:75% sc:0.9',
-		'pulseGrow'		:'n:pulseGrow d:1 e:linear loop:-1 backfaceVisibility:hidden kf:100 sc:1.1',
-		'pulseShrink'	:'n:pulseShrink d:1 e:linear loop:-1 backfaceVisibility:hidden kf:100 sc:0.9',
+		'pulse'			:'n:pulse d:1 e:linear loop:-1 dir:>< backfaceVisibility:hidden kf:25% sc:1.1|kf:75% sc:0.9',
+		'pulseGrow'		:'n:pulseGrow d:1 e:linear loop:-1 dir:>< backfaceVisibility:hidden kf:100 sc:1.1',
+		'pulseShrink'	:'n:pulseShrink d:1 e:linear loop:-1 dir:>< backfaceVisibility:hidden kf:100 sc:0.9',
 		'push'			:'n:push d:1 backfaceVisibility:hidden e:linear kf:50 sc:0.8|kf:100 sc:1',
 		'pop'			:'n:pop d:1 backfaceVisibility:hidden e:linear kf:50 sc:1.2',
 		'bounceIn2'		:'n:bounceIn2 d:0.5 backfaceVisibility:hidden kf:100 sc:1.2 e:elastic',
@@ -160,7 +160,7 @@ vii = (function(){
 		'floating2'		:'n:floating2 d:0.3 backfaceVisibility:hidden y:-8',
 		'sink'			:'n:sink d:0.3 backfaceVisibility:hidden y:8',
 		'bob'			:'n:bob d:1.5 backfaceVisibility:hidden loop:-1 kf:0 y:-8|kf:50 y:-4|kf:100 y:-8',
-		'hang'			:'n:hang d:1.5 e:easeInOut fillMode:forwards direction:alternate loop:-1 backfaceVisibility:hidden kf:0 y:8|kf:50 y:4|kf:100 y:8',
+		'hang'			:'n:hang d:1.5 e:easeInOut fillMode:forwards dir:>< loop:-1 backfaceVisibility:hidden kf:0 y:8|kf:50 y:4|kf:100 y:8',
 		'skewForward'	:'n:skewForward d:0.3 backfaceVisibility:hidden sk:-10',
 		'skewBackward'	:'n:skewBackward d:0.3 backfaceVisibility:hidden sk:10',
 		'wobbleVertical':'n:wobbleVertical d:1 backfaceVisibility:hidden kf:16.65% y:8|kf:33.3% y:-6|kf:49.95% y:4|kf:66.6% y:-2|kf:83.25% y:1|kf:100 y:0',
@@ -250,6 +250,8 @@ vii = (function(){
 	//a data map to shorcut words so tweens can be created Emmet style
 	var propMap = {
 		'd'		:'duration',
+		'dur'	:'duration',
+		'dir'	:'direction',
 		'e'		:'animationTimingFunction',
 		'steps'	:'animationTimingFunction',
 		'dy'	:'delay',
@@ -425,11 +427,43 @@ vii = (function(){
 				'cb':'center bottom',
 				'ct':'center top'
 			}
+			map['b'] = map.cb;
+			map['bl'] = map.lb;
+			map['br'] = map.rb;
+			map['l'] = map.lc;
+			map['r'] = map.rc;
+			map['t'] = map.ct;
+			map['tl'] = map.lt;
+			map['tr'] = map.rt;
 			if(map[v]){
 				return map[v];
 			}
 			if(v.indexOf(',') != -1){
 				return v.replace(',',' ');
+			}
+			return v;
+		},
+		'dir' : function(v){
+			var map = {
+				'>':'normal',
+				'<':'reverse',
+				'><':'alternate',
+				'<>':'alternate-reverse'
+			}
+			if(map[v]){
+				return map[v];
+			}
+			return v;
+		},
+		'fm' : function(v){
+			var map = {
+				'>':'forwards',
+				'<':'backwards',
+				'><':'both',
+				'<>':'both'
+			}
+			if(map[v]){
+				return map[v];
 			}
 			return v;
 		},
@@ -441,7 +475,7 @@ vii = (function(){
 	formatMap['x'] = formatMap['y'] = formatMap.trans;
 	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['numberPX'];
 	formatMap['bg'] = formatMap['bgc'] = formatMap['c'] = formatMap['color'];
-	formatMap.d = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap.fm = formatMap['none'];
+	formatMap.d = formatMap.dur = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap['none'];
 	function cleanWhiteSpace(s){
 		return s.replace(/\s\s+/g, ' ');
 	}
