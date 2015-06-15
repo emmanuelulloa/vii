@@ -280,6 +280,8 @@ vii = (function(){
 		'sc'	:'scale',
 		'scx'	:'scaleX',
 		'scy' 	:'scaleY',
+		'rx'	:'rotateX',
+		'ry'	:'rotateY',
 		'to' 	:'transformOrigin',
 		'r3d'	:'rotate3d',
 		't3d'	:'translate3d',
@@ -388,6 +390,9 @@ vii = (function(){
 			}
 			return 'translateZ(' + v +'px) ';
 		},
+		'deg': function(v){
+			return v +'deg'
+		},
 		'rot' : function(v){
 			return 'rotate(' + v +'deg) ';
 		},
@@ -475,6 +480,7 @@ vii = (function(){
 	formatMap['x'] = formatMap['y'] = formatMap.trans;
 	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['numberPX'];
 	formatMap['bg'] = formatMap['bgc'] = formatMap['c'] = formatMap['color'];
+	formatMap['rx'] = formatMap['ry'] = formatMap.deg;
 	formatMap.d = formatMap.dur = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap['none'];
 	function cleanWhiteSpace(s){
 		return s.replace(/\s\s+/g, ' ');
@@ -527,7 +533,7 @@ vii = (function(){
 				}
 			}
 			//clean transforms
-			if('translateX' in o || 'translateY' in o || 'translateZ' in o || 'rotate' in o || 'skew' in o || 'scale' in o || 'scaleX' in o || 'scaleY' in o || 'perspective' in o || 'scale3d' in o || 'translate3d' in o || 'rotate3d' in o){
+			if('translate' in o || 'translateX' in o || 'translateY' in o || 'translateZ' in o || 'rotate' in o || 'skew' in o || 'scale' in o || 'scaleX' in o || 'scaleY' in o || 'perspective' in o || 'scale3d' in o || 'translate3d' in o || 'rotate3d' in o || 'rotateX' in o || 'rotateY' in o){
 				o['transform'] = '';
 				if('perspective' in o){
 					o['transform'] += o['perspective'];
@@ -548,6 +554,16 @@ vii = (function(){
 					o['transform'] += o['rotate3d'];
 					global.has3D = true;
 					delete o['rotate3d'];
+				}
+				if('rotateX' in o){
+					o['transform'] += 'rotateX(' + o['rotateX'] + ') ';
+					global.has3D = true;
+					delete o['rotateX'];
+				}
+				if('rotateY' in o){
+					o['transform'] += 'rotateY(' + o['rotateY']+ ') ';
+					global.has3D = true;
+					delete o['rotateY'];
 				}
 				if('translateZ' in o){
 					o['transform'] += o['translateZ'];
