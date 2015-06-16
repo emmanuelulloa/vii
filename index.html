@@ -236,6 +236,13 @@
 	animation-play-state: running;
 	-webkit-animation-play-state: running;
 }
+.row {
+	clear: both;
+	float: left;
+	display: block;
+	position: relative;
+	width: 100%;
+}
 	.vii {
 		font-family: "Courier New", Courier, monospace;
 		font-variant: normal;
@@ -276,9 +283,7 @@
 		background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
 		background: radial-gradient(ellipse at center,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-		border:none;
-		max-width: 1280px;
-		width: 90%;
+		width: 40%;
 		min-width: 320px;
 		height: 260px;
 		color:#555;
@@ -287,6 +292,36 @@
 		border-radius: 3px;
 		-webkit-border-radius: 3px;
 		border: 1px solid lightgray;
+		display: inline-block;
+		float: left;
+	}
+	.viiDemo {
+		background-color: gainsboro;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		border: 1px solid lightgray;
+		display: inline-block;
+		width: 260px;
+		height: 260px;
+		float: left;
+		margin-left: 5px;
+		margin-right: 5px;
+		margin-top: 5px;
+	}
+	.viiDemo .viiHero {
+		width: 50px;
+		height: 50px;
+		border: 1px solid dodgerblue;
+		background-color: skyblue;
+		color:dodgerblue;
+		display: block;
+		position: relative;
+		font-size: 75%;
+		text-align: center;
+		z-index: 1000;
+		margin-left: 105px;
+		margin-top: 105px;
+		cursor: pointer;
 	}
 /*vii.t('n:viiButton d:500ms e:spring bgc:deeppink c:white sc:1.5 x:35 y:5 rot:-5 to:cc');*/
 .viiButton {
@@ -464,7 +499,12 @@
 			</select>
 			<sup>*</sup>
 		</p>
-		<textarea class="vii viiCode" id="code_txt"></textarea>
+		<div class="row">
+			<textarea class="vii viiCode" id="code_txt"></textarea>
+			<div class="viiDemo">
+				<div class="viiHero">DEMO</div>
+			</div>			
+		</div>
 		<p class="small"><sup>*</sup>Animations are taken from <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 Animation Cheat Sheet</a>, <a href="http://daneden.github.io/animate.css/" target="_blank">Animate.css</a>, <a href="http://www.minimamente.com/example/magic_animations/" target="_blank">Magic Animations</a>, <a href="http://ianlunn.github.io/Hover/" target="_blank">Hover.css</a> and <a href="http://ademilter.com/lab/liffect/" target="_blank">liffect</a>.</p>
 		<p class="small">Easings taken from <a href="http://matthewlein.com/ceaser/" target="_blank">Ceaser</a>, <a href="http://cubic-bezier.com/" target="_blank">Lea Verou's cubic-bezier.com</a> and <a href="http://easings.net/" target="_blank">Easings.net</a>.</p>
 	</form>
@@ -483,15 +523,25 @@
 		$(document).ready(function(){
 			var $generate_btn = $('#generate_btn'),
 				$command_txt = $('#command_txt'),
-				$code_txt = $('#code_txt');
-				$foo_sl = $('#foo_sl');
+				$code_txt = $('#code_txt'),
+				$foo_sl = $('#foo_sl'),
+				$hero = $('.viiHero'),
+				styleTag;
 			function generateCode(){
+				$hero.toggleClass(vii.getClassName());
 				$code_txt.val(vii[$foo_sl.val()]($command_txt.val()));
-				$code_txt.addClass('loaded');
+				/*$code_txt.addClass('loaded');
 				setTimeout(function(){
 					$code_txt.removeClass('loaded');
-					$code_txt.select();
-				}, 700);
+				}, 700);*/
+				if(styleTag === null || styleTag === undefined){
+					styleTag = document.createElement('style');
+					styleTag.type = 'text/css';	
+					document.getElementsByTagName('head')[0].appendChild(styleTag);
+				}
+				styleTag.innerHTML = $code_txt.val();
+				$hero.toggleClass(vii.getClassName());
+				$code_txt.select();
 			}
 			$generate_btn.click(function(event){
 				generateCode();
@@ -511,6 +561,16 @@
 			  $(o).text(arr[i].t);
 			});
 			var tutorialPremades = {
+				'Tutorial: Combine filters':'gs:1 bl:10',
+				'Tutorial: Saturate filter':'sat:10',
+				'Tutorial: Invert filter':'inv:1',
+				'Tutorial: Hue-Rotate filter':'hue:180',
+				'Tutorial: Contrast filter':'con:10',
+				'Tutorial: Brightness filter':'br:10',
+				'Tutorial: Sepia filter':'sep:1',
+				'Tutorial: Drop Shadow filter': 'ds:1,10,6,#CCC',
+				'Tutorial: Grayscale filter': 'gs:0|gs:1',
+				'Tutorial: Blur filter': 'bl:0|bl:10',
 				'Tutorial: steps easing (sprite animation)': 'n:frameWidthIs100pxImageWidthIs500px d:2 loop:-1 steps:4 fps:4 bgp:-400px,0px',
 				'Tutorial: Rotate 3 times' : 'spin:3',
 				'Tutorial: 3D Transforms': 'n:my3D kf:0 p3d:800 r3d:xy,180 t3d:25,30,15|kf:100 p3d:300 rx:90 ry:-90 z:50',

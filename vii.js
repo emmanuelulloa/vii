@@ -290,14 +290,14 @@ vii = (function(){
 		'p3d'	:'perspective',
 		'op'	:'opacity',
 		'bl'	:'blur',
-		'gr'	:'grayscale',
+		'gs'	:'grayscale',
 		'sep'	:'sepia',
 		'br'	:'brightness',
 		'con'	:'contrast',
 		'hue'	:'hueRotate',
 		'inv'	:'invert',
 		'sat'	:'saturate',
-		'dp'	:'dropShadow',
+		'ds'	:'dropShadow',
 		'kf' 	:'percent',
 		'fm'	:'fillMode'
 	};
@@ -306,7 +306,7 @@ vii = (function(){
 		'bl':function(v){
 			return 'blur(' + v +'px) ';
 		},
-		'gr':function(v){
+		'gs':function(v){
 			return 'grayscale(' + v + ') ';
 		},
 		'sep':function(v){
@@ -327,7 +327,7 @@ vii = (function(){
 		'sat':function(v){
 			return 'saturate(' + v + ') ';
 		},
-		'dp':function(v){
+		'ds':function(v){
 			var raw = v.split(','),
 			defaults = {
 				offset:'5px ',
@@ -481,7 +481,7 @@ vii = (function(){
 				var raw = v.split(',');
 				return ((parseInt(raw[1])/1000) * parseInt(raw[0])).toFixed(1) + 's';
 			}
-			return (60/1000 * parseInt(v).toFixed(1)) + 's';
+			return (60/1000 * parseInt(v)).toFixed(1) + 's';
 			return v;
 		},
 		'none' : function(v){return v}
@@ -499,6 +499,7 @@ vii = (function(){
 	}
 	//receives an object or spring and parse and reads its data
 	var global = {};
+	global.className = '';
 	function parse(val){
 		var fr = [];
 		if(typeof val === 'string'){
@@ -693,6 +694,7 @@ vii = (function(){
 			_k = 'keyframes ',
 			_w = '-webkit-',
 			prefix = ['',_w];
+		global.className = n;
 		d += d.indexOf('s') == -1? 's':'';
 		dy += dy.indexOf('s') == -1? 's':'';
 		if(useHacks){
@@ -848,17 +850,17 @@ vii = (function(){
 				if(isCSS(k)){
 					t += _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + prop[k] + _e + _n;
 				}else if(k === 'transform'){
-					t += _t + _t + 'transform: ' + prop[k] + _e + _n;
-					t += _t + _t + _w +'transform: ' + prop[k] + _e + _n;
+					t += _t + 'transform: ' + prop[k] + _e + _n;
+					t += _t + _w +'transform: ' + prop[k] + _e + _n;
 				}else if(k === 'transformOrigin'){
-					t += _t + _t + 'transform-origin: ' + prop[k] + _e + _n;
-					t += _t + _t + _w +'transform-origin: ' + prop[k] + _e + _n;
+					t += _t + 'transform-origin: ' + prop[k] + _e + _n;
+					t += _t + _w +'transform-origin: ' + prop[k] + _e + _n;
 				}else if(k === 'backfaceVisibility'){
-					t += _t + _t + 'backface-visibility: ' + prop[k] + _e + _n;
-					t += _t + _t + _w +'backface-visibility: ' + prop[k] + _e + _n;
+					t += _t + 'backface-visibility: ' + prop[k] + _e + _n;
+					t += _t + _w +'backface-visibility: ' + prop[k] + _e + _n;
 				}else if(k === 'filter'){
 					//t += _t + _t + 'filter: ' + prop[k] + _e + _n;
-					t += _t + _t + _w +'filter: ' + prop[k] + _e + _n;
+					t += _t + _w +'filter: ' + prop[k] + _e + _n;
 				}
 			}
 			s += t;
@@ -912,6 +914,7 @@ vii = (function(){
 		applyTransition : applyTransition,
 		getKeyframedTransition: getKeyframedTransition,
 		getInteractiveTransition: getInteractiveTransition,
-		getPreMade: function(){return preMade}
+		getPreMade: function(){return preMade},
+		getClassName: function(){return global.className}
 	}
 })();
