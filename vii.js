@@ -479,8 +479,9 @@ vii = (function(){
 		'fps' : function(v){
 			if(v.indexOf(',') != -1){
 				var raw = v.split(',');
-				return ((parseInt(raw[0])/1000) * parseInt(raw[1])).toFixed(1) + 's';
+				return ((parseInt(raw[1])/1000) * parseInt(raw[0])).toFixed(1) + 's';
 			}
+			return (60/1000 * parseInt(v).toFixed(1)) + 's';
 			return v;
 		},
 		'none' : function(v){return v}
