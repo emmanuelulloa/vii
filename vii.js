@@ -52,6 +52,9 @@ vii = (function(){
 	ceaser.bounce = 'cubic-bezier(.65, 1.95, .03, .32)';
 	ceaser.elastic = 'cubic-bezier(0.47, 2.02, 0.31, -0.36)';
 	ceaser.spring = 'cubic-bezier(.25,2,.75,.5)';
+	ceaser.fastOut = 'cubic-bezier(0.4,0,1,1)';
+	ceaser.slowIn = 'cubic-bezier(0,0,0.2,1)';
+	ceaser.fastOutSlowIn = 'cubic-bezier(0.4,0,0.2,1)'
 	//pre-made animations
 	var preMade = {
 		'fadeIn'		: 'n:fadeIn d:0.5 e:ease op:1',
@@ -159,7 +162,7 @@ vii = (function(){
 		'rotate'		:'n:rotate d:0.3 backfaceVisibility:hidden rot:4',
 		'floating2'		:'n:floating2 d:0.3 backfaceVisibility:hidden y:-8',
 		'sink'			:'n:sink d:0.3 backfaceVisibility:hidden y:8',
-		'bob'			:'n:bob d:1.5 backfaceVisibility:hidden loop:-1 kf:0 y:-8|kf:50 y:-4|kf:100 y:-8',
+		'bob'			:'n:bob d:1.5 loop:-1 kf:class backfaceVisibility:hidden|kf:0 y:-8|kf:50 y:-4|kf:100 y:-8',
 		'hang'			:'n:hang d:1.5 e:easeInOut fillMode:forwards dir:>< loop:-1 backfaceVisibility:hidden kf:0 y:8|kf:50 y:4|kf:100 y:8',
 		'skewForward'	:'n:skewForward d:0.3 backfaceVisibility:hidden sk:-10',
 		'skewBackward'	:'n:skewBackward d:0.3 backfaceVisibility:hidden sk:10',
@@ -220,8 +223,8 @@ vii = (function(){
 		'tinDownIn'		: 'n:tinDownIn d:1 kf:0 op:0 sc:1 y:900%|kf:50%,70%,90% op:1 sc:1.1 y:0|kf:60%,80%,100% op:1 sc:1 y:0',
 		'bombRightOut'	: 'n:bombRightOut d:1 kf:0 op:1 to:50%,50% rot:0 bl:0|kf:50 op:1 to:200%,50% rot:160 bl:0|kf:100 op:0 to:200%,50% rot:160 bl:20',
 		'bombLeftOut'	: 'n:bombLeftOut d:1 kf:0 op:1 to:50%,50% rot:0 bl:0|kf:50 op:1 to:-100%,50% rot:-160 bl:0|kf:100 op:0 to:-100%,50% rot:-160 bl:20',
-		'boingInUp'		: 'n:boingInUp d:1 kf:0 to:50%,0% p3d:800 r3d:x,-90|kf:50 to:50%,0% p3d:800 r3d:x,50|kf:100 op:1 to:50%,0% p3d:800 r3d:x,0',
-		'boingOutDown'	: 'n:boingOutDown d:1 kf:0 to:100%,100% p3d:800 r3d:y,0|kf:20 op:1 to:100%,100% p3d:800 r3d:y,10|kf:30 op:1 to:0%,100% p3d:800 r3d:y,0|kf:40 op:1 to:0%100% p3d:800 r3d:xy,10|kf:100 op:0 to:100%,100% p3d:800 r3d:x,90',
+		'boingInUp'		: 'n:boingInUp d:1 to:50%,0% kf:class|kf:0 p3d:800 r3d:x,-90|kf:50 p3d:800 r3d:x,50|kf:100 op:1 p3d:800 r3d:x,0',
+		'boingOutDown'	: 'n:boingOutDown d:1 kf:class to:100%,100%|kf:0 p3d:800 r3d:y,0|kf:20 op:1 p3d:800 r3d:y,10|kf:30 op:1 p3d:800 r3d:y,0|kf:40 op:1 p3d:800 r3d:xy,10|kf:100 op:0 p3d:800 r3d:x,90',
 		'spaceOutUp'	: 'n:spaceOutUp d:1 kf:0 op:1 to:50%,0% sc:1 y:0%|kf:100 op:0 to:50%,0% sc:0.2 y:-200%',
 		'spaceOutRight'	: 'n:spaceOutRight d:1 kf:0 op:1 to:100%,50% sc:1 x:0%|kf:100 op:0 to:100%,50% sc:0.2 x:200%',
 		'spaceOutDown'	: 'n:spaceOutDown d:1 kf:0 op:1 to:50%,100% sc:1 y:0%|kf:100 op:0 to:50%,100% sc:0.2 y:200%',
@@ -419,6 +422,9 @@ vii = (function(){
 			return 'scaleY(' + v +') ';
 		},
 		'kf' : function(v){
+			if(v.toLowerCase() === 'class'){
+				return 'class';
+			}
 			if(v.indexOf('%') != -1){
 				return v;
 			}
@@ -485,10 +491,8 @@ vii = (function(){
 				return ((parseInt(raw[1])/1000) * parseInt(raw[0])).toFixed(1) + 's';
 			}
 			return (60/1000 * parseInt(v)).toFixed(1) + 's';
-			return v;
 		},
 		'bgr':function(v,i){
-			console.log(i);
 			var map = {
 				'b' :0,
 				'bl':45,
@@ -502,13 +506,12 @@ vii = (function(){
 			map.v = map.l;
 			map.h = map.b;
 			map.d = map.bl;
-			var a = parseInt(map[v]?map[v]:v); //* Math.PI/180
-			a = (a > 360)?a%360:a;
-			i = i || 0;
+			var a = (map[v] !== undefined)?map[v]:parseInt(v); //* Math.PI/180
+			a = (a > 360)? a % 360 : a;
 			var x,y,t;
 			if((a<45)||((a>135)&&(a<225))||(a>315)){
 				t = Math.tan((180 - a) * Math.PI/180);
-				if(i == 0){
+				if(i == global.startFrom){
 					x = 0;
 					y = 100 - parseInt((50 * t) + 50);
 				}else if(i == global.frameQty -1){
@@ -517,7 +520,7 @@ vii = (function(){
 				}
 			}else{
 				t = Math.tan((a - 90) * Math.PI/180);
-				if(i == 0){
+				if(i == global.startFrom){
 					x = 100 - parseInt((50 * t) + 50);
 					y = 0;
 				}else if(i == global.frameQty -1){
@@ -590,12 +593,20 @@ vii = (function(){
 	function trim(s){
 		return s.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
 	}
-	//receives an object or spring and parse and reads its data
+	//GLOBAL
 	var global = {};
 	global.className = 'myTween';
 	global.code = '/* No css has been created */';
 	global.frameQty = 0;
+	global.startFrom = 0;
+	//receives an object or spring and parse and reads its data
 	function parse(val){
+		//RESET
+		global.className = 'myTween';
+		global.code = '/* No css has been created */';
+		global.frameQty = 0;
+		global.startFrom = 0;
+		//begin parsing
 		var fr = [];
 		if(typeof val === 'string'){
 			if(preMade[val]){
@@ -751,13 +762,77 @@ vii = (function(){
 					delete o['dropShadow'];
 				}
 			}
-			//check if percentage is present
-			if(!o.percent){
-				o.percent = (i == 0)?'0%':(i == fr.length - 1)?'100%':(Math.floor(i/(fr.length-1) * 100)) + '%';
+			if(o.percent === 'class'){
+				global.startFrom = 1;
 			}
 			frames.push(o);
 		}
+		//check if percentage is present
+		global.frameQty = frames.length
+		for(var i = global.startFrom; i < global.frameQty; i++){
+			var o = frames[i];
+			if(!o.percent){
+				o.percent = (i == global.startFrom)?'0%':(i == global.frameQty - 1)?'100%':(Math.floor(i/((global.frameQty - global.startFrom) - 1) * 100)) + '%';
+			}
+		}
 		return frames;
+	}
+	function getKeyframeCSS(k,v,p){
+		var s = '',
+			_c = ':',
+			_e = ';',
+			_d = '.',
+			_s = ' ',
+			_n = '\n',
+			_t = '\t',
+			_o = '{',
+			_x = '}'
+			_k = 'keyframes ',
+			_w = '-webkit-';
+		if(isCSS(k)){
+			s += _t + _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + v + _e + _n;
+		}else if(k === 'transform'){
+			s += _t + _t + p + 'transform: ' + v + _e + _n;
+		}else if(k === 'transformOrigin'){
+			s += _t + _t + p + 'transform-origin: ' + v + _e + _n;
+		}else if(k === 'animationTimingFunction'){
+			if(v.indexOf('steps') === -1){
+				s += _t + _t + p + 'animation-timing-function: ' + (ceaser[v]?ceaser[v]:v) + _e + _n;
+			}
+		}else if(k === 'backfaceVisibility'){
+			s += _t + _t + p + 'backface-visibility: ' + v + _e + _n;
+		}else if(k === 'filter'){
+			s += _t + _t + _w + 'filter: ' + v + _e + _n;
+		}
+		return s;
+	}
+	function getSimpleCSS(k,v){
+		var s = '',
+			_c = ':',
+			_e = ';',
+			_d = '.',
+			_s = ' ',
+			_n = '\n',
+			_t = '\t',
+			_o = '{',
+			_x = '}'
+			_k = 'keyframes ',
+			_w = '-webkit-';
+		if(isCSS(k)){
+			s += _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + v + _e + _n;
+		}else if(k === 'transform'){
+			s += _t + 'transform: ' + v + _e + _n;
+			s += _t + _w +'transform: ' + v + _e + _n;
+		}else if(k === 'transformOrigin'){
+			s += _t + 'transform-origin: ' + v + _e + _n;
+			s += _t + _w +'transform-origin: ' + v + _e + _n;
+		}else if(k === 'backfaceVisibility'){
+			s += _t + 'backface-visibility: ' + v + _e + _n;
+			s += _t + _w +'backface-visibility: ' + v + _e + _n;
+		}else if(k === 'filter'){
+			s += _t + _w +'filter: ' + v + _e + _n;
+		}
+		return s;
 	}
 	//receives an object the duration and the easing name
 	function getCSS(properties, duration, easing){
@@ -815,52 +890,24 @@ vii = (function(){
 		//KEYFRAMES
 		if(isTransition < 1){
 			//keyframes
-			var fQty = frames.length;
+			var fQty = global.frameQty;
 			for(var px=0; px < prefix.length; px++){
 				if(fQty == 1){
-					p = (p != '0%')?p:'to';
+					p = (p != '0%')?(p != 'class')?p:'to':'to';
 					t += '@' + prefix[px] + _k + n + _s + _o + _n;
 					t += _t + p + _s + _o + _n;
 					for(var k in prop){
-						if(isCSS(k)){
-							t += _t + _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + prop[k] + _e + _n;
-						}else if(k === 'transform'){
-							t += _t + _t + prefix[px] + 'transform: ' + prop[k] + _e + _n;
-						}else if(k === 'transformOrigin'){
-							t += _t + _t + prefix[px] + 'transform-origin: ' + prop[k] + _e + _n;
-						}else if(k === 'animationTimingFunction'){
-							if(prop[k].indexOf('steps') === -1){
-								t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[prop[k]]?ceaser[prop[k]]:prop[k]) + _e + _n;
-							}
-						}else if(k === 'backfaceVisibility'){
-							t += _t + _t + prefix[px] + 'backface-visibility: ' + prop[k] + _e + _n;
-						}else if(k === 'filter'){
-							t += _t + _t + _w + 'filter: ' + prop[k] + _e + _n;
-						}
+						t += getKeyframeCSS(k,prop[k],prefix[px]);
 					}
 					t += _t + _x + _n;
 					t += _x + _n;					
 				}else{
 					t += '@' + prefix[px] + _k + n + _s + _o + _n;
-					for(var i=0; i < fQty; i++){
+					for(var i = global.startFrom; i < fQty; i++){
 						p = (fQty == 2)?(i == 0)?(frames[i].percent === '0%')?'from':frames[i].percent:(frames[i].percent === '100%')?'to':frames[i].percent:frames[i].percent;
 						t += _t + p + _s + _o + _n;
 						for(var k in frames[i]){
-							if(isCSS(k)){
-								t += _t + _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + frames[i][k] + _e + _n;
-							}else if(k === 'transform'){
-								t += _t + _t + prefix[px] + 'transform: ' + frames[i][k] + _e + _n;
-							}else if(k === 'transformOrigin'){
-								t += _t + _t + prefix[px] + 'transform-origin: ' + frames[i][k] + _e + _n;
-							}else if(k === 'animationTimingFunction'){
-								if(frames[i][k].indexOf('steps') === -1){
-									t += _t + _t + prefix[px] + 'animation-timing-function: ' + (ceaser[frames[i][k]]?ceaser[frames[i][k]]:frames[i][k]) + _e + _n;
-								}
-							}else if(k === 'backfaceVisibility'){
-								t += _t + _t + prefix[px] + 'backface-visibility: ' + frames[i][k] + _e + _n;
-							}else if(k === 'filter'){
-								t += _t + _t + _w + 'filter: ' + frames[i][k] + _e + _n;
-							}
+							t += getKeyframeCSS(k,frames[i][k],prefix[px]);
 						}
 						t += _t + _x + _n;	
 					}
@@ -871,17 +918,26 @@ vii = (function(){
 			//class
 			var states = _d + n + ':hover, ' + _d + n + ':focus, ' + _d + n + ':active ';
 			if(isTransition === 0){
-				s += _d + n + _o + _n;
+				s += _d + n + _s + _o + _n;
 				s += hacks;	
 			}else if(isTransition === -1){
-				s += _d + n + _o + _n;
+				s += _d + n + _s + _o + _n;
 				s += hacks;	
-				s += _x + _n;
+				s += _x + _n + _s;
 				s += states + _o + _n;
 			}else if(isTransition === -2){
-				s += _d + n + _o + _n;
+				s += _d + n + _s + _o + _n;
 				s += hacks;
 			}
+			//global properties within the class
+			if(prop.percent == 'class'){
+				t = '';
+				for(var k in prop){
+					t += getSimpleCSS(k,prop[k],'',false);
+				}
+				s += t;				
+			}
+			//animation code
 			t = '';
 			if(!useLongForm){
 				t += 'animation: ' + n + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + dy + _s + l + _s + ad + _e + _n;
@@ -943,21 +999,7 @@ vii = (function(){
 			s += states + _o + _n;
 			t = '';
 			for(var k in prop){
-				if(isCSS(k)){
-					t += _t + (k).replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase() + _s + _c + _s + prop[k] + _e + _n;
-				}else if(k === 'transform'){
-					t += _t + 'transform: ' + prop[k] + _e + _n;
-					t += _t + _w +'transform: ' + prop[k] + _e + _n;
-				}else if(k === 'transformOrigin'){
-					t += _t + 'transform-origin: ' + prop[k] + _e + _n;
-					t += _t + _w +'transform-origin: ' + prop[k] + _e + _n;
-				}else if(k === 'backfaceVisibility'){
-					t += _t + 'backface-visibility: ' + prop[k] + _e + _n;
-					t += _t + _w +'backface-visibility: ' + prop[k] + _e + _n;
-				}else if(k === 'filter'){
-					//t += _t + _t + 'filter: ' + prop[k] + _e + _n;
-					t += _t + _w +'filter: ' + prop[k] + _e + _n;
-				}
+				t += getSimpleCSS(k,prop[k]);
 			}
 			s += t;
 			s += _x + _n;
