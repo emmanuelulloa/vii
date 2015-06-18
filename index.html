@@ -274,7 +274,7 @@
 		background-color : dodgerblue;
 		color : white;
 	}
-	.viiCode {
+	.viiGradient {
 		background: #ffffff; /* Old browsers */
 		background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #f6f6f6 47%, #ededed 100%); /* FF3.6+ */
 		background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(47%,#f6f6f6), color-stop(100%,#ededed)); /* Chrome,Safari4+ */
@@ -282,16 +282,16 @@
 		background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* Opera 12+ */
 		background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* IE10+ */
 		background: radial-gradient(ellipse at center,  #ffffff 0%,#f6f6f6 47%,#ededed 100%); /* W3C */
-		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */		
+	}
+	.viiCode {
 		width: 40%;
 		min-width: 320px;
 		height: 260px;
 		color:#555;
 		text-align: left;
 		padding: 5px;
-		border-radius: 3px;
-		-webkit-border-radius: 3px;
-		border: 1px solid lightgray;
+		border: 1px solid #555;
 		display: inline-block;
 		float: left;
 		white-space: pre;
@@ -316,6 +316,7 @@
 		height: 50px;
 		border: 1px solid dodgerblue;
 		background-color: skyblue;
+		background: linear-gradient(180deg, skyblue, dodgerblue);
 		color:dodgerblue;
 		display: block;
 		position: relative;
@@ -340,7 +341,7 @@
 	transform-origin: center center;
 	-webkit-transform-origin: center center;
 	border:none;
-	border-bottom: 3px solid blue;
+	border-bottom: 3px solid royalblue;
 	cursor: pointer;
 	padding: 10px 10px 0 10px;
 	transition: all 500ms cubic-bezier(.25,2,.75,.5) 0s;
@@ -360,6 +361,25 @@
 	transform: scale(1.2) ;
 	-webkit-transform: scale(1.2) ;
 	outline: 0;
+}
+.gistButton{
+	font-size: 80%;
+	color:white;
+	background-color: #555;
+	margin-top:-3px;
+	margin-bottom: 3px;
+	padding: 2px 3px 2px 3px;
+	border-bottom-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	text-decoration: none;
+	display: block;
+	clear: both;
+	float: left;
+	width:100px;
+	text-align: center;
+	font-weight: normal;
 }
 @keyframes loaded {
 	0% {
@@ -483,7 +503,12 @@
 	<div class="content">
 	<p class="ad">This tool helps you write the code for CSS animations really fast. No need to worry about prefixes or the correct transform strings or even your keyframe names!</p>
 	<h2>Instructions</h2>
-	<h3>1) Type your commands:</h3>
+	<h3>Type your commands:</h3>
+	<ul>
+		<li>Type commands using vii.k('') for keyframes, vii.t('') for transitions, vii.kt('') for keyframed transitions and vii.it('') for interactive transitions.</li>
+		<li>Press the GENERATE button to preview your animation.</li>
+		<li>Copy the generated code into a .css file.</li>
+	</ul>
 	<form>
 		<p>
 			<span class="vii"><strong>vii.
@@ -493,7 +518,7 @@
 				<option value="kt">kt</option>
 				<option value="it">it</option>
 			</select>
-			('<input type="text" class="vii viiString" value="n:myAnimation d:1000ms loop:-1 dy:0.5 x:5 y:-5 sc:1.5 rot:30 op:.7" id="command_txt">')</strong></span>
+			('<input type="text" class="vii viiString" value="n:myAnimation d:1000ms loop:-1 dir:>< dy:0.5 x:5 y:-5 sc:1.5 rot:30 op:.7" id="command_txt">')</strong></span>
 			<a href="#" class="viiButton" id="generate_btn">GENERATE</a>
 		</p>
 		<p>
@@ -503,20 +528,17 @@
 			<sup>*</sup>
 		</p>
 		<div class="row">
-			<textarea class="vii viiCode" id="code_txt"></textarea>
+			<textarea class="vii viiCode viiGradient" id="code_txt"></textarea>
 			<div class="viiDemo">
 				<div class="viiHero">DEMO</div>
-			</div>			
+			</div>
+			<a href="#" class="gistButton" id="gist">Save as gist</a>			
 		</div>
+		
 		<p class="small"><sup>*</sup>Animations are taken from <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 Animation Cheat Sheet</a>, <a href="http://daneden.github.io/animate.css/" target="_blank">Animate.css</a>, <a href="http://www.minimamente.com/example/magic_animations/" target="_blank">Magic Animations</a>, <a href="http://ianlunn.github.io/Hover/" target="_blank">Hover.css</a> and <a href="http://ademilter.com/lab/liffect/" target="_blank">liffect</a>.</p>
 		<p class="small">Easings taken from <a href="http://matthewlein.com/ceaser/" target="_blank">Ceaser</a>, <a href="http://cubic-bezier.com/" target="_blank">Lea Verou's cubic-bezier.com</a> and <a href="http://easings.net/" target="_blank">Easings.net</a>.</p>
+		<p class="small">Animated backgrounds inspired by <a href="http://www.gradient-animator.com/" target="_blank">CSS Gradient Animator</a>.</p>
 	</form>
-	<h3>2) Quick mode:</h3>
-	<ul>
-		<li>Open your browser console.</li>
-		<li>Type commands using vii.k('') for keyframes, vii.t('') for transitions, vii.kt('') for keyframed transitions and vii.it('') for interactive transitions.</li>
-		<li>Copy the generated code into a .css file.</li>
-	</ul>
 	</div>
 	<div class="footer">
 		<p><a href="https://github.com/emmanuelulloa/vii" target="_blank">Download this project at GitHub</a></p>
@@ -529,9 +551,10 @@
 				$code_txt = $('#code_txt'),
 				$foo_sl = $('#foo_sl'),
 				$hero = $('.viiHero'),
+				$gist = $('#gist'),
 				styleTag;
 			function generateCode(){
-				$hero.toggleClass(vii.getClassName());
+				$hero.removeClass(vii.getClassName());
 				$code_txt.val(vii[$foo_sl.val()]($command_txt.val()));
 				/*$code_txt.addClass('loaded');
 				setTimeout(function(){
@@ -543,7 +566,7 @@
 					document.getElementsByTagName('head')[0].appendChild(styleTag);
 				}
 				styleTag.innerHTML = $code_txt.val();
-				$hero.toggleClass(vii.getClassName());
+				$hero.addClass(vii.getClassName());
 				$code_txt.select();
 			}
 			$generate_btn.click(function(event){
@@ -564,6 +587,7 @@
 			  $(o).text(arr[i].t);
 			});
 			var tutorialPremades = {
+				'Tutorial: Animated backgrounds' : 'd:2 loop:-1 e:linear dir:>< blg:h,#f00,#00f,#f00 bgs:300%,300% bgr:0|blg:h,#f00,#00f,#f00 bgs:300%,300% bgr:0',
 				'Tutorial: Combine filters':'gs:1 bl:10',
 				'Tutorial: Saturate filter':'sat:10',
 				'Tutorial: Invert filter':'inv:1',
@@ -587,10 +611,33 @@
 			for(var k in tutorialPremades){
 				$preMade_sl.prepend('<option value="' + tutorialPremades[k] + '">' + k + '</option>')
 			}
-			$preMade_sl.prepend('<option value="n:myAnimation d:1000ms loop:-1 dy:0.5 x:5 y:-5 sc:1.5 rot:30 op:.7">Select an animation</option>');
+			$preMade_sl.prepend('<option value="n:myAnimation d:1000ms loop:-1 dir:>< dy:0.5 x:5 y:-5 sc:1.5 rot:30 op:.7">Select an animation</option>');
 			$preMade_sl.change(function(event){
 				$command_txt.val($preMade_sl.val());
 				generateCode();
+			});
+			$gist.click(function(event){
+				var files = new Object();
+				files[vii.getClassName() + ".css"] = {
+					content:vii.getCode()
+				}
+				var data={
+					"description":"vii generated animation",
+					"public":true,
+					"files":files
+				}
+				$.ajax({
+					url:'https://api.github.com/gists',
+					type:'POST',dataType:'json',
+					async:false,
+					data:JSON.stringify(data)
+				}).success(function(e){
+					var w = window.open('','_blank');
+					w.location=e.html_url;
+					w.focus();
+				}).error(function(e){
+					console.log("Gist save error",e);
+				})				
 			});
 		})
 	</script>

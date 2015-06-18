@@ -268,7 +268,10 @@ vii = (function(){
 		'fz'	:'font-size',
 		'bg'	:'background',
 		'bgc'	:'background-color',
+		'blg'	:'background',
 		'bgp'	:'background-position',
+		'bgr'	:'background-position',
+		'bgs'	:'background-size',
 		'c'		:'color',
 		'bd'	:'border',
 		'x' 	:'translateX',
@@ -484,6 +487,96 @@ vii = (function(){
 			return (60/1000 * parseInt(v)).toFixed(1) + 's';
 			return v;
 		},
+		'bgr':function(v,i){
+			console.log(i);
+			var map = {
+				'b' :0,
+				'bl':45,
+				'l' :90,
+				'tl':135,
+				't' :180, 
+				'tr':225,
+				'r' :270,
+				'br':315
+			};
+			map.v = map.l;
+			map.h = map.b;
+			map.d = map.bl;
+			var a = parseInt(map[v]?map[v]:v); //* Math.PI/180
+			a = (a > 360)?a%360:a;
+			i = i || 0;
+			var x,y,t;
+			if((a<45)||((a>135)&&(a<225))||(a>315)){
+				t = Math.tan((180 - a) * Math.PI/180);
+				if(i == 0){
+					x = 0;
+					y = 100 - parseInt((50 * t) + 50);
+				}else if(i == global.frameQty -1){
+					x = 100;
+					y = 100 - parseInt(50 - (50 * t));
+				}
+			}else{
+				t = Math.tan((a - 90) * Math.PI/180);
+				if(i == 0){
+					x = 100 - parseInt((50 * t) + 50);
+					y = 0;
+				}else if(i == global.frameQty -1){
+					x = 100 - parseInt(50 - (50 * t));
+					y = 100;
+				}
+			}
+			return x + '% ' + y + '%';
+		},
+		'bgs':function(v){
+			if(v === '<>'){
+				return 'contain';
+			}
+			if(v === '><'){
+				return 'cover'
+			}
+			if(v.indexOf(',') != -1){
+				var raw = v.split(',');
+				if(raw[0].indexOf('%') == -1){
+					raw[0] += 'px';
+				}
+				if(raw[1].indexOf('%') == -1){
+					raw[1] += 'px';
+				}
+				return raw[0] + ' ' + raw[1];
+			}else{
+				if(v.indexOf('%') == -1){
+					return v + 'px';
+				}
+			}
+			return v;
+		},
+		'blg': function(v){
+			//http://www.ianforrest.me/
+			var map = {
+				'vertical':'0deg',
+				'horizontal':'90deg',
+				'diagonal':'45deg',
+				'tl':'135deg',
+				'bl':'45deg',
+				't' :'180deg', 
+				'tr':'225deg',
+				'r' :'270deg',
+				'br':'315deg',
+			};
+			map.l = map.horizontal;
+			map.b = map.vertical;
+			map.h = map.horizontal;
+			map.v = map.vertical;
+			map.d = map.diagonal;
+			var	raw = v.split(','),
+				a = (map[raw[0]])?map[raw[0]]:raw[0] + 'deg',
+				s = 'linear-gradient(' + a ;
+			for(var i=1; i<raw.length; i++)	{
+				s += ',' + raw[i];
+			}
+			s += ')';
+			return s;
+		},
 		'none' : function(v){return v}
 	};
 	formatMap['x'] = formatMap['y'] = formatMap.trans;
@@ -499,7 +592,9 @@ vii = (function(){
 	}
 	//receives an object or spring and parse and reads its data
 	var global = {};
-	global.className = '';
+	global.className = 'myTween';
+	global.code = '/* No css has been created */';
+	global.frameQty = 0;
 	function parse(val){
 		var fr = [];
 		if(typeof val === 'string'){
@@ -520,7 +615,8 @@ vii = (function(){
 			fr = val;
 		}
 		var frames = [];
-		for(var i=0;i<fr.length;i++){
+		global.frameQty = fr.length
+		for(var i=0;i<global.frameQty;i++){
 			var obj;
 			//check if string
 			if(typeof fr[i] === 'string'){
@@ -528,7 +624,7 @@ vii = (function(){
 				var raw = trim(fr[i]).split(' ');
 				for(var j = 0; j < raw.length; j++){
 					var nameValue = raw[j].split(':');
-					obj[nameValue[0]] = (nameValue[0] in formatMap)?formatMap[nameValue[0]](nameValue[1]):nameValue[1];
+					obj[nameValue[0]] = (nameValue[0] in formatMap)?formatMap[nameValue[0]](nameValue[1],i):nameValue[1];
 				}
 			}else{
 				obj = fr[i];
@@ -668,7 +764,7 @@ vii = (function(){
 		var frames = parse(properties),
 			prop = frames[0],
 			isTransition = (prop.isTransition != undefined)?prop.isTransition:0,
-			n = prop.name || 'myTween',
+			n = prop.name || global.className,
 			d = prop.duration || duration || '0.5',
 			l = prop.animationIterationCount || prop.loop || '1',
 			e = prop.animationTimingFunction || prop.ease || easing || 'ease',
@@ -866,6 +962,7 @@ vii = (function(){
 			s += t;
 			s += _x + _n;
 		}
+		global.code = s;
 		return s;
 	}
 	//get transition instead of keyframes
@@ -915,6 +1012,7 @@ vii = (function(){
 		getKeyframedTransition: getKeyframedTransition,
 		getInteractiveTransition: getInteractiveTransition,
 		getPreMade: function(){return preMade},
-		getClassName: function(){return global.className}
+		getClassName: function(){return global.className},
+		getCode: function(){return global.code}
 	}
 })();
