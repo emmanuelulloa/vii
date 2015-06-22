@@ -377,6 +377,9 @@ vii = (function(){
 			return 'perspective(' + v + ') ';
 		},
 		'numberPX' : function(v){
+			if(v.indexOf('%') != -1){
+				return v;
+			}
 			if(v.indexOf('px') == -1){
 				return v + 'px';
 			}
@@ -770,12 +773,43 @@ vii = (function(){
 			}
 			frames.push(o);
 		}
-		//check if percentage is present
 		global.frameQty = frames.length
-		for(var i = global.startFrom; i < global.frameQty; i++){
+		return fixKeyframePercent(frames);
+	}
+	function fixKeyframePercent(frames){
+		var dur = 0;
+		var isKeyframeDuration = false;
+		var i = 0;
+		for(i = global.startFrom; i < global.frameQty; i++){
 			var o = frames[i];
+			//check if percentage is present
 			if(!o.percent){
 				o.percent = (i == global.startFrom)?'0%':(i == global.frameQty - 1)?'100%':(Math.floor(i/((global.frameQty - global.startFrom) - 1) * 100)) + '%';
+			}
+			//use time instead of percent
+			if(o.kd){
+				dur += parseFloat(o.kd);
+				o._step = dur;
+				isKeyframeDuration = true;
+			}else{
+				dur += 0.5;
+				o._step = dur;
+			}
+		}
+		dur = dur.toFixed(2);
+		//fix the percentage if there is any keyframeDuration available
+		if(isKeyframeDuration){
+			for(i = global.startFrom; i < global.frameQty; i++){
+				var o = frames[i];
+				var pos = (Math.round(o._step/dur * 100));
+				o.percent = (i == global.startFrom && o._step == 0)?'0%':(i == global.frameQty - 1 && pos == 100)?'100%':pos + '%';
+				delete o['kd'];
+				delete o['_step'];
+			}
+			frames[0].duration = dur + '';		
+		}else{
+			for(i = global.startFrom; i < global.frameQty; i++){
+				delete frames[i]['_step'];
 			}
 		}
 		return frames;
@@ -868,6 +902,9 @@ vii = (function(){
 			_k = 'keyframes ',
 			_w = '-webkit-',
 			prefix = ['',_w];
+			if(n.toLowerCase() == 'randomname'){
+				n = global.className = 'myTween-' + Math.round(Math.random() * 1000);
+			}
 		global.className = n;
 		d += d.indexOf('s') == -1? 's':'';
 		dy += dy.indexOf('s') == -1? 's':'';

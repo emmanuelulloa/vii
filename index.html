@@ -571,8 +571,8 @@
 				$code_txt.select();
 			}
 			$generate_btn.click(function(event){
-				generateCode();
 				event.preventDefault();
+				generateCode();
 				return false;
 			});
 			var preMade = vii.getPreMade(),
@@ -588,6 +588,7 @@
 			  $(o).text(arr[i].t);
 			});
 			var tutorialPremades = {
+				'Tutorial: Keyframe duration':'n:randomName kf:class x:-200 y:-50% sc:0.2 rot:-20 to:bl bl:5 | kd:0.6 sc:1 sk:-20,0 x:25 y:0 e:fastOut | kd:0.3 sk:20,0 rot:-10 x:0 e:slowIn bl:0 | kd:0.2 bl:0 transform:none',
 				'Tutorial: Animated backgrounds' : 'n:gradientAnim d:1 dir:>< loop:-1 blg:180,gold,crimson bgs:300%,300% kf:class|kf:0 bgr:90|kf:100 bgr:90',
 				'Tutorial: Combine filters':'gs:1 bl:10',
 				'Tutorial: Saturate filter':'sat:10',
