@@ -280,6 +280,7 @@ vii = (function(){
 		'bgs'	:'background-size',
 		'c'		:'color',
 		'bd'	:'border',
+		'br'	:'border-radius',
 		'x' 	:'translateX',
 		'y' 	:'translateY',
 		'z'		:'translateZ',
@@ -292,6 +293,7 @@ vii = (function(){
 		'scy' 	:'scaleY',
 		'rx'	:'rotateX',
 		'ry'	:'rotateY',
+		'rz'	:'rotateZ',
 		'to' 	:'transformOrigin',
 		'r3d'	:'rotate3d',
 		't3d'	:'translate3d',
@@ -308,6 +310,7 @@ vii = (function(){
 		'sat'	:'saturate',
 		'ds'	:'dropShadow',
 		'kf' 	:'percent',
+		'kd'	:'keyframeDuration',
 		'fm'	:'fillMode'
 	};
 	//a data map to format properties
@@ -589,10 +592,10 @@ vii = (function(){
 		'none' : function(v){return v}
 	};
 	formatMap['x'] = formatMap['y'] = formatMap.trans;
-	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['numberPX'];
+	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['br'] = formatMap['numberPX'];
 	formatMap['bg'] = formatMap['bgc'] = formatMap['c'] = formatMap['color'];
-	formatMap['rx'] = formatMap['ry'] = formatMap.deg;
-	formatMap.d = formatMap.dur = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap['none'];
+	formatMap['rx'] = formatMap['ry'] = formatMap['rz'] = formatMap.deg;
+	formatMap.d = formatMap.dur = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap.kd = formatMap['none'];
 	function cleanWhiteSpace(s){
 		return s.replace(/\s\s+/g, ' ');
 	}
@@ -656,7 +659,7 @@ vii = (function(){
 				}
 			}
 			//clean transforms
-			if('translate' in o || 'translateX' in o || 'translateY' in o || 'translateZ' in o || 'rotate' in o || 'skew' in o || 'scale' in o || 'scaleX' in o || 'scaleY' in o || 'perspective' in o || 'scale3d' in o || 'translate3d' in o || 'rotate3d' in o || 'rotateX' in o || 'rotateY' in o){
+			if('translate' in o || 'translateX' in o || 'translateY' in o || 'translateZ' in o || 'rotate' in o || 'skew' in o || 'scale' in o || 'scaleX' in o || 'scaleY' in o || 'perspective' in o || 'scale3d' in o || 'translate3d' in o || 'rotate3d' in o || 'rotateX' in o || 'rotateY' in o || 'rotateZ' in o){
 				o['transform'] = '';
 				if('perspective' in o){
 					o['transform'] += o['perspective'];
@@ -687,6 +690,11 @@ vii = (function(){
 					o['transform'] += 'rotateY(' + o['rotateY']+ ') ';
 					global.has3D = true;
 					delete o['rotateY'];
+				}
+				if('rotateZ' in o){
+					o['transform'] += 'rotateZ(' + o['rotateZ']+ ') ';
+					global.has3D = true;
+					delete o['rotateZ'];
 				}
 				if('translateZ' in o){
 					o['transform'] += o['translateZ'];
@@ -787,8 +795,8 @@ vii = (function(){
 				o.percent = (i == global.startFrom)?'0%':(i == global.frameQty - 1)?'100%':(Math.floor(i/((global.frameQty - global.startFrom) - 1) * 100)) + '%';
 			}
 			//use time instead of percent
-			if(o.kd){
-				dur += parseFloat(o.kd);
+			if(o.keyframeDuration){
+				dur += parseFloat(o.keyframeDuration);
 				o._step = dur;
 				isKeyframeDuration = true;
 			}else{
@@ -796,14 +804,14 @@ vii = (function(){
 				o._step = dur;
 			}
 		}
-		dur = dur.toFixed(2);
+		dur = parseFloat(dur.toFixed(3) + '');
 		//fix the percentage if there is any keyframeDuration available
 		if(isKeyframeDuration){
 			for(i = global.startFrom; i < global.frameQty; i++){
 				var o = frames[i];
 				var pos = (Math.round(o._step/dur * 100));
 				o.percent = (i == global.startFrom && o._step == 0)?'0%':(i == global.frameQty - 1 && pos == 100)?'100%':pos + '%';
-				delete o['kd'];
+				delete o['keyframeDuration'];
 				delete o['_step'];
 			}
 			frames[0].duration = dur + '';		

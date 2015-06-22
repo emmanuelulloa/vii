@@ -68,7 +68,11 @@
 		margin-bottom: 3px;
 		outline:0;
 	}
-
+	.pull_left{
+		float: left;
+		clear: right;
+		display: block;
+	}
 	/*n:header d:600ms dy:300ms to:ct op:0 p3d:800 r3d:x,-180|op:1 r3d:x,0*/
 	@keyframes header {
 		from {
@@ -363,24 +367,25 @@
 	-webkit-transform: scale(1.2) ;
 	outline: 0;
 }
-.gistButton{
+.externalIDE_btn{
 	font-size: 80%;
 	color:white;
 	background-color: #555;
 	margin-top:-3px;
 	margin-bottom: 3px;
-	padding: 2px 3px 2px 3px;
-	border-bottom-right-radius: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;
+	padding: 3px 5px 3px 5px;
+	border-bottom-right-radius: 8px;
+	-webkit-border-bottom-right-radius: 8px;
+	border-bottom-left-radius: 8px;
+	-webkit-border-bottom-left-radius: 8px;
 	text-decoration: none;
-	display: block;
-	clear: both;
+	display: inline-block;
 	float: left;
-	width:100px;
 	text-align: center;
 	font-weight: normal;
+}
+.externalIDE_btn:nth-child(1){
+	clear: right;
 }
 @keyframes loaded {
 	0% {
@@ -510,7 +515,6 @@
 		<li>Press the GENERATE button to preview your animation.</li>
 		<li>Copy the generated code into a .css file.</li>
 	</ul>
-	<form>
 		<p>
 			<span class="vii"><strong>vii.
 			<select name="foo_sl" id="foo_sl" class="vii viiFoo">
@@ -532,14 +536,20 @@
 			<textarea class="vii viiCode viiGradient" id="code_txt"></textarea>
 			<div class="viiDemo">
 				<div class="viiHero">DEMO</div>
-			</div>
-			<a href="#" class="gistButton" id="gist">Save as gist</a>			
+			</div>			
 		</div>
-		
+		<div>
+		<a href="#" class="externalIDE_btn" id="gist">Save as gist</a>
+		<!--a href="#" class="externalIDE_btn" id="codepen">Edit on CodePen</a>
+		<form id="codepen_frm" action="http://codepen.io/pen/define" method="POST" target="_blank">
+			<input type="hidden" id="cp_data" name="data" value="{'html':'<div></div>','css':'/**/'}" />
+		</form-->
+		</div>
+		<div class="row">
 		<p class="small"><sup>*</sup>Animations are taken from <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 Animation Cheat Sheet</a>, <a href="http://daneden.github.io/animate.css/" target="_blank">Animate.css</a>, <a href="http://www.minimamente.com/example/magic_animations/" target="_blank">Magic Animations</a>, <a href="http://ianlunn.github.io/Hover/" target="_blank">Hover.css</a> and <a href="http://ademilter.com/lab/liffect/" target="_blank">liffect</a>.</p>
 		<p class="small">Easings taken from <a href="http://matthewlein.com/ceaser/" target="_blank">Ceaser</a>, <a href="http://cubic-bezier.com/" target="_blank">Lea Verou's cubic-bezier.com</a> and <a href="http://easings.net/" target="_blank">Easings.net</a>.</p>
-		<p class="small">Animated backgrounds inspired by <a href="http://www.gradient-animator.com/" target="_blank">CSS Gradient Animator</a>.</p>
-	</form>
+		<p class="small">Animated backgrounds inspired by <a href="http://www.gradient-animator.com/" target="_blank">CSS Gradient Animator</a>.</p>		
+		</div>
 	</div>
 	<div class="footer">
 		<p><a href="https://github.com/emmanuelulloa/vii" target="_blank">Download this project at GitHub</a></p>
@@ -553,6 +563,7 @@
 				$foo_sl = $('#foo_sl'),
 				$hero = $('.viiHero'),
 				$gist = $('#gist'),
+				$codepen = $('#codepen'),
 				styleTag;
 			function generateCode(){
 				$hero.removeClass(vii.getClassName());
@@ -588,7 +599,7 @@
 			  $(o).text(arr[i].t);
 			});
 			var tutorialPremades = {
-				'Tutorial: Keyframe duration':'n:randomName kf:class x:-200 y:-50% sc:0.2 rot:-20 to:bl bl:5 | kd:0.6 sc:1 sk:-20,0 x:25 y:0 e:fastOut | kd:0.3 sk:20,0 rot:-10 x:0 e:slowIn bl:0 | kd:0.2 bl:0 transform:none',
+				'Tutorial: Keyframe duration':'n:randomName kf:class x:-200 y:-50% sc:0.2 rot:-20 to:bl bl:5 op:0|kd:0.2 op:1|kd:0.6 sc:1 sk:-20,0 x:25 y:0 e:fastOut|kd:0.3 sk:20,0 rot:-10 x:0 e:slowIn bl:0|kd:0.2 bl:0 op:1 transform:none',
 				'Tutorial: Animated backgrounds' : 'n:gradientAnim d:1 dir:>< loop:-1 blg:180,gold,crimson bgs:300%,300% kf:class|kf:0 bgr:90|kf:100 bgr:90',
 				'Tutorial: Combine filters':'gs:1 bl:10',
 				'Tutorial: Saturate filter':'sat:10',
@@ -640,6 +651,10 @@
 				}).error(function(e){
 					console.log("Gist save error",e);
 				})				
+			});
+			$codepen.click(function(event){
+				$('#cp_data').val("{'html':'<div class=\"" + vii.getClassName() + "\" style=\"border:1px solid black;background:green;width:100px;height:100px;position:absolute;display:block;\">vii</div>','css':'"+vii.getCode()+"'}");
+				$('#codepen_frm').submit();
 			});
 		})
 	</script>
