@@ -309,12 +309,32 @@ vii = (function(){
 		'inv'	:'invert',
 		'sat'	:'saturate',
 		'ds'	:'dropShadow',
+		'ss'	:'scale',
 		'kf' 	:'percent',
 		'kd'	:'keyframeDuration',
 		'fm'	:'fillMode'
 	};
 	//a data map to format properties
 	var formatMap = {
+		'ss':function(v){
+			var raw = [1,1], x = 1, y = 1, s = 1;
+			if(v.indexOf(',') != -1){
+				raw = v.split(',');
+				v = parseFloat(raw[0]);
+				s = parseFloat(raw[1]);
+			}else{
+				v = parseFloat(v);
+			}
+			v = (v > 2)?0.9:(v <= 0)?0.1:v;
+			if(v < 1){
+				x = v;
+				y = parseFloat((1 + (1 - v)).toFixed(3));
+			}else if(v > 1){
+				x = v;
+				y = parseFloat((1 - (v - 1)).toFixed(3));
+			}
+			return 'scale(' + (x * s) + ',' + (y * s) + ') ';
+		},
 		'bl':function(v){
 			return 'blur(' + v +'px) ';
 		},

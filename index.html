@@ -599,6 +599,8 @@
 			  $(o).text(arr[i].t);
 			});
 			var tutorialPremades = {
+				'Tutorial: Walk cycle':'n:walk dy:-0.5 loop:-1 kf:class e:linear to:50%,5%|kd:0 x:-20 y:0 rot:25|kd:0.3 x:0 y:-10 rot:-5|kd:0.2 x:20 y:0 rot:-20|kd:0.3 y:0 rot:0|kd:0.2 x:-20 y:0 rot:25',
+				'Tutorial: Squash & Stretch' : 'n:squashStretch loop:-1 dir:>< kf:class to:cb|ss:0.8|ss:1.3',
 				'Tutorial: Keyframe duration':'n:randomName kf:class x:-200 y:-50% sc:0.2 rot:-20 to:bl bl:5 op:0|kd:0.2 op:1|kd:0.6 sc:1 sk:-20,0 x:25 y:0 e:fastOut|kd:0.3 sk:20,0 rot:-10 x:0 e:slowIn bl:0|kd:0.2 bl:0 op:1 transform:none',
 				'Tutorial: Animated backgrounds' : 'n:gradientAnim d:1 dir:>< loop:-1 blg:180,gold,crimson bgs:300%,300% kf:class|kf:0 bgr:90|kf:100 bgr:90',
 				'Tutorial: Combine filters':'gs:1 bl:10',
