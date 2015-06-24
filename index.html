@@ -500,6 +500,16 @@
 	font-style: italic;
 	text-align: justify;
 }
+#new_btn{
+	text-decoration: none;
+	border-radius: 4px;
+	background-color: dimgray;
+	color:gainsboro;
+	font-size: 80%;
+	font-weight: bold;
+	padding: 3px;
+
+}
 </style>
 </head>
 <body>
@@ -531,6 +541,7 @@
 			<select class="vii viiFoo" id="preMade_sl">
 			</select>
 			<sup>*</sup>
+			<a href="#" id="new_btn">CREATE NEW</a>
 		</p>
 		<div class="row">
 			<textarea class="vii viiCode viiGradient" id="code_txt"></textarea>
@@ -548,7 +559,8 @@
 		<div class="row">
 		<p class="small"><sup>*</sup>Animations are taken from <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 Animation Cheat Sheet</a>, <a href="http://daneden.github.io/animate.css/" target="_blank">Animate.css</a>, <a href="http://www.minimamente.com/example/magic_animations/" target="_blank">Magic Animations</a>, <a href="http://ianlunn.github.io/Hover/" target="_blank">Hover.css</a> and <a href="http://ademilter.com/lab/liffect/" target="_blank">liffect</a>.</p>
 		<p class="small">Easings taken from <a href="http://matthewlein.com/ceaser/" target="_blank">Ceaser</a>, <a href="http://cubic-bezier.com/" target="_blank">Lea Verou's cubic-bezier.com</a> and <a href="http://easings.net/" target="_blank">Easings.net</a>.</p>
-		<p class="small">Animated backgrounds inspired by <a href="http://www.gradient-animator.com/" target="_blank">CSS Gradient Animator</a>.</p>		
+		<p class="small">Animated backgrounds inspired by <a href="http://www.gradient-animator.com/" target="_blank">CSS Gradient Animator</a>.</p>
+		<p class="small">Multiple animations inspired by <a href="http://bennettfeely.com/cssynth/" target="_blank">CSSYNTH</a>.</p>		
 		</div>
 	</div>
 	<div class="footer">
@@ -564,6 +576,7 @@
 				$hero = $('.viiHero'),
 				$gist = $('#gist'),
 				$codepen = $('#codepen'),
+				$new_btn = $('#new_btn'),
 				styleTag;
 			function generateCode(){
 				$hero.removeClass(vii.getClassName());
@@ -598,31 +611,7 @@
 			  o.value = arr[i].v;
 			  $(o).text(arr[i].t);
 			});
-			var tutorialPremades = {
-				'Tutorial: Walk cycle':'n:walk dy:-0.5 loop:-1 kf:class e:linear to:50%,5%|kd:0 x:-20 y:0 rot:25|kd:0.3 x:0 y:-10 rot:-5|kd:0.2 x:20 y:0 rot:-20|kd:0.3 y:0 rot:0|kd:0.2 x:-20 y:0 rot:25',
-				'Tutorial: Squash & Stretch' : 'n:squashStretch loop:-1 dir:>< kf:class to:cb|ss:0.8|ss:1.3',
-				'Tutorial: Keyframe duration':'n:randomName kf:class x:-200 y:-50% sc:0.2 rot:-20 to:bl bl:5 op:0|kd:0.2 op:1|kd:0.6 sc:1 sk:-20,0 x:25 y:0 e:fastOut|kd:0.3 sk:20,0 rot:-10 x:0 e:slowIn bl:0|kd:0.2 bl:0 op:1 transform:none',
-				'Tutorial: Animated backgrounds' : 'n:gradientAnim d:1 dir:>< loop:-1 blg:180,gold,crimson bgs:300%,300% kf:class|kf:0 bgr:90|kf:100 bgr:90',
-				'Tutorial: Combine filters':'gs:1 bl:10',
-				'Tutorial: Saturate filter':'sat:10',
-				'Tutorial: Invert filter':'inv:1',
-				'Tutorial: Hue-Rotate filter':'hue:180',
-				'Tutorial: Contrast filter':'con:10',
-				'Tutorial: Brightness filter':'br:10',
-				'Tutorial: Sepia filter':'sep:1',
-				'Tutorial: Drop Shadow filter': 'ds:1,10,6,#CCC',
-				'Tutorial: Grayscale filter': 'gs:0|gs:1',
-				'Tutorial: Blur filter': 'bl:0|bl:10',
-				'Tutorial: steps easing (sprite animation)': 'n:frameWidthIs100pxImageWidthIs500px d:2 loop:-1 steps:4 fps:4 bgp:-400px,0px',
-				'Tutorial: Rotate 3 times' : 'spin:3',
-				'Tutorial: 3D Transforms': 'n:my3D kf:0 p3d:800 r3d:xy,180 t3d:25,30,15|kf:100 p3d:300 rx:90 ry:-90 z:50',
-				'Tutorial: Transforms': 'n:myTransforms kf:0 to:tl x:0 y:0 sc:1 rot:180 sk:10|kf:100 to:b x:100 y:-50 sc:2.2 rot:0 sk:0',
-				'Tutorial: CSS properties (shorthand)' : 'n:myCSS l:100 t:25 w:50 h:50 bgc:#F00|l:0 t:0 w:200 h:25 bgc:#00F',
-				'Tutorial: CSS properties' : 'n:myCascadingStyleSheets left:100px top:25px width:50px height:50px background-color:#F00|left:0px top:0px width:200px height:25px background-color:#00F',
-				'Tutorial: Auto-keyframes': 'x:0|x:100|x:150|x:125|x:110',
-				'Tutorial: Keyframes' : 'kf:0|kf:30|kf:50%,70%|kf:60|kf:100',
-				'Tutorial: Animation Parameters':'n:animationName dur:2 e:easeOut dy:3 loop:4 dir:>< fm:<>'
-			}
+			var tutorialPremades = vii.getTutorial();
 			for(var k in tutorialPremades){
 				$preMade_sl.prepend('<option value="' + tutorialPremades[k] + '">' + k + '</option>')
 			}
@@ -657,6 +646,12 @@
 			$codepen.click(function(event){
 				$('#cp_data').val("{'html':'<div class=\"" + vii.getClassName() + "\" style=\"border:1px solid black;background:green;width:100px;height:100px;position:absolute;display:block;\">vii</div>','css':'"+vii.getCode()+"'}");
 				$('#codepen_frm').submit();
+			});
+			$new_btn.click(function(event){
+				$command_txt.val('');
+				$command_txt.focus();
+				event.preventDefault();
+				return false;
 			});
 		})
 	</script>
