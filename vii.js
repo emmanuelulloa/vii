@@ -247,7 +247,6 @@ vii = (function(){
 		'bobble'		: 'n:bobble d:2 loop:-1 y:0% e:easeIn|y:10% e:easeOut|y:0%',
 		'pulsate'		: 'n:pulsate d:3 e:linear loop:-1 kf:0 sc:1|kf:30 sc:1.4|kf:50 sc:1|kf:100 sc:1',
 		'bump'			: 'n:bump d:3 e:linear dy:2 loop:-1 y:0|y:-10|y:0|y:10|y:0'
-
 	}
 	var tutorial = {
 		'Tutorial: Walk cycle':'n:walk dy:-0.5 loop:-1 kf:class e:linear to:50%,5%|kd:0 x:-20 y:0 rot:25|kd:0.3 x:0 y:-10 rot:-5|kd:0.2 x:20 y:0 rot:-20|kd:0.3 y:0 rot:0|kd:0.2 x:-20 y:0 rot:25',
@@ -273,11 +272,11 @@ vii = (function(){
 		'Tutorial: CSS properties' : 'n:myCascadingStyleSheets left:100px top:25px width:50px height:50px background-color:#F00|left:0px top:0px width:200px height:25px background-color:#00F',
 		'Tutorial: Auto-keyframes': 'x:0|x:100|x:150|x:125|x:110',
 		'Tutorial: Keyframes' : 'kf:0|kf:30|kf:50,70|kf:60|kf:100',
-		'Tutorial: Animation Parameters':'n:animationName dur:2 e:easeOut dy:3 loop:4 dir:>< fm:<>'
+		'Tutorial: Animation Parameters':'n:animationName dur:2 e:easeOut dy:3 loop:4 dir:>< fm:<> sh:true'
 	}
 	//check if a property is a configuration property or css property
 	function isCSS(prop){	
-		return (('isTransition name duration loop ease delay fillMode useAll percent transform useLongForm useHacks transformOrigin direction animationTimingFunction animationPlayState play animationIterationCount backfaceVisibility filter').indexOf(prop) === -1);
+		return (('isTransition name duration loop ease delay fillMode useAll percent transform useShortHand useHacks transformOrigin direction animationTimingFunction animationPlayState play animationIterationCount backfaceVisibility filter').indexOf(prop) === -1);
 	}
 	//a data map to shorcut words so tweens can be created Emmet style
 	var propMap = {
@@ -338,10 +337,14 @@ vii = (function(){
 		'ss'	:'scale',
 		'kf' 	:'percent',
 		'kd'	:'keyframeDuration',
-		'fm'	:'fillMode'
+		'fm'	:'fillMode',
+		'sh'	:'useShortHand'
 	};
 	//a data map to format properties
 	var formatMap = {
+		'sh':function(v){
+			return Boolean(v.toLowerCase());
+		},
 		'ss':function(v){
 			var raw = [1,1], x = 1, y = 1, s = 1;
 			if(v.indexOf(',') != -1){
@@ -425,7 +428,7 @@ vii = (function(){
 			}
 			return 'perspective(' + v + ') ';
 		},
-		'numberPX' : function(v){
+		'_numberPX' : function(v){
 			if(v.indexOf('%') != -1){
 				return v;
 			}
@@ -435,12 +438,17 @@ vii = (function(){
 			return v;
 		},
 		'color' : function(v){
-			/*if(v.indexOf('#') == -1){
-				return '#' + v;
-			}*/
+			if(v.indexOf('#') == -1){
+				if(/(^[0-9A-F]{6}$)|(^[0-9A-F]{3}$)/i.test(v)){
+					return '#' + v;
+				}
+			}
 			return v;
 		},
-		'trans' : function(v){
+		'tr':function(v){
+			return 'translate(' + v + ') ';
+		},
+		'_transPX' : function(v){
 			if(v.indexOf('%') != -1){
 				return v;
 			}
@@ -482,7 +490,7 @@ vii = (function(){
 				return 'class';
 			}
 			if(v.indexOf(',')!= -1){
-				s = v.indexOf('%') != -1 ? v : v.replace(',', '%, ') + '%';
+				s = v.indexOf('%') != -1 ? v : v.replace(/,/g, ' ').replace(/ /g,'%,') + '%';
 			}else if(v.indexOf('%') != -1){
 				s = v;
 			}else {
@@ -570,8 +578,8 @@ vii = (function(){
 				'br':315,
 			};
 			map.horizontal = map.l;
-			map.vertical = map.b;
-			map.diagonal = map.bl
+			map.vertical   = map.b;
+			map.diagonal   = map.bl
 			map.h = map.horizontal;
 			map.v = map.vertical;
 			map.d = map.diagonal;
@@ -651,8 +659,8 @@ vii = (function(){
 		},
 		'none' : function(v){return v}
 	};
-	formatMap['x'] = formatMap['y'] = formatMap.trans;
-	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['br'] = formatMap['numberPX'];
+	formatMap['x'] = formatMap['y'] = formatMap._transPX;
+	formatMap['h'] = formatMap['t'] = formatMap['l'] = formatMap['r'] = formatMap['b'] = formatMap['fz'] = formatMap['w'] = formatMap['br'] = formatMap['_numberPX'];
 	formatMap['bg'] = formatMap['bgc'] = formatMap['c'] = formatMap['color'];
 	formatMap['rx'] = formatMap['ry'] = formatMap['rz'] = formatMap.deg;
 	formatMap.d = formatMap.dur = formatMap.e = formatMap.m = formatMap.p = formatMap.op = formatMap.bd = formatMap.dy = formatMap.n = formatMap.kd = formatMap['none'];
@@ -774,6 +782,10 @@ vii = (function(){
 						o['transform'] += 'translateY(' + o['translateY'] + ') ';
 						delete o['translateY'];
 					}				
+				}
+				if('translate' in o){
+					o['transform'] += o['translate'];
+					delete o['translate'];
 				}
 				if('scaleX' in o){
 					o['transform'] += o['scaleX'];
@@ -954,7 +966,7 @@ vii = (function(){
 			p = prop.percent || 'to',
 			isPlaying = prop.play || prop.animationPlayState || 'running',
 			useAll = prop.useAll || false,
-			useLongForm = prop.useLongForm || true,
+			useShortHand = prop.useShortHand || false,
 			useHacks = Boolean(prop.useHacks) || false,
 			hacks = '',
 			t = '',
@@ -1072,8 +1084,8 @@ vii = (function(){
 			}
 			//animation code
 			t = '';
-			if(!useLongForm){
-				t += 'animation: ' + n + _s + d + _s + (ceaser[e]?ceaser[e]:e) + _s + ((nTimes == 1)?dy + dypx + _s : '' + _s) + l + _s + ad + _e + _n;
+			if(useShortHand){
+				t += 'animation: ' + n + _s + d + dpx + _s + (ceaser[e]?ceaser[e]:e) + _s + ((nTimes == 1)?dy + dypx + _s : '' + _s) + l + _s + ad + _e + _n;
 				s += _t + t;
 				s += _t + _w + t;				
 			}else{

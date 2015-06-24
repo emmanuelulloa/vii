@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>vii: The CSS3 Animation Generator</title>
+	<title>vii CSS3 Animation Tool</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<meta property="og:image" content="http://emmanuelulloa.com/vii/vii.png"/>
 	<meta property="og:title" content="vii: The CSS3 Animation Generator"/>
@@ -10,6 +10,7 @@
 	<meta property="og:url" content="http://emmanuelulloa.com/vii"/>
 	<meta property="og:site_name" content="EmmanuelUlloa.com"/>
 	<meta property="og:type" content="blog"/>
+	<link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script type="text/javascript" src="vii.js"></script>
 	<style type="text/css">
@@ -38,6 +39,7 @@
 		-webkit-transform-style: preserve-3d;
 	}
 	h1 {
+		font-family: 'Architects Daughter', cursive;
 		padding-bottom: 10px;
 		font-size: 200%;
 	}
@@ -259,6 +261,7 @@
 		padding:5px;
 		border-radius: 3px;
 		-webkit-border-radius: 3px;
+		width: auto;
 	}
 	.viiString {
 		background:#555;
@@ -500,21 +503,27 @@
 	font-style: italic;
 	text-align: justify;
 }
-#new_btn{
+.new_btn{
 	text-decoration: none;
 	border-radius: 4px;
 	background-color: dimgray;
 	color:gainsboro;
 	font-size: 80%;
-	font-weight: bold;
-	padding: 3px;
-
+	padding: 3px 5px 3px 5px;
+	border-bottom: 3px solid #555;
+	transition: all 0.5s ease 0s;
+	-webkit-transition: all 0.5s ease 0s;
+}
+.new_btn:hover, .new_btn:focus, .new_btn:active {
+	background-color: dodgerblue;
+	border-bottom: 3px solid royalblue;
+	color: white;
 }
 </style>
 </head>
 <body>
 	<div class="header">
-		<h1><span class="vii logo">vii</span>: The css3 Animation Generator</h1>
+		<h1><span class="vii logo">vii</span> css3 Animation Tool</h1>
 	</div>
 	<div class="content">
 	<p class="ad">This tool helps you write the code for CSS animations really fast. No need to worry about prefixes or the correct transform strings or even your keyframe names!</p>
@@ -537,11 +546,11 @@
 			<a href="#" class="viiButton" id="generate_btn">GENERATE</a>
 		</p>
 		<p>
-			Load a pre-made animation:
+			<a href="#" id="new_btn" class="new_btn">Create New</a> or load a pre-made animation:
 			<select class="vii viiFoo" id="preMade_sl">
 			</select>
 			<sup>*</sup>
-			<a href="#" id="new_btn">CREATE NEW</a>
+			
 		</p>
 		<div class="row">
 			<textarea class="vii viiCode viiGradient" id="code_txt"></textarea>
