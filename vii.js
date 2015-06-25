@@ -249,11 +249,14 @@ vii = (function(){
 		'bump'			: 'n:bump d:3 e:linear dy:2 loop:-1 y:0|y:-10|y:0|y:10|y:0'
 	}
 	var tutorial = {
+		'Tutorial: Timeline sketch (advanced)' :'[0S..5..1..@..=..-ss^^..RrrR..v..^.S=S+..<..>.<.><>.=]',
+		'Tutorial: Timeline sketch' :'[.....*....**..*.*......*]',
 		'Tutorial: Walk cycle':'n:walk dy:-0.5 loop:-1 kf:class e:linear to:50%,5%|kd:0 x:-20 y:0 rot:25|kd:0.3 x:0 y:-10 rot:-5|kd:0.2 x:20 y:0 rot:-20|kd:0.3 y:0 rot:0|kd:0.2 x:-20 y:0 rot:25',
 		'Tutorial: Squash & Stretch' :'n:squashStretch loop:-1 dir:>< kf:class to:cb|ss:0.8|ss:1.3',
 		'Tutorial: Keyframe duration':'n:randomName kf:class x:-200 y:-50% sc:0.2 rot:-20 to:bl bl:5 op:0|kd:0.2 op:1|kd:0.6 sc:1 sk:-20,0 x:25 y:0 e:fastOut|kd:0.3 sk:20,0 rot:-10 x:0 e:slowIn bl:0|kd:0.2 bl:0 op:1 transform:none',
 		'Tutorial: Multiple elements':'n:sync*10 loop:-1 d:3 dy:100ms kf:0,100 sc:0 spin:0|kf:45,55 sc:1 spin:3',
-		'Tutorial: Animated backgrounds' : 'n:gradientAnimation d:1 dir:>< loop:-1 blg:br,gold,crimson bgs:50%,50% kf:class|kf:0 bgp:0%,0%|kf:100 bgp:-200%,-200%',
+		'Tutorial: Animated backgrounds 2' :'n:gradientAnimation2 d:1 dir:> loop:-1 e:linear blg:br,gold,crimson bgs:50%,50% kf:class|kf:0 bgp:tl|kf:100 bgp:br',
+		'Tutorial: Animated backgrounds 1' :'n:gradientAnimation1 d:3 dir:> loop:-1 e:linear blg:t,gold,crimson,gold bgs:200%,200% kf:class|kf:0 bgp:0%,0%|kf:100 bgp:-200%,-200%',
 		'Tutorial: Combine filters':'gs:1 bl:10',
 		'Tutorial: Saturate filter':'sat:10',
 		'Tutorial: Invert filter':'inv:1',
@@ -301,7 +304,6 @@ vii = (function(){
 		'bgc'	:'background-color',
 		'blg'	:'background',
 		'bgp'	:'background-position',
-		'bgr'	:'background-position',
 		'bgs'	:'background-size',
 		'c'		:'color',
 		'bd'	:'border',
@@ -561,21 +563,15 @@ vii = (function(){
 			return (60/1000 * parseInt(v)).toFixed(1) + 's';
 		},
 		'bgp':function(v){
-			if(v.indexOf(',')){
-				return v.replace(',',' ');
-			}
-			return v;
-		},
-		'bgr':function(v,i){
 			var map = {
-				'b':0,
-				'l':90,
-				'tl':135,
-				'bl':45,
-				't' :180, 
-				'tr':225,
-				'r' :270,
-				'br':315,
+				't' :'50% 0%',
+				'b' :'50% 100%',
+				'l':'0% 50%',
+				'tl':'0% 0%',
+				'bl':'0% 100%',
+				'tr':'100% 0%',
+				'r' :'100% 50%',
+				'br':'100% 100%',
 			};
 			map.horizontal = map.l;
 			map.vertical   = map.b;
@@ -583,29 +579,13 @@ vii = (function(){
 			map.h = map.horizontal;
 			map.v = map.vertical;
 			map.d = map.diagonal;
-			var a = (map[v] !== undefined)?map[v]:parseInt(v); //* Math.PI/180
-			a = (a > 360)? a % 360 : a;
-			var x,y,t;
-			if((a<45)||((a>135)&&(a<225))||(a>315)){
-				t = Math.tan((180 - a) * Math.PI/180);
-				if(i == global.startFrom){
-					x = 0;
-					y = 100 - parseInt((50 * t) + 50);
-				}else if(i == global.frameQty -1){
-					x = 100;
-					y = 100 - parseInt(50 - (50 * t));
-				}
-			}else{
-				t = Math.tan((a - 90) * Math.PI/180);
-				if(i == global.startFrom){
-					x = 100 - parseInt((50 * t) + 50);
-					y = 0;
-				}else if(i == global.frameQty -1){
-					x = 100 - parseInt(50 - (50 * t));
-					y = 100;
-				}
+			if(map[v]){
+				return map[v];
 			}
-			return x + '% ' + y + '%';
+			if(v.indexOf(',')){
+				return v.replace(',',' ');
+			}
+			return v;
 		},
 		'bgs':function(v){
 			if(v === '<>'){
@@ -674,20 +654,74 @@ vii = (function(){
 	var global = {};
 	global.className = 'myTween';
 	global.code = '/* No css has been created */';
+	global.command = '/**/';
 	global.frameQty = 0;
 	global.startFrom = 0;
+	//create timeline
+	function createTimeline(v){
+		//[......*..**...]
+		var r = 'n:randomName e:linear d:';
+		var t = v.replace('[','');
+		t = t.replace(']','');
+		var l = t.length;
+		r += parseFloat((l * 0.06).toFixed(2)) + 's kf:class';
+		function isKeyframe(v){
+			return (('*><vV^015rR-+sS@=').indexOf(v) != -1)
+		}
+		function getKeyframeValue(v){
+			var map = {
+				'*' : '',
+				'<' : ' x:-10',
+				'>' : ' x:10',
+				'v' : ' y:10',
+				'V' : ' y:10',
+				'^' : ' y:-10',
+				'0' : ' op:0',
+				'1' : ' op:1',
+				'5' : ' op:.5',
+				'r' : ' rot:-45',
+				'R' : ' rot:45',
+				'-'	: ' rot:-90',
+				'+' : ' rot:90',
+				'@' : ' spin:1',
+				's' : ' sc:0.5',
+				'S' : ' sc:1.5',
+				'=' : ' transform:none op:1'
+			}
+			return map[v];
+		}
+		for(var i=0; i<l; i++){
+			if(isKeyframe(t[i])){
+				if(i == 0){
+					r += '|kf:0' + getKeyframeValue(t[i]);
+				}else if(i == l - 1){
+					r += '|kf:100' + getKeyframeValue(t[i]);
+				}else{
+					r += '|kf:' + Math.round((i+1)/l * 100) + getKeyframeValue(t[i]);
+				}
+			}
+		}
+		return r;
+	}
 	//receives an object or spring and parse and reads its data
 	function parse(val){
 		//RESET
 		global.className = 'myTween';
 		global.code = '/* No css has been created */';
+		global.command = '/**/';
 		global.frameQty = 0;
 		global.startFrom = 0;
 		//begin parsing
 		var fr = [];
 		if(typeof val === 'string'){
 			if(preMade[val]){
+				global.command = val;
 				return parse(preMade[val]);
+			}
+			//is it a timeline?
+			if(val[0] == '[' && val[val.length - 1] == ']'){
+				global.command = createTimeline(val);
+				return parse(global.command);
 			}
 			//is string
 			if(val.indexOf('|') !== -1){
@@ -853,7 +887,8 @@ vii = (function(){
 			}
 			frames.push(o);
 		}
-		global.frameQty = frames.length
+		global.frameQty = frames.length;
+		global.command = val;
 		return fixKeyframePercent(frames);
 	}
 	function fixKeyframePercent(frames){
@@ -1022,6 +1057,7 @@ vii = (function(){
 		if(l == '-1'){
 			l = 'infinite';
 		}
+		s += '/* '+ global.command + ' */' + _n;
 		//KEYFRAMES
 		if(isTransition < 1){
 			//keyframes
