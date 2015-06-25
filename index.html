@@ -411,37 +411,27 @@
 		height : 260px;
 	}
 }
-@-webkit-keyframes loaded {
-	0% {
-		height : 260px;
-	}
-	30% {
-		height : 1px;
-	}
-	80% {
-		height : 300px;
-	}
-	100% {
-		height : 260px;
-	}
-}
-.loaded{
-	animation-name: loaded;
-	animation-duration: 800ms;
-	animation-timing-function: ease;
-	animation-delay: 0s;
+.social{
+	width: 96%;
+	min-width: 480px;
+	padding: 10px 2% 10px 2%;
+	float: left;
+	animation-name: footer;
+	animation-duration: 0.5s;
+	animation-timing-function: cubic-bezier(.19,1,.22,1);
+	animation-delay: 1.8s;
 	animation-iteration-count: 1;
 	animation-direction: normal;
-	animation-fill-mode: forwards;
+	animation-fill-mode: both;
 	animation-play-state: running;
-	-webkit-animation-name: loaded;
-	-webkit-animation-duration: 800ms;
-	-webkit-animation-timing-function: ease;
-	-webkit-animation-delay: 0s;
+	-webkit-animation-name: footer;
+	-webkit-animation-duration: 0.5s;
+	-webkit-animation-timing-function: cubic-bezier(.19,1,.22,1);
+	-webkit-animation-delay: 1.8s;
 	-webkit-animation-iteration-count: 1;
 	-webkit-animation-direction: normal;
-	-webkit-animation-fill-mode: forwards;
-	-webkit-animation-play-state: running;
+	-webkit-animation-fill-mode: both;
+	-webkit-animation-play-state: running;	
 }
 @keyframes footer {
 	from {
@@ -474,7 +464,7 @@
 	animation-name: footer;
 	animation-duration: 0.5s;
 	animation-timing-function: cubic-bezier(.19,1,.22,1);
-	animation-delay: 1.8s;
+	animation-delay: 2s;
 	animation-iteration-count: 1;
 	animation-direction: normal;
 	animation-fill-mode: both;
@@ -482,7 +472,7 @@
 	-webkit-animation-name: footer;
 	-webkit-animation-duration: 0.5s;
 	-webkit-animation-timing-function: cubic-bezier(.19,1,.22,1);
-	-webkit-animation-delay: 1.8s;
+	-webkit-animation-delay: 2s;
 	-webkit-animation-iteration-count: 1;
 	-webkit-animation-direction: normal;
 	-webkit-animation-fill-mode: both;
@@ -529,6 +519,14 @@
 </style>
 </head>
 <body>
+<div id="fb-root"></div>
+	<script>(function(d, s, id) {
+	  var js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3&appId=234326719923390";
+	  fjs.parentNode.insertBefore(js, fjs);
+	}(document, 'script', 'facebook-jssdk'));</script>
 	<div class="header">
 		<h1><span class="vii logo">vii</span> css3 Animation Tool</h1>
 	</div>
@@ -577,6 +575,11 @@
 		<p class="small">Animated backgrounds inspired by <a href="http://www.gradient-animator.com/" target="_blank">CSS Gradient Animator</a>.</p>
 		<p class="small">Multiple animations inspired by <a href="http://bennettfeely.com/cssynth/" target="_blank">CSSYNTH</a>.</p>		
 		</div>
+	</div>
+	<div class="social">
+		<a href="https://twitter.com/share" class="twitter-share-button" data-text="vii CSS Animation Tool" data-via="emmanuelulloa" data-hashtags="cssanimation">Tweet</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+		<div class="fb-share-button" data-href="http://emmanuelulloa.com/vii/" data-layout="button_count"></div>
 	</div>
 	<div class="footer">
 		<p><a href="https://github.com/emmanuelulloa/vii" target="_blank">Download this project at GitHub</a></p>
