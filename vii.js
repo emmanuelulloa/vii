@@ -249,7 +249,7 @@ vii = (function(){
 		'bump'			: 'n:bump d:3 e:linear dy:2 loop:-1 y:0|y:-10|y:0|y:10|y:0'
 	}
 	var tutorial = {
-		'Tutorial: Timeline sketch (advanced)' :'[0S..5..1..@..=..-ss^^..RrrR..v..^.S=S+..<..>.<.><>.=]',
+		'Tutorial: Timeline sketch (special characters)' :'[u.U.d.D.r.R.l.L.w.W.h.H.s.S.k.K.t.T.x.X.y.Y.z.Z.f.F.p.P.v.V.+.-.<.>.^._.@.0.5.1.#.=.8.2.4.6.7.9.m.M.n.N]',
 		'Tutorial: Timeline sketch' :'[.....*....**..*.*......*]',
 		'Tutorial: Walk cycle':'n:walk dy:-0.5 loop:-1 kf:class e:linear to:50%,5%|kd:0 x:-20 y:0 rot:25|kd:0.3 x:0 y:-10 rot:-5|kd:0.2 x:20 y:0 rot:-20|kd:0.3 y:0 rot:0|kd:0.2 x:-20 y:0 rot:25',
 		'Tutorial: Squash & Stretch' :'n:squashStretch loop:-1 dir:>< kf:class to:cb|ss:0.8|ss:1.3',
@@ -435,7 +435,9 @@ vii = (function(){
 				return v;
 			}
 			if(v.indexOf('px') == -1){
-				return v + 'px';
+				if(!isNaN(parseFloat(v))){
+					return v + 'px';
+				}
 			}
 			return v;
 		},
@@ -661,32 +663,71 @@ vii = (function(){
 	function createTimeline(v){
 		//[......*..**...]
 		var r = 'n:randomName e:linear d:';
-		var t = v.replace('[','');
+		var t = v.replace(/ /g,'').replace('[','');
 		t = t.replace(']','');
 		var l = t.length;
-		r += parseFloat((l * 0.06).toFixed(2)) + 's kf:class';
+		r += parseFloat((l * 0.06).toFixed(2)) + 's to:cc kf:class';
 		function isKeyframe(v){
-			return (('*><vV^015rR-+sS@=').indexOf(v) != -1)
+			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFpPvV+-<>^_@051#=824679mMnN').indexOf(v) != -1)
+		}
+		function randomColor(){
+			return '#' + Math.floor(Math.random()*16777215).toString(16); 
 		}
 		function getKeyframeValue(v){
 			var map = {
 				'*' : '',
-				'<' : ' x:-10',
-				'>' : ' x:10',
-				'v' : ' y:10',
-				'V' : ' y:10',
-				'^' : ' y:-10',
-				'0' : ' op:0',
-				'1' : ' op:1',
-				'5' : ' op:.5',
-				'r' : ' rot:-45',
-				'R' : ' rot:45',
-				'-'	: ' rot:-90',
-				'+' : ' rot:90',
-				'@' : ' spin:1',
+				'u'	: ' y:-10',
+				'U'	: ' y:-100%',
+				'd'	: ' y:10',
+				'D' : ' y:100%',
+				'r' : ' x:10',
+				'R' : ' x:100%',
+				'l' : ' x:-10',
+				'L' : ' x:-100%',
+				'w' : ' w:0',
+				'W' : ' w:auto',
+				'h' : ' h:0',
+				'H' : ' h:auto',
 				's' : ' sc:0.5',
-				'S' : ' sc:1.5',
-				'=' : ' transform:none op:1'
+				'S' : ' sc:2',
+				'k' : ' sk:-20',
+				'K' : ' sk:20',
+				't' : ' ss:1.5',
+				'T' : ' ss:0.5',
+				'x' : ' rx:-90',
+				'X' : ' rx:90',
+				'y' : ' ry:-90',
+				'Y' : ' ry:90',
+				'z' : ' z:-800',
+				'Z' : ' z:300',
+				'f' : ' sc:-1',
+				'F' : ' sc:1',
+				'p' : ' p3d:200',
+				'P' : ' p3d:800',
+				'+' : ' rot:45',
+				'-' : ' rot:-45',
+				'<' : ' rot:-90',
+				'>' : ' rot:90',
+				'^' : ' rot:0',
+				'v' : ' rot:-180',
+				'V' : ' rot:180',
+				'_' : ' to:cb',
+				'@' : ' spin:1',
+				'0' : ' op:0',
+				'5' : ' op:0.5',
+				'1' : ' op:1',
+				'#' : ' bgc:' + randomColor(),
+				'=' : ' op:1 transform:none',
+				'8' : ' op:0 y:-500%',
+				'2' : ' op:0 y:500%',
+				'4' : ' op:0 x:-500%',
+				'6' : ' op:0 x:500%',
+				'7' : ' op:0 rot:135',
+				'9' : ' op:0 rot:-135',
+				'm' : ' op:0 to:cc ry:180 z:300',
+				'M' : ' op:1 to:cc ry:0 z:0',
+				'n' : ' op:0 to:cc ry:-180 z:300',
+				'N' : ' op:1 to:cc ry:0 z:0'
 			}
 			return map[v];
 		}
@@ -697,7 +738,7 @@ vii = (function(){
 				}else if(i == l - 1){
 					r += '|kf:100' + getKeyframeValue(t[i]);
 				}else{
-					r += '|kf:' + Math.round((i+1)/l * 100) + getKeyframeValue(t[i]);
+					r += '|kf:' + parseFloat(((i+1)/l * 100).toFixed(2)) + getKeyframeValue(t[i]);
 				}
 			}
 		}
@@ -719,8 +760,9 @@ vii = (function(){
 				return parse(preMade[val]);
 			}
 			//is it a timeline?
-			if(val[0] == '[' && val[val.length - 1] == ']'){
-				global.command = createTimeline(val);
+			var tmpVal = trim(val);
+			if(tmpVal[0] == '[' && tmpVal[tmpVal.length - 1] == ']'){
+				global.command = createTimeline(tmpVal);
 				return parse(global.command);
 			}
 			//is string

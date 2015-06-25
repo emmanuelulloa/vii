@@ -307,10 +307,9 @@
 		overflow: auto;
 	}
 	.viiDemo {
-		background-color: gainsboro;
 		border-radius: 3px;
 		-webkit-border-radius: 3px;
-		border: 1px solid lightgray;
+		border: 2px solid lightgray;
 		display: inline-block;
 		width: 260px;
 		height: 260px;
@@ -318,6 +317,12 @@
 		margin-left: 5px;
 		margin-right: 5px;
 		margin-top: 5px;
+		transform-style: preserve-3d;
+		-webkit-transform-style: preserve-3d;
+		perspective: 500px;
+		-webkit-perspective: 500px; /* Chrome, Safari, Opera */
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden; /* Chrome, Safari, Opera */
 	}
 	.viiHero {
 		width: 50px;
@@ -334,6 +339,8 @@
 		margin-left: 105px;
 		margin-top: 105px;
 		cursor: pointer;
+		backface-visibility: visible;
+		-webkit-backface-visibility: visible; /* Chrome, Safari, Opera */
 	}
 /*vii.t('n:viiButton d:500ms e:spring bgc:deeppink c:white sc:1.5 x:35 y:5 rot:-5 to:cc');*/
 .viiButton {
@@ -535,6 +542,12 @@
 		<li>Copy the generated code into a .css file.</li>
 	</ul>
 		<p>
+			<a href="#" id="new_btn" class="new_btn">Create New</a> or load a pre-made animation:
+			<select class="vii viiFoo" id="preMade_sl">
+			</select>
+			<sup>*</sup>
+		</p>
+		<p>
 			<span class="vii"><strong>vii.
 			<select name="foo_sl" id="foo_sl" class="vii viiFoo">
 				<option value="k">k</option>
@@ -544,13 +557,6 @@
 			</select>
 			('<input type="text" class="vii viiString" value="n:myAnimation d:1000ms loop:-1 dir:>< dy:0.5 x:5 y:-5 sc:1.5 rot:30 op:.7" id="command_txt">')</strong></span>
 			<a href="#" class="viiButton" id="generate_btn">GENERATE</a>
-		</p>
-		<p>
-			<a href="#" id="new_btn" class="new_btn">Create New</a> or load a pre-made animation:
-			<select class="vii viiFoo" id="preMade_sl">
-			</select>
-			<sup>*</sup>
-			
 		</p>
 		<div class="row">
 			<textarea class="vii viiCode viiGradient" id="code_txt"></textarea>
