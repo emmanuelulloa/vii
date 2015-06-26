@@ -668,7 +668,7 @@ vii = (function(){
 		var l = t.length;
 		r += parseFloat((l * 0.06).toFixed(2)) + 's to:cc kf:class';
 		function isKeyframe(v){
-			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFpPvV+-<>^_@051#=824679mMnNcC/\\').indexOf(v) != -1)
+			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFpPvV+-<>^_@051#=824679mMnNoOcC/\\').indexOf(v) != -1)
 		}
 		function randomColor(){
 			return '#' + Math.floor(Math.random()*16777215).toString(16); 
@@ -728,10 +728,12 @@ vii = (function(){
 				'M' : ' op:1 to:cc ry:0 z:300',
 				'n' : ' op:0 to:cc ry:-180 z:300',
 				'N' : ' op:1 to:cc ry:0 z:300',
-				'/' : ' ry:-60',
-				'\\': ' ry:60',
+				'o' : ' op:0 sc:0',
+				'O' : ' op:0 sc:3',
 				'c' : ' x:0 y:0',
-				'C' : ' x:0 y:0 z:0'
+				'C' : ' x:0 y:0 z:0',
+				'/' : ' ry:-60',
+				'\\': ' ry:60'
 			}
 			return map[v];
 		}
