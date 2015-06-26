@@ -340,10 +340,14 @@ vii = (function(){
 		'kf' 	:'percent',
 		'kd'	:'keyframeDuration',
 		'fm'	:'fillMode',
-		'sh'	:'useShortHand'
+		'sh'	:'useShortHand',
+		'vis'	:'visibility'
 	};
 	//a data map to format properties
 	var formatMap = {
+		'vis':function(v){
+			return (v)?'visible':'hidden';
+		}
 		'sh':function(v){
 			return Boolean(v.toLowerCase());
 		},
@@ -662,7 +666,7 @@ vii = (function(){
 	//create timeline
 	function createTimeline(v){
 		function isKeyframe(v){
-			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFvV+-<>^_@#=015!234|6789oOmMnNbBpPqQcCeE/\\').indexOf(v) != -1)
+			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFvV+-<>^_@#=015iI!234|6789oOmMnNbBpPqQcCeE/\\').indexOf(v) != -1)
 		}
 		function randomColor(){
 			return '#' + Math.floor(Math.random()*16777215).toString(16); 
@@ -736,7 +740,9 @@ vii = (function(){
 				'b' : ' bl:0',
 				'B' : ' bl:10',
 				'e' : ' e:easeIn',
-				'E' : ' e:easeOut'
+				'E' : ' e:easeOut',
+				'i' : ' vis:0',
+				'I' : ' vis:1'
 			}
 			return map[v];
 		}
