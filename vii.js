@@ -262,7 +262,7 @@ vii = (function(){
 		'Tutorial: Invert filter':'inv:1',
 		'Tutorial: Hue-Rotate filter':'hue:180',
 		'Tutorial: Contrast filter':'con:10',
-		'Tutorial: Brightness filter':'br:10',
+		'Tutorial: Brightness filter':'bri:10',
 		'Tutorial: Sepia filter':'sep:1',
 		'Tutorial: Drop Shadow filter': 'ds:1,10,6,#CCC',
 		'Tutorial: Grayscale filter': 'gs:0|gs:1',
@@ -330,7 +330,7 @@ vii = (function(){
 		'bl'	:'blur',
 		'gs'	:'grayscale',
 		'sep'	:'sepia',
-		'br'	:'brightness',
+		'bri'	:'brightness',
 		'con'	:'contrast',
 		'hue'	:'hueRotate',
 		'inv'	:'invert',
@@ -375,7 +375,7 @@ vii = (function(){
 		'sep':function(v){
 			return 'sepia(' + v + ') ';
 		},
-		'br':function(v){
+		'bri':function(v){
 			return 'brightness(' + v + ') ';
 		},
 		'con':function(v){
@@ -661,14 +661,8 @@ vii = (function(){
 	global.startFrom = 0;
 	//create timeline
 	function createTimeline(v){
-		//[......*..**...]
-		var r = 'n:randomName e:linear d:';
-		var t = v.replace(/ /g,'').replace('[','');
-		t = t.replace(']','');
-		var l = t.length;
-		r += parseFloat((l * 0.06).toFixed(2)) + 's to:cc kf:class';
 		function isKeyframe(v){
-			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFpPvV+-<>^_@051#=824679mMnNoOcC/\\').indexOf(v) != -1)
+			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFvV+-<>^_@#=015!234|6789oOmMnNbBpPqQcCeE/\\').indexOf(v) != -1)
 		}
 		function randomColor(){
 			return '#' + Math.floor(Math.random()*16777215).toString(16); 
@@ -694,16 +688,10 @@ vii = (function(){
 				'K' : ' sk:20',
 				't' : ' ss:1.5',
 				'T' : ' ss:0.5',
-				'x' : ' rx:-90',
-				'X' : ' rx:90',
-				'y' : ' ry:-90',
-				'Y' : ' ry:90',
 				'z' : ' z:-800',
 				'Z' : ' z:300',
 				'f' : ' sc:-1,1',
-				'F' : ' sc:1,1',
-				'p' : ' p3d:200',
-				'P' : ' p3d:800',
+				'F' : ' sc:1,-1',
 				'+' : ' rot:45',
 				'-' : ' rot:-45',
 				'<' : ' rot:-90',
@@ -711,32 +699,78 @@ vii = (function(){
 				'^' : ' rot:0',
 				'v' : ' rot:-180',
 				'V' : ' rot:180',
+				'x' : ' rx:-90',
+				'X' : ' rx:90',
+				'y' : ' ry:-90',
+				'Y' : ' ry:90',
+				'/' : ' ry:-60',
+				'\\': ' ry:60',
 				'_' : ' to:cb',
 				'@' : ' spin:1',
+				'#' : ' bgc:' + randomColor(),
+				'=' : ' op:1 transform:none',
 				'0' : ' op:0',
 				'5' : ' op:0.5',
 				'1' : ' op:1',
-				'#' : ' bgc:' + randomColor(),
-				'=' : ' op:1 transform:none',
-				'8' : ' op:0 y:-500%',
-				'2' : ' op:0 y:500%',
-				'4' : ' op:0 x:-500%',
-				'6' : ' op:0 x:500%',
-				'7' : ' op:0 rot:135',
-				'9' : ' op:0 rot:-135',
-				'm' : ' op:0 to:cc ry:180 z:300',
-				'M' : ' op:1 to:cc ry:0 z:300',
-				'n' : ' op:0 to:cc ry:-180 z:300',
-				'N' : ' op:1 to:cc ry:0 z:300',
 				'o' : ' op:0 sc:0',
 				'O' : ' op:0 sc:3',
-				'c' : ' x:0 y:0',
-				'C' : ' x:0 y:0 z:0',
-				'/' : ' ry:-60',
-				'\\': ' ry:60'
+				'7' : ' op:0 x:-263% y:-425%',
+				'8' : ' op:0 y:-500%',
+				'9' : ' op:0 x:263% y:-425%',
+				'|' : ' op:0 x:0 y:0',
+				'4' : ' op:0 x:-500%',
+				'6' : ' op:0 x:500%',
+				'!' : ' op:0 x:-263% y:425%',
+				'2' : ' op:0 y:500%',
+				'3' : ' op:0 x:263% y:425%',
+				'm' : ' op:0 rx:-180 z:300',
+				'M' : ' op:1 rx:0 z:300',
+				'n' : ' op:0 rx:180 z:300',
+				'N' : ' op:1 rx:0 z:300',
+				'q' : ' op:0 ry:-180 z:300',
+				'Q' : ' op:1 ry:0 z:300',
+				'p' : ' op:0 ry:180 z:300',
+				'P' : ' op:1 ry:0 z:300',
+				'c' : ' br:0',
+				'C' : ' br:50',
+				'b' : ' bl:0',
+				'B' : ' bl:10',
+				'e' : ' e:easeIn',
+				'E' : ' e:easeOut'
 			}
 			return map[v];
 		}
+		//clean up
+		var t = trim(v);
+		var params = '()[]{}';
+		if(params.indexOf(t[0]) === -1 && params.indexOf(t[v.length - 1]) === -1){
+			return false;
+		}
+		//[......*..**...]
+		var r = 'n:randomName e:linear d:';
+		var loop = ' loop:1';
+		var rev = false;
+		//check looping and type of animation
+		if(t[0] == '('){
+			loop = ' loop:-1';
+		}else if(t[0] == ')'){
+			loop = ' loop:-1';
+			rev = true;
+		}else if(t[0] == ']'){
+			rev = true;
+		}
+		//remove parenthesis
+		for(var i=0; i<params.length; i++){
+			t = t.replace(params[i],'');
+		}
+		if(rev){
+			t = t.split('').reverse().join('');
+		}
+		var l = t.length;
+		//duration
+		r += parseFloat((l * 0.06).toFixed(2)) + 's';
+		r += loop;
+		r += ' to:cc kf:class';
 		for(var i=0; i<l; i++){
 			if(isKeyframe(t[i])){
 				if(i == 0){
@@ -766,9 +800,9 @@ vii = (function(){
 				return parse(preMade[val]);
 			}
 			//is it a timeline?
-			var tmpVal = trim(val);
-			if(tmpVal[0] == '[' && tmpVal[tmpVal.length - 1] == ']'){
-				global.command = createTimeline(tmpVal);
+			var timeline = createTimeline(val);
+			if(timeline){
+				global.command = timeline;
 				return parse(global.command);
 			}
 			//is string
