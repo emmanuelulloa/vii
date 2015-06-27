@@ -347,7 +347,7 @@ vii = (function(){
 	var formatMap = {
 		'vis':function(v){
 			return (v)?'visible':'hidden';
-		}
+		},
 		'sh':function(v){
 			return Boolean(v.toLowerCase());
 		},
@@ -701,8 +701,9 @@ vii = (function(){
 				'<' : ' rot:-90',
 				'>' : ' rot:90',
 				'^' : ' rot:0',
-				'v' : ' rot:-180',
-				'V' : ' rot:180',
+				'i' : ' rot:-180',
+				'I' : ' rot:180',
+				'@' : ' spin:1',
 				'x' : ' rx:-90',
 				'X' : ' rx:90',
 				'y' : ' ry:-90',
@@ -710,9 +711,10 @@ vii = (function(){
 				'/' : ' ry:-60',
 				'\\': ' ry:60',
 				'_' : ' to:cb',
-				'@' : ' spin:1',
 				'#' : ' bgc:' + randomColor(),
 				'=' : ' op:1 transform:none',
+				'v' : ' vis:0',
+				'V' : ' vis:1',
 				'0' : ' op:0',
 				'5' : ' op:0.5',
 				'1' : ' op:1',
@@ -740,9 +742,7 @@ vii = (function(){
 				'b' : ' bl:0',
 				'B' : ' bl:10',
 				'e' : ' e:easeIn',
-				'E' : ' e:easeOut',
-				'i' : ' vis:0',
-				'I' : ' vis:1'
+				'E' : ' e:easeOut'
 			}
 			return map[v];
 		}
