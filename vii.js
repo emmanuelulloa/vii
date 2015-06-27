@@ -346,7 +346,7 @@ vii = (function(){
 	//a data map to format properties
 	var formatMap = {
 		'vis':function(v){
-			return (v)?'visible':'hidden';
+			return (v === '1' || v.toLowerCase() === 'true')?'visible':'hidden';
 		},
 		'sh':function(v){
 			return Boolean(v.toLowerCase());
