@@ -42,12 +42,13 @@
   		transform-style: preserve-3d;
 		-webkit-transform-style: preserve-3d;
 	}
-	a {
+	a, a:visited {
+		color:dodgerblue;
 		text-decoration: underline;
 		font-weight: bold;
 	}
-	a:hover, a:focus, a:active, a:visited{
-		color:#555;
+	a:hover, a:focus, a:active{
+		color:deeppink;
 	}
 	h1 {
 		font-family: 'Architects Daughter', cursive;
@@ -193,6 +194,8 @@
 		font-weight: bold;
 		color:white;
 		font-size: 85%;
+		transition: all 0.4s ease 0s;
+		-webkit-transition: all 0.4s ease 0s;
 	}
 	.ui a:hover, .ui a:focus{
 		background-color: deeppink;
@@ -207,6 +210,11 @@
 		height: 100px;
 		width: 100%;
 		overflow: auto;
+		transition: all 0.4s ease 0s;
+		-webkit-transition: all 0.4s ease 0s;
+	}
+	.generated-code-block:hover, .generated-code-block:focus{
+		background-color: white;
 	}
 	.small{
 		font-size: 80%;
@@ -222,8 +230,8 @@
 		padding: 5px;
 		border-radius: 3px;
 		-webkit-border-radius: 3px;
-		transition: all 0.6s ease 0s;
-		-webkit-transition: all 0.6s ease 0s;
+		transition: all 0.4s ease 0s;
+		-webkit-transition: all 0.4s ease 0s;
 	}
 	.viiString:hover, .viiString:focus {
 		font-weight: 500;
@@ -826,8 +834,9 @@
 		<p><span class="code">[........L]</span></p>
 		<p>You can also combine characters to create a bigger movement:</p>
 		<p><span class="code">[R........L]</span></p>
-		<h3>Looping animations</h3>
-		<p>Now let's make the animation loop:</p>
+
+		<h2>Looping animations</h2>
+		<p>Now let's make the animation loop, to achieve this you only need to change your brackets to parentheses:</p>
 		<p><span class="code">(R........L)</span></p>
 		<p>Wouldn't be nice if you could make the looping seamless? Right now it does present a &quot;jump&quot; when the animation reaches the end.  This is because it goes to the original center position and then it restarts. A way to fix this is to move the keyframes so there is no start and end positions:</p>
 		<p><span class="code">(...R...L...)</span></p>
@@ -838,6 +847,14 @@
 		<p>The most effective way to create a loop animation is to have the beginning and ending keyframes be the same:</p>
 		<p><span class="code">(s....u...S...u....s)</span></p>
 		<p><span class="code">(U....&gt;....R....I....D....&lt;....L....I....U)</span></p>
+		<h3>Using animation-direction</h3>
+		<p>Another way to loop animations is by using the animation-direction property.  In GIviiRISH you can define them by changing the brackets <span class="code">[]</span> or the parentheses <span class="code">()</span> with curly brackets <span class="code">{}</span></p>
+		<p>So for instance this looping animation: </p>
+		<p><span class="code">(R........L)</span></p>
+		<p>can become smoother by changing the parentheses to curly brackets, which will give it an animation-direction of 'alternate':</p>
+		<p><span class="code">{R........L}</span></p>
+		<p>Or animation-direction of 'alternate-reverse' if the brackets are inversed (this will not inverse the animation though):</p>
+		<p><span class="code">}R........L{</span></p>
 		<h3>Using starting/ending positions</h3>
 		<p>When the animation is not a looping animation you might not want to start the animation too abruptly.  You want to give the viewer the time to assimilate what has happened.  Entrance and exit animations allow for an element to come in and leave a scene in an elegant manner.</p>
 		<p>That is why fading elements has proven so popular in many web apps.</p>
@@ -949,7 +966,7 @@
 		})
 		$code.each(function(i,el){
 			var thi$ = $(this);
-			if(thi$.text().indexOf('[') != -1 || thi$.text().indexOf('(') != -1 ){
+			if(thi$.text().indexOf('[') != -1 || thi$.text().indexOf('(') != -1 || thi$.text().indexOf('{') != -1 ){
 				thi$.css('cursor','pointer');
 				thi$.click(function(evt){
 					window.scrollTo(0,0);
@@ -960,19 +977,3 @@
 	</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

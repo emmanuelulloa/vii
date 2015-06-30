@@ -273,7 +273,7 @@ vii = (function(){
 		'Tutorial: Rotate 3 times' : 'spin:3',
 		'Tutorial: 3D Transforms': 'n:my3D kf:0 p3d:800 r3d:xy,180 t3d:25,30,15|kf:100 p3d:300 rx:90 ry:-90 z:50',
 		'Tutorial: Transforms': 'n:myTransforms kf:0 to:tl x:0 y:0 sc:1 rot:180 sk:10|kf:100 to:b x:100 y:-50 sc:2.2 rot:0 sk:0',
-		'Tutorial: CSS properties (shorthand)' : 'n:myCSS l:100 t:25 w:50 h:50 bgc:#F00|l:0 t:0 w:200 h:25 bgc:#00F',
+		'Tutorial: CSS properties (shorthand)' : 'n:myCSS sh:true l:100 t:25 w:50 h:50 bgc:#F00|l:0 t:0 w:200 h:25 bgc:#00F',
 		'Tutorial: CSS properties' : 'n:myCascadingStyleSheets left:100px top:25px width:50px height:50px background-color:#F00|left:0px top:0px width:200px height:25px background-color:#00F',
 		'Tutorial: Auto-keyframes': 'x:0|x:100|x:150|x:125|x:110',
 		'Tutorial: Keyframes' : 'kf:0|kf:30|kf:50,70|kf:60|kf:100',
@@ -767,7 +767,14 @@ vii = (function(){
 		var r = 'n:randomName e:linear d:';
 		var loop = ' loop:1';
 		var rev = false;
+		var dir = '';
 		//check looping and type of animation
+		/*
+		'>':'normal',
+		'<':'reverse',
+		'><':'alternate',
+		'<>':'alternate-reverse'
+		*/
 		if(t[0] == '('){
 			loop = ' loop:-1';
 		}else if(t[0] == ')'){
@@ -775,6 +782,12 @@ vii = (function(){
 			rev = true;
 		}else if(t[0] == ']'){
 			rev = true;
+		}else if(t[0] == '{'){
+			loop = ' loop:-1';
+			dir = ' dir:><';
+		}else if(t[0] == '}'){
+			loop = ' loop:-1';
+			dir = ' dir:<>';
 		}
 		//remove parenthesis
 		for(var i=0; i<params.length; i++){
@@ -792,7 +805,8 @@ vii = (function(){
 		}else{
 			r += parseFloat((l * 0.06).toFixed(2)) + 's';
 			r += loop;
-			r += ' to:cc kf:class';
+			r += dir;
+			r += ' sh:true to:cc kf:class';
 			for(var i=0; i<l; i++){
 				if(isKeyframe(t[i])){
 					if(i == 0){
@@ -1226,7 +1240,7 @@ vii = (function(){
 			//animation code
 			t = '';
 			if(useShortHand){
-				t += 'animation: ' + n + _s + d + dpx + _s + (ceaser[e]?ceaser[e]:e) + _s + ((nTimes == 1)?dy + dypx + _s : '' + _s) + l + _s + ad + _e + _n;
+				t += 'animation: ' + n + _s + d + dpx + _s + (ceaser[e]?ceaser[e]:e) + _s + ((nTimes == 1)?dy + dypx + _s : '' + _s) + l + _s + ad + _s + fm + _s + ((isTransition === -2)?'paused':isPlaying) + _e + _n;
 				s += _t + t;
 				s += _t + _w + t;				
 			}else{
