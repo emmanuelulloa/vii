@@ -666,7 +666,7 @@ vii = (function(){
 	//create timeline
 	function createTimeline(v){
 		function isKeyframe(v){
-			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFvV+-<>^_@#=015iI!234|6789oOmMnNbBpPqQcCeE/\\').indexOf(v) != -1)
+			return (('*uUdDrRlLwWhHsSkKtTxXyYzZfFvV+-<>^_\'":;,jJ@#=015iI!234|6789aAoOmMnNbBpPqQcCeE/\\').indexOf(v) != -1)
 		}
 		function randomColor(){
 			return '#' + Math.floor(Math.random()*16777215).toString(16); 
@@ -710,14 +710,25 @@ vii = (function(){
 				'Y' : ' ry:90',
 				'/' : ' ry:-60',
 				'\\': ' ry:60',
-				'_' : ' to:cb',
+				',' : ' to:cb',
+				'\'': ' to:ct',
+				'"' : ' to:50%,-150%',
+				';' : ' to:lc',
+				':' : ' to:rc',
+				'_' : ' to:cc',
 				'#' : ' bgc:' + randomColor(),
-				'=' : ' op:1 transform:none',
 				'v' : ' vis:0',
 				'V' : ' vis:1',
 				'0' : ' op:0',
 				'5' : ' op:0.5',
 				'1' : ' op:1',
+				'c' : ' br:0',
+				'C' : ' br:50',
+				'b' : ' bl:0',
+				'B' : ' bl:10',
+				'e' : ' e:easeIn',
+				'E' : ' e:easeOut',
+				'=' : ' op:1 transform:none',
 				'o' : ' op:0 sc:0',
 				'O' : ' op:0 sc:3',
 				'7' : ' op:0 x:-263% y:-425%',
@@ -729,20 +740,18 @@ vii = (function(){
 				'!' : ' op:0 x:-263% y:425%',
 				'2' : ' op:0 y:500%',
 				'3' : ' op:0 x:263% y:425%',
-				'm' : ' op:0 rx:-180 z:300',
-				'M' : ' op:1 rx:0 z:300',
-				'n' : ' op:0 rx:180 z:300',
-				'N' : ' op:1 rx:0 z:300',
-				'q' : ' op:0 ry:-180 z:300',
-				'Q' : ' op:1 ry:0 z:300',
-				'p' : ' op:0 ry:180 z:300',
-				'P' : ' op:1 ry:0 z:300',
-				'c' : ' br:0',
-				'C' : ' br:50',
-				'b' : ' bl:0',
-				'B' : ' bl:10',
-				'e' : ' e:easeIn',
-				'E' : ' e:easeOut'
+				'j' : ' op:0 rot:-90 y:-150% x:-200%',
+				'J' : ' op:0 rot:90 y:-150% x:200%',
+				'n' : ' op:0 r3d:x,180 z:300',
+				'N' : ' op:0 to:t r3d:x,180',
+				'm' : ' op:0 r3d:x,-180 z:300',
+				'M' : ' op:0 to:b r3d:x,-180',
+				'q' : ' op:0 r3d:y,-180 z:300',
+				'Q' : ' op:0 to:l r3d:y,-180',
+				'p' : ' op:0 r3d:y,180 z:300',
+				'P' : ' op:0 to:r r3d:y,180',
+				'a' : ' op:1 r3d:xy,0 z:300',
+				'A' : ' op:1 z:300'
 			}
 			return map[v];
 		}
@@ -774,19 +783,25 @@ vii = (function(){
 		}
 		var l = t.length;
 		//duration
-		r += parseFloat((l * 0.06).toFixed(2)) + 's';
-		r += loop;
-		r += ' to:cc kf:class';
-		for(var i=0; i<l; i++){
-			if(isKeyframe(t[i])){
-				if(i == 0){
-					r += '|kf:0' + getKeyframeValue(t[i]);
-				}else if(i == l - 1){
-					r += '|kf:100' + getKeyframeValue(t[i]);
-				}else{
-					r += '|kf:' + parseFloat(((i+1)/l * 100).toFixed(2)) + getKeyframeValue(t[i]);
+		if(l === 1){
+			r += '0.6s'
+			r += loop;
+			r += ' to:cc kf:class|kf:100' + getKeyframeValue(t);
+		}else{
+			r += parseFloat((l * 0.06).toFixed(2)) + 's';
+			r += loop;
+			r += ' to:cc kf:class';
+			for(var i=0; i<l; i++){
+				if(isKeyframe(t[i])){
+					if(i == 0){
+						r += '|kf:0' + getKeyframeValue(t[i]);
+					}else if(i == l - 1){
+						r += '|kf:100' + getKeyframeValue(t[i]);
+					}else{
+						r += '|kf:' + parseFloat(((i+1)/l * 100).toFixed(2)) + getKeyframeValue(t[i]);
+					}
 				}
-			}
+			}			
 		}
 		return r;
 	}

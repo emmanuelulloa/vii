@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>GIviiRISH</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta property="og:image" content="http://emmanuelulloa.com/vii/vii.png"/>
+	<meta property="og:title" content="GIviiRISH"/>
+	<meta property="og:description" content="This tool helps you write the code for CSS animations really fast. No need to worry about prefixes or the correct transform strings or even your keyframe names!" />
+	<meta property="og:url" content="http://emmanuelulloa.com/vii/giviirish.html"/>
+	<meta property="og:site_name" content="EmmanuelUlloa.com"/>
+	<meta property="og:type" content="blog"/>
+	<link href='http://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script type="text/javascript" src="vii.js"></script>
+	<style type="text/css">
+	/*reset*/
+	body, h1, h2, h3, ul, li, p, div, table, tbody, tfoot, thead, tr, th, td{
+		margin: 0;
+		padding: 0;
+		border: 0;
+		font-size: 100%;
+		font: inherit;
+		vertical-align: baseline;
+	}
+	ol, ul {
+		list-style: none;
+	}
+	body {
+		line-height: 1;
+	}
+	table {
+		border-collapse: collapse;
+		border-spacing: 0;
+	}
+	/**/
+	body{
+		background: gainsboro;
+		font-family: Helvetica, Verdana, sans-serif;
+  		font-size: 17px/24px;
+  		color: #555555;
+  		transform-style: preserve-3d;
+		-webkit-transform-style: preserve-3d;
+	}
+	a {
+		text-decoration: underline;
+		font-weight: bold;
+	}
+	a:hover, a:focus, a:active, a:visited{
+		color:#555;
+	}
+	h1 {
+		font-family: 'Architects Daughter', cursive;
+		padding-top: 20px;
+		font-weight: bold;
+		padding-bottom: 10px;
+		font-size: 200%;
+	}
+	h2 {
+		font-family: 'Architects Daughter', cursive;
+		padding-top: 20px;
+		font-weight: bold;
+		padding-bottom: 10px;
+		font-size: 150%;
+	}
+	h3 {
+		font-family: 'Architects Daughter', cursive;
+		padding-top: 20px;
+		font-weight: bold;
+		margin-bottom: 15px;
+		font-size: 110%;
+		border-bottom: 1px solid #555;
+	}
+	p{
+		padding-bottom: 8px;
+	}
+	p,ul {
+		line-height: 1.2;
+
+	}
+	p:last-child {
+		padding-bottom: 50px;
+	}
+	li {
+		padding-left: 2%;
+		padding-right: 2%;
+		padding-bottom: 5px;
+	}
+	select, input, textarea{
+		font-size: 125%;
+		margin-bottom: 3px;
+		outline:0;
+	}
+	table{
+		width: auto;
+		max-width: 900px;
+	}
+	tr{
+		padding: 0 !important;
+		margin: 0 !important;
+	}
+	tr:nth-child(even) {
+		background-color: #eee;
+	}
+	th{
+		font-size: 100%;
+		text-align: center;
+		font-weight: bold;
+		border-bottom: 1px solid #ccc;
+	}
+	td{
+		font-size: 90%;
+	}
+	td .code-block{
+		width: 96%;
+	}
+	.leftColumn{
+		width: 15%;
+		text-align: center;
+		font-size: 110%;
+		font-weight: bold;
+	}
+	td.leftColumn {
+		font-family: "Courier New", Courier, monospace !important;
+	}
+	.centerColumn{
+		width: 30%;
+		text-align: left;
+		padding-right: 5px;
+	}
+	.rightColumn{
+		text-align: left;
+	}
+	.wrapper {
+		width: 96%;
+		min-width: 480px;
+		padding: 10px 2% 0 2%;
+		float: left;
+	}
+	.code {
+		background-color: ghostwhite;
+		color: #555;
+		font-family: "Courier New", Courier, monospace;
+		font-variant: normal;
+		border-radius: 5px;
+		-webkit-border-radius: 5px;
+		font-weight: bold;
+		padding-left: 3px;
+		padding-right: 3px;
+	}
+	.code-block {
+		color: #555;
+		font-family: "Courier New", Courier, monospace;
+		font-variant: normal;
+		padding:8px;
+		font-size: 85%;
+		display: block;
+		width: 50%;
+
+	}
+	.viiDemo{
+		width: 100%;
+		height: 200px;
+		border: 1px solid #555;
+		display: block;
+		transform-style: preserve-3d;
+		-webkit-transform-style: preserve-3d;
+		perspective: 500px;
+		-webkit-perspective: 500px; /* Chrome, Safari, Opera */
+	}
+	.viiHero{
+		font-size: 80%;
+		text-align: center;
+		border:1px solid black;
+		background: white;
+		width: 50px;
+		height: 50px;
+		display: block;
+		position: relative;
+		margin:0 auto;
+		top: 75px;
+	}
+	.ui{
+		width: 100%;
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	.ui a{
+		background-color: cornflowerblue;
+		border-radius: 5px;
+		padding: 7px;
+		text-decoration: none;
+		font-weight: bold;
+		color:white;
+		font-size: 85%;
+	}
+	.ui a:hover, .ui a:focus{
+		background-color: deeppink;
+	}
+	.ui input{
+		font-family: "Courier New", Courier, monospace;
+		width: 70%;
+		text-align: center;
+	}
+	.generated-code-block {
+		border:1px dashed #555;
+		height: 100px;
+		width: 100%;
+		overflow: auto;
+	}
+	</style>
+</head>
+<body>
+	<div class="wrapper">
+		<div class="viiDemo">
+			<div class="viiHero">DEMO</div>
+		</div>
+		<div class="ui">
+			<label for="giviirish">Write some giviirish here: </label><input id="giviirish_txt" type="text" size="70" value='("...#...-...#...=...#...+...#...")' /> <a href="#" id="play_btn" class="_btn">PLAY &gt;</a>	
+		</div>
+		<pre class="generated-code-block">USEFUL CODE WILL SHOW UP HERE (I promise).</pre>
+		<h1>GIviiRISH: Timeline commands</h1>
+		<p>Even though <a href="index.html" alt="vii">vii</a> by itself allows you to save time when writing css animations, it also includes a subset of commands that create animations even faster.</p>
+		<p>Because of the odd looking commands this subset is called GIviiRISH.</p>
+		<p>GIviiRISH can describe animations by visualizing a timeline.</p>
+		<p>A timeline is represented by square brackets: <span class="code">[ ]</span>.</p>
+		<p>Time is represented by dots: <span class="code">[......]</span>.  Each dot represents 0.06 seconds (60fps/1000ms).  The preceeding animation will last for 0.36 seconds (or 360 milliseconds) since it has 6 frames.</p>
+		<p>A timeline might have as many dots as you want.  The more dots the longer the duration of the animation.</p>
+		<p>The output for <span class="code">[......]</span> is:</p>
+		<pre class="code-block">
+/* n:randomName e:linear d:0.36s loop:1 to:cc kf:class */
+@keyframes myTween-89 {
+	to {
+		animation-timing-function: linear;
+		transform-origin: center center;
+	}
+}
+@-webkit-keyframes myTween-89 {
+	to {
+		-webkit-animation-timing-function: linear;
+		-webkit-transform-origin: center center;
+	}
+}
+.myTween-89 {
+	transform-origin: center center;
+	-webkit-transform-origin: center center;
+	animation-name: myTween-89;
+	animation-duration: 0.36s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+	-webkit-animation-name: myTween-89;
+	-webkit-animation-duration: 0.36s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-direction: normal;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+}			
+		</pre>
+		<p><strong>Notes:</strong></p>
+		<ul>
+			<li>The name of the animation is a random name.  Feel free to 'search &amp; replace' for a more convenient name.</li>
+			<li>At the top of the css output comes the animation in vii format: <span class="code">n:randomName e:linear d:0.36s loop:1 to:cc kf:class</span>.  You can use this to fine-tune your animation in vii or create first the timing and later the keyframe changes.</li>
+			<li>The way that the vii parser works is that transforms GIviiRISH timelines into vii code and then into css.  Since the timeline does not define any keyframes the generated css animation only has a 'to' keyframe.</li>
+		</ul>
+		<h2>Keyframes</h2>
+		<p>Keyframes are defined by the <span class="code">*</span> character.</p>
+		<p>This timeline contains 1 keyframe <span class="code">[.....*.....]</span> at aproximate 50% into the animation.</p>
+		<p>This other timeline contains 3 keyframes <span class="code">[*.....*.....*]</span>.  Since it has <span class="code">*</span> characters at the beginning and end of the timeline it will output with a 0% and a 100% keyframes like so:</p>
+<pre class="code-block">
+/* n:randomName e:linear d:0.78s loop:1 to:cc kf:class|kf:0|kf:53.85|kf:100 */
+@keyframes myTween-12 {
+	0% {
+	}
+	53.85% {
+	}
+	100% {
+	}
+}
+@-webkit-keyframes myTween-12 {
+	0% {
+	}
+	53.85% {
+	}
+	100% {
+	}
+}
+.myTween-12 {
+	transform-origin: center center;
+	-webkit-transform-origin: center center;
+	animation-name: myTween-12;
+	animation-duration: 0.78s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+	-webkit-animation-name: myTween-12;
+	-webkit-animation-duration: 0.78s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-direction: normal;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+}	
+</pre>
+	<h3>Spacing and timing</h3>
+		<p>GIviiRISH timelines allows you to easily sketch timing charts visually:</p>
+		<p><strong>Half</strong></p>
+		<p><span class="code">[*.....*.....*]</span></p>
+		<p><strong>Slow-in</strong></p>
+		<p><span class="code">[*......*...*...*]</span></p>
+		<p><strong>Slow-out</strong></p>
+		<p><span class="code">[*...*...*......*]</span></p>
+		<p><strong>Thirds</strong></p>
+		<p><span class="code">[*...*...*...*]</span></p>
+		<p><strong>Cushon</strong></p>
+		<p><span class="code">[*.........*.*]</span></p>
+		<p><strong>Halves</strong></p>
+		<p><span class="code">[*..*..*..*..*]</span></p>
+		<p><strong>Slow-in and slow-out</strong></p>
+		<p><span class="code">[*.*.*..*....*....*..*.*.*]</span></p>
+		<h2>Special keyframe characters</h2>
+		<p>The <span class="code">*</span> character returns an empty keyframe.  GIviiRISH timelines allow to use other characters with special meaning and it will return keyframes with prefilled info that makes animating so much easier!</p>
+		<table border='0' cellpadding='0' cellspacing='0'>
+			<thead>
+				<tr>
+					<th class="leftColumn">Character</th>
+					<th class="centerColumn">Meaning</th>
+					<th class="rightColumn">Returned value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="leftColumn">u</td>
+					<td class="centerColumn">Move up by 10 pixels</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateY(-10px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">U</td>
+					<td class="centerColumn">Move up by 100%</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateY(-100%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">d</td>
+					<td class="centerColumn">Move down by 10 pixels</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateY(10px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">D</td>
+					<td class="centerColumn">Moves down by 100%</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateY(100%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">r</td>
+					<td class="centerColumn">Move right by 10 pixels</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateX(10px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">R</td>
+					<td class="centerColumn">Move right by 100%</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateX(100%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">l</td>
+					<td class="centerColumn">Move left by 10 pixels</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateX(-10px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">L</td>
+					<td class="centerColumn">Move left by 100%</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateX(-100%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">w</td>
+					<td class="centerColumn">Change width to 0 pixels</td>
+					<td class="rightColumn"><pre class="code-block">width : 0px;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">W</td>
+					<td class="centerColumn">Change width to 'auto'</td>
+					<td class="rightColumn"><pre class="code-block">width : auto;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">h</td>
+					<td class="centerColumn">Change height to 0 pixels</td>
+					<td class="rightColumn"><pre class="code-block">width : 0px;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">H</td>
+					<td class="centerColumn">Change height to 'auto'</td>
+					<td class="rightColumn"><pre class="code-block">width : auto;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">s</td>
+					<td class="centerColumn">Shrink element to half size</td>
+					<td class="rightColumn"><pre class="code-block">transform: scale(0.5) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">S</td>
+					<td class="centerColumn">Scale element to double size</td>
+					<td class="rightColumn"><pre class="code-block">transform: scale(2) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">k</td>
+					<td class="centerColumn">Skew the element by -20 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: skew(-20deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">K</td>
+					<td class="centerColumn">Skew the element by 20 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: skew(20deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">t</td>
+					<td class="centerColumn">Squash the element</td>
+					<td class="rightColumn"><pre class="code-block">transform: scale(1.5,0.5) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">T</td>
+					<td class="centerColumn">Stretch the element</td>
+					<td class="rightColumn"><pre class="code-block">transform: scale(0.5,1.5) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">z</td>
+					<td class="centerColumn">Move the element in the z axis to -800 pixels (far)</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateZ(-800px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">Z</td>
+					<td class="centerColumn">Move the element in the z axis to 300 pixels (close)</td>
+					<td class="rightColumn"><pre class="code-block">transform: translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">f</td>
+					<td class="centerColumn">Flip horizontal</td>
+					<td class="rightColumn"><pre class="code-block">transform: scale(-1,1) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">F</td>
+					<td class="centerColumn">Flip vertical</td>
+					<td class="rightColumn"><pre class="code-block">transform: scale(1,-1) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">-</td>
+					<td class="centerColumn">Rotate -45 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(-45deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">+</td>
+					<td class="centerColumn">Rotate 45 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(45deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">&lt;</td>
+					<td class="centerColumn">Rotate -90 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(-90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">&gt;</td>
+					<td class="centerColumn">Rotate 90 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">^</td>
+					<td class="centerColumn">Rotate to 0 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(0deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">i</td>
+					<td class="centerColumn">Rotate -180 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(-180deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">I</td>
+					<td class="centerColumn">Rotate 180 degrees</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(180deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">@</td>
+					<td class="centerColumn">Spin 1 turn</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotate(1turn) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">x</td>
+					<td class="centerColumn">Rotate -90 degrees in the horizontal axis</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotateX(-90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">X</td>
+					<td class="centerColumn">Rotate 90 degrees in the horizontal axis</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotateX(90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">y</td>
+					<td class="centerColumn">Rotate -90 degrees in the vertical axis</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotateY(-90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">Y</td>
+					<td class="centerColumn">Rotate 90 degrees in the vertical axis</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotateY(90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">/</td>
+					<td class="centerColumn">Rotate -60 degrees in the vertical axis</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotateY(-60deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">\</td>
+					<td class="centerColumn">Rotate 60 degrees in the vertical axis</td>
+					<td class="rightColumn"><pre class="code-block">transform: rotateY(60deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">,</td>
+					<td class="centerColumn">Change the transform origin to the bottom</td>
+					<td class="rightColumn"><pre class="code-block">transform-origin: center bottom;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">'</td>
+					<td class="centerColumn">Change the transform origin to the top</td>
+					<td class="rightColumn"><pre class="code-block">transform-origin: center top;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">"</td>
+					<td class="centerColumn">Change the transform origin to the top (for hanging)</td>
+					<td class="rightColumn"><pre class="code-block">transform-origin: 50% -150%;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">;</td>
+					<td class="centerColumn">Change the transform origin to the left</td>
+					<td class="rightColumn"><pre class="code-block">transform-origin: left center;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">:</td>
+					<td class="centerColumn">Change the transform origin to the right</td>
+					<td class="rightColumn"><pre class="code-block">transform-origin: right center;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">_</td>
+					<td class="centerColumn">Change the transform origin to the center</td>
+					<td class="rightColumn"><pre class="code-block">transform-origin: center center;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">#</td>
+					<td class="centerColumn">Change the background color to a random color</td>
+					<td class="rightColumn"><pre class="code-block">background-color : #f695eb;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">v</td>
+					<td class="centerColumn">Hide element</td>
+					<td class="rightColumn"><pre class="code-block">visibility : hidden;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">V</td>
+					<td class="centerColumn">Show element</td>
+					<td class="rightColumn"><pre class="code-block">visibility : visible;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">0</td>
+					<td class="centerColumn">Make element transparent</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">5</td>
+					<td class="centerColumn">Set element to semi-transparent</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0.5;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">1</td>
+					<td class="centerColumn">Set element to opaque</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 1;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">b</td>
+					<td class="centerColumn">Set blur filter to 0</td>
+					<td class="rightColumn"><pre class="code-block">-webkit-filter: blur(0px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">B</td>
+					<td class="centerColumn">Set blur filter to 10 pixels</td>
+					<td class="rightColumn"><pre class="code-block">-webkit-filter: blur(10px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">c</td>
+					<td class="centerColumn">Set corners to 0 border radius</td>
+					<td class="rightColumn"><pre class="code-block">border-radius : 0px;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">C</td>
+					<td class="centerColumn">Set corners to 50 pixels border radius</td>
+					<td class="rightColumn"><pre class="code-block">border-radius : 50px;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">e</td>
+					<td class="centerColumn">Set easing to ease-in (for GIviiRISH the default easing is linear)</td>
+					<td class="rightColumn"><pre class="code-block">animation-timing-function: ease-in;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">E</td>
+					<td class="centerColumn">Set easing to ease-out</td>
+					<td class="rightColumn"><pre class="code-block">animation-timing-function: ease-out;</pre></td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>Starting &amp; ending positions</h3>
+		<p>Some characters represent special positions that pack several options at once.</p>
+		<p>These characters are specially useful when creating animations that end and begin in a specific position.  Think of them as animation templates.</p>
+		<table border='0' cellpadding='0' cellspacing='0'>
+			<thead>
+				<tr>
+					<th class="leftColumn">Character</th>
+					<th class="centerColumn">Meaning</th>
+					<th class="rightColumn">Returned value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="leftColumn">=</td>
+					<td class="centerColumn">Reset the transform and opacity to 1</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 1;<br />transform: none;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">o</td>
+					<td class="centerColumn">Scale is minimum and opacity is 0</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: scale(0) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">O</td>
+					<td class="centerColumn">Scale is 3 (very big) and opacity is 0</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: scale(3) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">j</td>
+					<td class="centerColumn">Element is rotated -90 degrees, translated to the left and opacity is 0</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(-200%, -150%) rotate(-90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">J</td>
+					<td class="centerColumn">Element is rotated 90 degrees, translated to the right and opacity is 0</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(200%, -150%) rotate(90deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">9</td>
+					<td class="centerColumn">Start or end from top right corner (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(-263%, 425%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">8</td>
+					<td class="centerColumn">Start or end from top (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translateY(-500%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">7</td>
+					<td class="centerColumn">Start or end from top left corner (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(-263%, -425%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">6</td>
+					<td class="centerColumn">Start or end from right (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translateX(500%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">|</td>
+					<td class="centerColumn">Start or end from center (5 is used for semi-transparency)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(0px, 0px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">4</td>
+					<td class="centerColumn">Start or end from left (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(0px, 0px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">3</td>
+					<td class="centerColumn">Start or end from bottom right corner (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(263%, 425%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">2</td>
+					<td class="centerColumn">Start or end from bottom (following the keyboard numpad positioning)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translateY(500%) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">!</td>
+					<td class="centerColumn">Start or end from bottom left corner (1 is used for opcity=1)</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: translate(-263%, 425%) ;</pre></td>
+				</tr>
+			</tbody>
+		</table>
+		<h3>3D Starting &amp; ending positions</h3>
+		<p>GIviiRISH also allows you to do little 3D transformations with a set of commands that are expected to be used toguether.</p>
+		<table border='0' cellpadding='0' cellspacing='0'>
+		<thead>
+				<tr>
+					<th class="leftColumn">Character</th>
+					<th class="centerColumn">Meaning</th>
+					<th class="rightColumn">Returned value</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="leftColumn">n</td>
+					<td class="centerColumn">Object is hidden into 3D space, comes in from top.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: rotateX(180deg) translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">N</td>
+					<td class="centerColumn">Object is hidden into 3D space, rolls in from top.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform-origin: center top;<br />transform: rotateX(180deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">m</td>
+					<td class="centerColumn">Object is hidden into 3D space, comes in from bottom.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: rotateX(-180deg) translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">M</td>
+					<td class="centerColumn">Object is hidden into 3D space, rolls in from bottom.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform-origin: center bottom;<br />transform: rotateX(-180deg) translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">p</td>
+					<td class="centerColumn">Object is hidden into 3D space, comes in from right.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: rotateY(180deg) translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">P</td>
+					<td class="centerColumn">Object is hidden into 3D space, rolls in from right.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform-origin: right center;<br />transform: rotateY(180deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">q</td>
+					<td class="centerColumn">Object is hidden into 3D space, comes in from left.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform: rotateY(-180deg) translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">Q</td>
+					<td class="centerColumn">Object is hidden into 3D space, rolls in from left.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 0;<br />transform-origin: left center;<br />transform: rotateY(-180deg) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">a</td>
+					<td class="centerColumn">Object is visible into 3D space with rotation.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 1;<br />transform: rotate3d(1,1,0,0deg) translateZ(300px) ;</pre></td>
+				</tr>
+				<tr>
+					<td class="leftColumn">A</td>
+					<td class="centerColumn">Object is visible into 3D space with no rotation.</td>
+					<td class="rightColumn"><pre class="code-block">opacity : 1;<br />transform: translateZ(300px) ;</pre></td>
+				</tr>
+			</tbody>
+		</table>
+		<h2>Creating animations</h2>
+		<p>Creating an animation requires that you think what is going to happen on each keyframe and how fast or slow you want the animation.</p>
+		<p>Let's say you want an element to move from its initial position to the right.  GIviiRISH timelines are read like normal text from left to right:</p>
+		<p><span class="code">[........]</span></p>
+		<p>Now let's use the r character to identify a movement to the left:</p>
+		<p><span class="code">[........r]</span></p>
+		<p>The previous code will output this css animation code:</p>
+		<pre class="code-block">
+/* n:randomName e:linear d:0.54s loop:1 to:cc kf:class|kf:100 x:10 */
+@keyframes myTween-233 {
+	to {
+		transform: translateX(10px) ;
+	}
+}
+@-webkit-keyframes myTween-233 {
+	to {
+		-webkit-transform: translateX(10px) ;
+	}
+}
+.myTween-233 {
+	transform-origin: center center;
+	-webkit-transform-origin: center center;
+	animation-name: myTween-233;
+	animation-duration: 0.54s;
+	animation-timing-function: linear;
+	animation-delay: 0s;
+	animation-iteration-count: 1;
+	animation-direction: normal;
+	animation-fill-mode: forwards;
+	animation-play-state: running;
+	-webkit-animation-name: myTween-233;
+	-webkit-animation-duration: 0.54s;
+	-webkit-animation-timing-function: linear;
+	-webkit-animation-delay: 0s;
+	-webkit-animation-iteration-count: 1;
+	-webkit-animation-direction: normal;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-play-state: running;
+}			
+		</pre>
+		<p>Test your animation.  Want to make a bigger move? Change your r to R:</p>
+		<p><span class="code">[........R]</span></p>
+		<p>If you want to move your animation to the left change your R to a L:</p>
+		<p><span class="code">[........L]</span></p>
+		<p>You can also combine characters to create a bigger movement:</p>
+		<p><span class="code">[R........L]</span></p>
+		<h3>Looping animations</h3>
+		<p>Now let's make the animation loop:</p>
+		<p><span class="code">(R........L)</span></p>
+		<p>Wouldn't be nice if you could make the looping seamless? Right now it does present a &quot;jump&quot; when the animation reaches the end.  This is because it goes to the original center position and then it restarts. A way to fix this is to move the keyframes so there is no start and end positions:</p>
+		<p><span class="code">(...R...L...)</span></p>
+		<p>If you want the animation to be slower, then add spacing to the keyframes:</p>
+		<p><span class="code">(........R........L........)</span></p>
+		<p>Repeating keyframes also allows to &quot;pause&quot; the keyframe so a particular state has longer exposition, in this case the animation will stay in the right position for a couple of beats before continuing:</p>
+		<p><span class="code">(......R............R......L......)</span></p>
+		<p>The most effective way to create a loop animation is to have the beginning and ending keyframes be the same:</p>
+		<p><span class="code">(s....u...S...u....s)</span></p>
+		<p><span class="code">(U....&gt;....R....I....D....&lt;....L....I....U)</span></p>
+		<h3>Using starting/ending positions</h3>
+		<p>When the animation is not a looping animation you might not want to start the animation too abruptly.  You want to give the viewer the time to assimilate what has happened.  Entrance and exit animations allow for an element to come in and leave a scene in an elegant manner.</p>
+		<p>That is why fading elements has proven so popular in many web apps.</p>
+		<p>Most entrance and exit animations will use the opacity either at the beginning or at the end.</p>
+		<p>An entrance animation just need to start from 0 and then do something else:</p>
+		<p><span class="code">[0.........S...s]</span></p>
+		<p><span class="code">[0s.....0..........s....R]</span></p>
+		<p>An exit animation will always end in 0:</p>
+		<p><span class="code">[L.....l.........0]</span></p>
+		<p>Alternatively you can take an entrance animation and turn it into an exit animation by inversing the order of the brackets:</p>
+		<p><span class="code">]0s.....0..........s....R[</span></p>
+		<p>By using a combination of <span class="code">!234|6789oOjJ</span> and <span class="code">=</span> you can make easier entrance and exit animations:</p>
+		<p><span class="code">[4..........=]</span></p>
+		<p><span class="code">[o......S....=]</span></p>
+		<p><span class="code">[j......D..u..d..=]</span></p>
+		<p><span class="code">[...d......=.....D...=......8]</span></p>
+		<h3>Entrance and exit animations with 3D effect</h3>
+		<p>You can also benefit from the 3D transforms that many modern browser support.</p>
+		<p>GIviiRISH has the following initial positions <span class="code">nNmMpPqQ</span> that can be reset with either <span class="code">a</span> or <span class="code">A</span> (depending on the effect you are after):</p>
+		<p><span class="code">[m...........a]</span></p>
+		<p><span class="code">[a...........n]</span></p>
+		<p>Be aware that: <span class="code">[m...........a]</span> is not equal to <span class="code">[m...........A]</span> or <span class="code">[M...........a]</span> or <span class="code">[M...........A]</span></p>
+		<h2>Formulas</h2>
+		<p>The following examples will teach you how to combine characters .</p>
+		<h3>Entrance animations:</h3>
+		<ul>
+			<li><strong>Fade in: </strong><span class="code">[0...............1]</span></li>
+			<li><strong>Small in: </strong><span class="code">[o...............=]</span></li>
+			<li><strong>Big in: </strong><span class="code">[O...............=]</span></li>
+			<li><strong>Left in: </strong><span class="code">[4...............=]</span></li>
+			<li><strong>Right in: </strong><span class="code">[6...............=]</span></li>
+			<li><strong>Up in: </strong><span class="code">[8...............=]</span></li>
+			<li><strong>Down in: </strong><span class="code">[2...............=]</span></li>
+			<li><strong>Ascend in: </strong><span class="code">[0D...0D..........=]</span></li>
+			<li><strong>Descend in: </strong><span class="code">[0U...0U..........=]</span></li>
+			<li><strong>Drop in: </strong><span class="code">[0x'...0x.......']</span></li>
+		</ul>
+		<h3>Exit animations:</h3>
+		<ul>
+			<li><strong>Fade out: </strong><span class="code">[1...............0]</span></li>
+			<li><strong>Small out: </strong><span class="code">[...............o]</span></li>
+			<li><strong>Big out: </strong><span class="code">[...............O]</span></li>
+			<li><strong>Left out: </strong><span class="code">[...............4]</span></li>
+			<li><strong>Right out: </strong><span class="code">[...............6]</span></li>
+			<li><strong>Up out: </strong><span class="code">[...............8]</span></li>
+			<li><strong>Down out: </strong><span class="code">[...............2]</span></li>
+			<li><strong>Ascend out: </strong><span class="code">[..........0U...U0]</span></li>
+			<li><strong>Descend out: </strong><span class="code">[..........0D...D0]</span></li>
+			<li><strong>Drop out: </strong><span class="code">[,.......0x,...x0]</span></li>
+		</ul>
+		<h3>Pulse animations</h3>
+		<ul>
+			<li><strong>Spin: </strong><span class="code">(.....................@)</span></li>
+			<li><strong>Grow: </strong><span class="code">(,........S.S........,)</span></li>
+			<li><strong>Flash: </strong><span class="code">(...1...0...0...1...)</span></li>
+			<li><strong>Pulse: </strong><span class="code">(........S........)</span></li>
+			<li><strong>Vertical: </strong><span class="code">(......u......)</span></li>
+			<li><strong>Horizontal: </strong><span class="code">(..l......)</span></li>
+		</ul>
+		<h3>More examples</h3>
+		<ul>
+			<li><strong>Zoom bounce: </strong><span class="code">[....ss..SS..ss....]</span></li>
+			<li><strong>Big buzz: </strong><span class="code">[....RLRLRRL=]</span></li>
+			<li><strong>Small buzz: </strong><span class="code">[.r=l=r=l=r=l=]</span></li>
+			<li><strong>Shake: </strong><span class="code">[...UDUDUUDD=]</span></li>
+			<li><strong>Bounce: </strong><span class="code">[...U=UU=u=uu=..]</span></li>
+			<li><strong>Push: </strong><span class="code">[0L...1...rr.=.rr...RR]</span></li>
+			<li><strong>Walk: </strong><span class="code">(,..k.t..T.K..,)</span></li>
+			<li><strong>Jello: </strong><span class="code">(,..=.k.K.k.K.=..,)</span></li>
+			<li><strong>Roll bounce from left: </strong><span class="code">[0i0......1+...=]</span></li>
+			<li><strong>Roll bounce from right: </strong><span class="code">[0I0......1-...=]</span></li>
+		</ul>
+		<h2>Conclusion</h2>
+		<p>GIviiRISH is just a way to easily sketch css animations but by no means let it be your only way to create then.  Remember you can always take the commented vii command that comes at the top of the animation and improve it.  Happy Coding!</p>
+	</div>
+	<script type="text/javascript">
+		var $hero = $('.viiHero'),
+			$giviirish_txt = $('#giviirish_txt'),
+			$play_btn = $('#play_btn'),
+			$generated = $('.generated-code-block'),
+			$code = $('.code'),
+			styleTag;
+		$giviirish_txt.click(function(evt){
+			$(this).select();
+		});
+		function generateCode(gvii){
+			$hero.removeClass(vii.getClassName());
+			//$code_txt.val(vii[$foo_sl.val()]($command_txt.val()));
+			var code = vii.k(gvii);
+			$generated.text(code);
+			$giviirish_txt.val(gvii);
+			if(styleTag === null || styleTag === undefined){
+				styleTag = document.createElement('style');
+				styleTag.type = 'text/css';	
+				document.getElementsByTagName('head')[0].appendChild(styleTag);
+			}
+			styleTag.innerHTML = code;
+			$hero.addClass(vii.getClassName());
+			$generated.select();
+		}
+		$play_btn.click(function(evt){
+			evt.preventDefault();
+			evt.stopPropagation();
+			generateCode($giviirish_txt.val());
+		})
+		$code.each(function(i,el){
+			var thi$ = $(this);
+			if(thi$.text().indexOf('[') != -1 || thi$.text().indexOf('(') != -1 ){
+				thi$.css('cursor','pointer');
+				thi$.click(function(evt){
+					window.scrollTo(0,0);
+					generateCode(thi$.text());
+				});
+			}
+		})
+	</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
