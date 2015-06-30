@@ -186,7 +186,7 @@
 		padding-bottom: 10px;
 	}
 	.ui a{
-		background-color: cornflowerblue;
+		background-color: dodgerblue;
 		border-radius: 5px;
 		padding: 7px;
 		text-decoration: none;
@@ -208,6 +208,28 @@
 		width: 100%;
 		overflow: auto;
 	}
+	.small{
+		font-size: 80%;
+	}
+	.viiString {
+		background:ghostwhite;
+		border:none;
+		min-width: 320px;
+		width: 65%;
+		color:#555;
+		font-weight: normal;
+		text-align: center;
+		padding: 5px;
+		border-radius: 3px;
+		-webkit-border-radius: 3px;
+		transition: all 0.6s ease 0s;
+		-webkit-transition: all 0.6s ease 0s;
+	}
+	.viiString:hover, .viiString:focus {
+		font-weight: 500;
+		background-color : dodgerblue;
+		color : white;
+	}
 	</style>
 </head>
 <body>
@@ -216,9 +238,10 @@
 			<div class="viiHero">DEMO</div>
 		</div>
 		<div class="ui">
-			<label for="giviirish">Write some giviirish here: </label><input id="giviirish_txt" type="text" size="70" value='("...#...-...#...=...#...+...#...")' /> <a href="#" id="play_btn" class="_btn">PLAY &gt;</a>	
+			<label for="giviirish">Write some giviirish here: </label><input id="giviirish_txt" class="viiString" type="text" size="70" value='("...#...-...#...=...#...+...#...")' /> <a href="#" id="play_btn" class="_btn">PLAY &gt;</a>	
 		</div>
 		<pre class="generated-code-block">USEFUL CODE WILL SHOW UP HERE (I promise).</pre>
+		<p class="small">You can alternatively click on a command like this: <span class="code">(..+...-...)</span> to watch the animation.</p>
 		<h1>GIviiRISH: Timeline commands</h1>
 		<p>Even though <a href="index.html" alt="vii">vii</a> by itself allows you to save time when writing css animations, it also includes a subset of commands that create animations even faster.</p>
 		<p>Because of the odd looking commands this subset is called GIviiRISH.</p>
@@ -898,6 +921,10 @@
 			$code = $('.code'),
 			styleTag;
 		$giviirish_txt.click(function(evt){
+			$(this).select();
+		});
+		$generated.click(function(evt){
+			$(this).attr('contenteditable','true');
 			$(this).select();
 		});
 		function generateCode(gvii){

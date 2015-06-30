@@ -39,6 +39,8 @@ vii = (function(){
 	    'easeInOutBack'     : 'cubic-bezier(.68,-.55,.265,1.55)'
 	};
 	//ease name shortcuts & special easings
+	ceaser.slowIn  = ceaser.easeIn;
+	ceaser.slowOut = ceaser.easeOut;
 	ceaser.sine    = ceaser.easeOutSine;
 	ceaser.circ    = ceaser.easeOutCirc;
 	ceaser.expo    = ceaser.easeOutExpo;
@@ -249,7 +251,7 @@ vii = (function(){
 		'bump'			: 'n:bump d:3 e:linear dy:2 loop:-1 y:0|y:-10|y:0|y:10|y:0'
 	}
 	var tutorial = {
-		'Tutorial: Timeline sketch (special characters)' :'[u.U.d.D.r.R.l.L.w.W.h.H.s.S.k.K.t.T.x.X.y.Y.z.Z.f.F.p.P.v.V.+.-.<.>.^._.@.0.5.1.#.=.8.2.4.6.7.9.m.M.n.N]',
+		'Tutorial: Timeline sketch (special characters)' :'[*uUdDrRlLwWhHsSkKtTxXyYzZfFvV+-<>^_\'":;,jJ@#=015iI!234|6789aAoOmMnNbBpPqQcCeE/\\]',
 		'Tutorial: Timeline sketch' :'[.....*....**..*.*......*]',
 		'Tutorial: Walk cycle':'n:walk dy:-0.5 loop:-1 kf:class e:linear to:50%,5%|kd:0 x:-20 y:0 rot:25|kd:0.3 x:0 y:-10 rot:-5|kd:0.2 x:20 y:0 rot:-20|kd:0.3 y:0 rot:0|kd:0.2 x:-20 y:0 rot:25',
 		'Tutorial: Squash & Stretch' :'n:squashStretch loop:-1 dir:>< kf:class to:cb|ss:0.8|ss:1.3',
