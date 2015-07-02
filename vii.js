@@ -1240,7 +1240,8 @@ vii = (function(){
 			//animation code
 			t = '';
 			if(useShortHand){
-				t += 'animation: ' + n + _s + d + dpx + _s + (ceaser[e]?ceaser[e]:e) + _s + ((nTimes == 1)?dy + dypx + _s : '' + _s) + l + _s + ad + _s + fm + _s + ((isTransition === -2)?'paused':isPlaying) + _e + _n;
+				//name time ease delay
+				t += 'animation: ' + n + _s + d + dpx + _s + (ceaser[e]?ceaser[e]:e) + _s + ((dy == 0)?'':((nTimes == 1)?dy + dypx + _s : '' + _s)) + ((l == 1)?'':l + _s) + ((ad == 'normal')?'':ad + _s) + fm + ((isPlaying == 'running')? '' : ((isTransition === -2)?_s + 'paused':_s + isPlaying)) + _e + _n;
 				s += _t + t;
 				s += _t + _w + t;				
 			}else{
