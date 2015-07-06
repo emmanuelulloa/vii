@@ -499,7 +499,7 @@
 	font-style: italic;
 	text-align: justify;
 }
-.new_btn{
+.small_btn{
 	text-decoration: none;
 	border-radius: 4px;
 	background-color: dimgray;
@@ -510,7 +510,7 @@
 	transition: all 0.5s ease 0s;
 	-webkit-transition: all 0.5s ease 0s;
 }
-.new_btn:hover, .new_btn:focus, .new_btn:active {
+.small_btn:hover, .small_btn:focus, .small_btn:active {
 	background-color: dodgerblue;
 	border-bottom: 3px solid royalblue;
 	color: white;
@@ -537,10 +537,10 @@
 		<li>Type commands using vii.k('') for keyframes, vii.t('') for transitions, vii.kt('') for keyframed transitions and vii.it('') for interactive transitions.</li>
 		<li>Press the GENERATE button to preview your animation.</li>
 		<li>Copy the generated code into a .css file.</li>
-		<li>You can use <a href="giviirish.html" class="new_btn">GIviiRISH</a></li>
+		<li>You can use <a href="giviirish.html" class="small_btn">GIviiRISH</a></li>
 	</ul>
 		<p>
-			<a href="#" id="new_btn" class="new_btn">Create New</a> or load a pre-made animation:
+			<a href="#" id="small_btn" class="small_btn">Create New</a> or load a pre-made animation:
 			<select class="vii viiFoo" id="preMade_sl">
 			</select>
 			<sup>*</sup>
@@ -563,11 +563,13 @@
 			</div>			
 		</div>
 		<div>
-		<a href="#" class="externalIDE_btn" id="gist">Save as gist</a>
 		<!--a href="#" class="externalIDE_btn" id="codepen">Edit on CodePen</a>
 		<form id="codepen_frm" action="http://codepen.io/pen/define" method="POST" target="_blank">
 			<input type="hidden" id="cp_data" name="data" value="{'html':'<div></div>','css':'/**/'}" />
 		</form-->
+		</div>
+		<div class="row">
+			<p><a href="#" class="small_btn" id="gist">Save as gist</a></p>
 		</div>
 		<div class="row">
 		<p class="small"><sup>*</sup>Animations are taken from <a href="http://www.justinaguilar.com/animations/" target="_blank">CSS3 Animation Cheat Sheet</a>, <a href="http://daneden.github.io/animate.css/" target="_blank">Animate.css</a>, <a href="http://www.minimamente.com/example/magic_animations/" target="_blank">Magic Animations</a>, <a href="http://ianlunn.github.io/Hover/" target="_blank">Hover.css</a> and <a href="http://ademilter.com/lab/liffect/" target="_blank">liffect</a>.</p>
@@ -594,7 +596,7 @@
 				$hero = $('.viiHero'),
 				$gist = $('#gist'),
 				$codepen = $('#codepen'),
-				$new_btn = $('#new_btn'),
+				$small_btn = $('#small_btn'),
 				styleTag;
 			function generateCode(){
 				$hero.removeClass(vii.getClassName());
@@ -665,7 +667,7 @@
 				$('#cp_data').val("{'html':'<div class=\"" + vii.getClassName() + "\" style=\"border:1px solid black;background:green;width:100px;height:100px;position:absolute;display:block;\">vii</div>','css':'"+vii.getCode()+"'}");
 				$('#codepen_frm').submit();
 			});
-			$new_btn.click(function(event){
+			$small_btn.click(function(event){
 				$command_txt.val('');
 				$command_txt.focus();
 				event.preventDefault();
